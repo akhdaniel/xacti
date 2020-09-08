@@ -27,7 +27,6 @@
         # 'security/ir.model.access.csv',
 
         'views/structure_xacti.xml',
-        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
         'views/master_ptkp.xml',
