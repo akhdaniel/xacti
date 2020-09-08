@@ -1,104 +1,77 @@
 <odoo>
     <data>
-        <record id="rule_tunj_gol" model="hr.salary.rule">
-            <field name="name">Tunjangan Golongan</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_GOL</field>
-            <field name="sequence">10</field>
+        <record id="rule_pph21_ptkp" model="hr.salary.rule">
+            <field name="name">Penghasilan Tidak Kena Pajak</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">PTKP</field>
+            <field name="sequence">190</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_occup</field>
-        </record>
-        <record id="rule_tunj_fungsional" model="hr.salary.rule">
-            <field name="name">Tunjangan Fungsional</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Func</field>
-            <field name="sequence">20</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_functional</field>
-        </record>
-        <record id="rule_tunj_keluarga" model="hr.salary.rule">
-            <field name="name">Tunjangan Keluarga</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Fam</field>
-            <field name="sequence">30</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_family</field>
-        </record>
-        <record id="rule_tunj_performance" model="hr.salary.rule">
-            <field name="name">Tunjangan Performance</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Perf</field>
-            <field name="sequence">40</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_perform</field>
-        </record>
-        <record id="rule_tunj_transportasi" model="hr.salary.rule">
-            <field name="name">Tunjangan Transportasi</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Trans</field>
-            <field name="sequence">50</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_trans</field>
-        </record>
-        <record id="rule_tunj_lainlain" model="hr.salary.rule">
-            <field name="name">Tunjangan Lain-Lain</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Lain_lain</field>
-            <field name="sequence">60</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_other</field>
-        </record>
-        <record id="rule_tunj_kehadiran" model="hr.salary.rule">
-            <field name="name">Tunjangan Kehadiran</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Kehadiran</field>
-            <field name="sequence">70</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_presence</field>
-        </record>
-        <record id="rule_tpk" model="hr.salary.rule">
-            <field name="name">TPK</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TPK</field>
-            <field name="sequence">80</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_tpk</field>
+            <field name="amount_python_compute">result=employee.ptkp_id.nominal</field>
         </record>
 
-        <record id="rule_tunj_shift" model="hr.salary.rule">
-            <field name="name">Tunj Shift</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TSHIFT</field>
-            <field name="sequence">80</field>
+        <record id="rule_pph21_disetahunkan" model="hr.salary.rule">
+            <field name="name">PenghasilanSetahunkan</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">PSTH</field>
+            <field name="sequence">200</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_shift</field>
+            <field name="amount_python_compute">result=(contract.wage+contract.x_trans+contract.x_occup+contract.x_family+contract.x_functional+contract.x_perform)*12</field>
         </record>
 
-        <record id="rule_uang_makan" model="hr.salary.rule">
-            <field name="name">Uang makan</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">MEAL</field>
-            <field name="sequence">80</field>
+        <record id="rule_pph21_biayajabatan" model="hr.salary.rule">
+            <field name="name">BiayaJabatan</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">BJAB</field>
+            <field name="sequence">300</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_meal</field>
+            <field name="amount_python_compute">result= min(0.05 * PSTH , 6000000)</field>
         </record>
 
+        <record id="rule_pph21_netto" model="hr.salary.rule">
+            <field name="name">Netto</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">NETTO</field>
+            <field name="sequence">400</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result= PSTH-BJAB-(contract.wage+contract.x_tpk+contract.x_occup+contract.x_trans+contract.x_family+contract.x_presence+contract.x_functional)*0.02*12</field>
+        </record>
 
-        <record id="structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
+        <record id="rule_pph21_pkp" model="hr.salary.rule">
+            <field name="name">Pendapatan Kena Pajak</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">PKP</field>
+            <field name="sequence">500</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=NETTO-PTKP if NETTO-PTKP>0 else 0</field>
+        </record>
+
+        <record id="rule_pph21_setahun" model="hr.salary.rule">
+            <field name="name">PPH21 Setahun</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">PPH21</field>
+            <field name="sequence">600</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"><![CDATA[
+for pkp_id in contract.company_id.pkp_ids:
+    if PKP > pkp_id.minimun and PKP < pkp_id.maximum
+        rate = pkp_id.rate
+ result = PKP * rate
+]]>
+            </field>
+        </record>
+
+        <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
             <field name="name">Karyawan tetap NS</field>
             <field name="parent_id" ref="hr_payroll_community.structure_base"/>
             <field name="code">KTNS</field>
-            <field name="rule_ids" eval="[(6,0,[ref('rule_tunj_gol'),
-            ref('rule_tunj_fungsional'),
-            ref('rule_tunj_keluarga'),
-            ref('rule_tunj_performance'),
-            ref('rule_tunj_transportasi'),
-            ref('rule_tunj_lainlain'),
-            ref('rule_tunj_kehadiran'),
-            ref('rule_tpk'),
-            ref('rule_tunj_shift'),
-            ref('rule_uang_makan')
-            ])]"/>
+            <field name="rule_ids" eval="[(4,ref('rule_pph21_ptkp')),
+             (4,ref('rule_pph21_disetahunkan')),
+             (4,ref('rule_pph21_biayajabatan')),
+             (4,ref('rule_pph21_netto')),
+             (4,ref('rule_pph21_pkp')),
+             (4,ref('rule_pph21_setahun'))
+             ]"/>
         </record>
+
     </data>
 </odoo>
