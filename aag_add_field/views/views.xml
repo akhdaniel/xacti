@@ -11,7 +11,7 @@
       <field name="arch" type="xml">
 
           <notebook position = 'inside'>
-            <page string="xacti_field">
+            <page string="Xacti Fields">
               <group>
                 <field name="x_idno"/>
                 <field name="x_allcd"/>
@@ -40,7 +40,7 @@
       <field name="arch" type="xml">
 
           <notebook position = 'inside'>
-            <page string="Xacti Contract field">
+            <page string="Xacti Contract Fields">
               <group>
                 <field name="x_tpk"/>
                 <field name="x_occup"/>
