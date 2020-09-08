@@ -62,3 +62,12 @@ class company(models.Model):
     _name = 'res.company'
     _inherit = 'res.company'
     x_meal = fields.Integer(string='Daily Meal Allowance')
+    x_umsk = fields.Integer(string='UMSK')
+    x_kwt_wage = fields.Integer(string='Contract Monthly Wage')
+    x_kwt_trans = fields.Integer(string='Contract Daily Transpot')
+    x_shift_op = fields.Integer(string='Daily Shift Allowance-Opr Level')
+    x_shift_gl = fields.Integer(string='Daily Shift Allowance-GL Level')
+    x_shift_sv = fields.Integer(string='Daily Shift Allowance-SV Level')
+    x_shift_am = fields.Integer(string='Daily Shift Allowance-AM Level')
+    x_shift_sm = fields.Integer(string='Daily Shift Allowance-SM Level')
+    x_shift_dm = fields.Integer(string='Daily Shift Allowance-DM Level')

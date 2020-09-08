@@ -69,6 +69,15 @@
             <page string="Xacti Standard Rate">
               <group>
                 <field name="x_meal"/>
+                <field name="x_umsk"/>
+                <field name="x_kwt_wage"/>
+                <field name="x_kwt_trans"/>
+                <field name="x_shift_op"/>
+                <field name="x_shift_gl"/>
+                <field name="x_shift_sv"/>
+                <field name="x_shift_am"/>
+                <field name="x_shift_sm"/>
+                <field name="x_shift_dm"/>
               </group>
             </page>
           </notebook>
