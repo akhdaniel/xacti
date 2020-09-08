@@ -25,9 +25,17 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+
+        'views/structure_xacti.xml',
+        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        'views/structure_xacti.xml',
+        'views/master_ptkp.xml',
+        'views/views_pkp.xml',
+        'views/master_pkp.xml',
+        'views/employee.xml',
+        'views/company.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
