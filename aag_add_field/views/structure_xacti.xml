@@ -80,7 +80,7 @@
             <field name="code">MEAL</field>
             <field name="sequence">80</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_meal</field>
+            <field name="amount_python_compute">result=contract.company_id.x_meal</field>
         </record>
 
 
