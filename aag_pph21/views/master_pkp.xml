@@ -20,6 +20,12 @@
             <field name="rate">25</field>
             <field name="company_id" ref="base.main_company"></field>
         </record>
+        <record id="master_pkp_4" model="aag_master_pkp">
+            <field name="minimum">500000001</field>
+            <field name="maximum">2000000000</field>
+            <field name="rate">30</field>
+            <field name="company_id" ref="base.main_company"></field>
+        </record>
 
     </data>
 </odoo>
