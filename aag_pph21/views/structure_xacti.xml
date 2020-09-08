@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record id="rule_pph21_ptkp" model="hr.salary.rule">
-            <field name="name">Penghasilan Tidak Kena Pajak</field>
+            <field name="name">x_Penghasilan Tidak Kena Pajak</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">PTKP</field>
             <field name="sequence">200</field>
@@ -10,7 +10,7 @@
         </record>
 
         <record id="rule_pph21_disetahunkan" model="hr.salary.rule">
-            <field name="name">PenghasilanSetahunkan</field>
+            <field name="name">x_Penghasilan Disetahunkan</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">PSTH</field>
             <field name="sequence">210</field>
@@ -19,7 +19,7 @@
         </record>
 
         <record id="rule_pph21_biayajabatan" model="hr.salary.rule">
-            <field name="name">BiayaJabatan</field>
+            <field name="name">x_Biaya Jabatan</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">BJAB</field>
             <field name="sequence">220</field>
@@ -28,7 +28,7 @@
         </record>
 
         <record id="rule_pph21_netto" model="hr.salary.rule">
-            <field name="name">Netto</field>
+            <field name="name">x_Netto</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">NETTO</field>
             <field name="sequence">230</field>
@@ -37,7 +37,7 @@
         </record>
 
         <record id="rule_pph21_pkp" model="hr.salary.rule">
-            <field name="name">Pendapatan Kena Pajak</field>
+            <field name="name">x_Pendapatan Kena Pajak</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">PKP</field>
             <field name="sequence">240</field>
@@ -46,7 +46,7 @@
         </record>
 
         <record id="rule_pph21_setahun" model="hr.salary.rule">
-            <field name="name">PPH21 Setahun</field>
+            <field name="name">x_PPh21 Setahun</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">PPH21</field>
             <field name="sequence">250</field>
@@ -81,7 +81,7 @@ result = pph21
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
-            <field name="name">Karyawan tetap NS</field>
+            <field name="name">x_Karyawan Tetap NS</field>
             <field name="parent_id" ref="hr_payroll_community.structure_base"/>
             <field name="code">KTNS</field>
             <field name="rule_ids" eval="[(4,ref('rule_pph21_ptkp')),
