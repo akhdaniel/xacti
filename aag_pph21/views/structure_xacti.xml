@@ -99,7 +99,8 @@ result = pph21
              (4,ref('rule_pph21_biayajabatan')),
              (4,ref('rule_pph21_netto')),
              (4,ref('rule_pph21_pkp')),
-             (4,ref('rule_pph21_setahun'))
+             (4,ref('rule_pph21_setahun')),
+             (4,ref('rule_pph21'))
              ]"/>
         </record>
 
