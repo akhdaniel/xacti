@@ -99,7 +99,7 @@ if PKP > range.maximum:
         if sisa_pkp <= (range.maximum-range.minimum+1):
             pph21 += sisa_pkp*range.rate/100
         else:
-            pph21 += 250000000*range.rate/100
+            pph21 += (range.maximum-range.minimum+1)*range.rate/100
             sisa_pkp = sisa_pkp-250000000
             range = contract.company_id.pkp_ids[3]
             pph21 += sisa_pkp*range.rate/100
