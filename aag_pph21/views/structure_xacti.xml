@@ -5,6 +5,15 @@
             <field name="code">IGN</field>
         </record>
 
+        <record id="rule_tunjangan_pph21" model="hr.salary.rule">
+            <field name="name">x_Tunjangan PPh21</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="code">TUNJ21</field>
+            <field name="sequence">90</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=0</field>
+        </record>
+
         <record id="rule_pph21" model="hr.salary.rule">
             <field name="name">x_Potongan PPh21</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
