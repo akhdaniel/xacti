@@ -8,6 +8,7 @@
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=PPH21TH/12</field>
         </record>
+        
         <record id="rule_pph21_ptkp" model="hr.salary.rule">
             <field name="name">x_Penghasilan Tidak Kena Pajak</field>
             <field name="parent_rule_id" ref="rule_pph21"/>
