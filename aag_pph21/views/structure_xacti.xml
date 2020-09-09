@@ -45,6 +45,7 @@
             <field name="amount_python_compute">result=NETTO-PTKP if NETTO-PTKP>0 else 0</field>
         </record>
 
+
         <record id="rule_pph21_setahun" model="hr.salary.rule">
             <field name="name">PPH21 Setahun</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
@@ -52,9 +53,29 @@
             <field name="sequence">250</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
-pkp_id = contract.company_id.pkp_ids.search([('minimum','<',PKP),('maximum','>',PKP)])
-rate=pkp_id[0].rate
-result = PKP*rate/100.0
+sisa_pkp = PKP 
+pph21 = 0 
+range = contract.company_id.pkp_ids[0]
+if PKP > range.maximum:
+    pph21 += range.maximum * range.rate / 100 
+    sisa_pkp = PKP - range.maximum
+    range = contract.company_id.pkp_ids[1]
+    if sisa_pkp <= (range.maximum-range.minimum+1):
+        pph21 += sisa_pkp * range.rate / 100 
+    else:
+        pph21 += (range.maximum-range.minimum+1) * range.rate / 100
+        sisa_pkp = sisa_pkp - (range.maximum-range,minimun+1)
+        range = contract.company_id.pkp_ids[2]
+        if sisa_pkp <= (range.maximum-range.minimum+1):
+            pph21 += sisa_pkp * range.rate / 100
+        else:
+            pph21 += (range.maximum-range.minimum+1) * range.rate /100
+            sisa_pkp = sisa_pkp - (range.maximum-range,minimun+1)
+            range = contract.company_id.pkp_ids[3]
+            pph21 += sisa_pkp * range.rate / 100
+else:
+    pph21 = PKP * range.rate / 100
+result = pph21
 ]]>
             </field>
         </record>
