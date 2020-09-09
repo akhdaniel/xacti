@@ -83,7 +83,6 @@
             <field name="sequence">250</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
-
 sisa_pkp = PKP 
 pph21 = 0 
 range = contract.company_id.pkp_ids[0]
