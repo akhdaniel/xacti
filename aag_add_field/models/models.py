@@ -6,17 +6,17 @@ from odoo import models, fields, api
 class employee(models.Model):
     _name = 'hr.employee'
     _inherit = 'hr.employee'
-    x_idno = fields.Integer(string='IDNO')
-    x_empsts = fields.Char(string='Empl. Status')
-    x_allcd = fields.Char(string='Code Golongan')
-    x_spmi = fields.Boolean(string='SPMI')
-    x_spmi_med = fields.Integer(string='SPMI Med')
-    x_nokop = fields.Char(string='NO Koperasi')
-    x_nobpjskes = fields.Char(string='NO BPJSKES')
-    x_bpjskesadd = fields.Integer(string='Tambahan BPJS KES')
-    x_nobpjstk = fields.Char(string='NO BPJSTK')
-    x_nobpjspen = fields.Char(string='NO BPJS Pensiun')
-    x_npwp = fields.Char(string='NPWP')
+    x_idno = fields.Integer(string='Employee IDNO')
+    x_empsts = fields.Char(string='Employee Status')
+    x_allcd = fields.Char(string='Grade Code')
+    x_spmi = fields.Boolean(string='Union Membership')
+    x_spmi_med = fields.Integer(string='Med. Donation Code')
+    x_nokop = fields.Char(string='Cooperation ID')
+    x_nobpjskes = fields.Char(string='BPJS-Kes ID')
+    x_bpjskesadd = fields.Integer(string='Add. BPJS-Kes')
+    x_nobpjstk = fields.Char(string='BPJS-TK ID')
+    x_nobpjspen = fields.Char(string='BPJS Pension ID')
+    x_npwp = fields.Char(string='Tax ID / NPWP')
 
     idno = fields.Integer(string='IDNO')
 
@@ -48,17 +48,26 @@ class contract(models.Model):
     _name = 'hr.contract'
     _inherit = 'hr.contract'
     x_tpk = fields.Integer(string='TPK')
-    x_occup = fields.Integer(string='Tunj. Golongan')
-    x_family = fields.Integer(string='Tunj. Keluarga')
-    x_functional = fields.Integer(string='Tunj. Fungsional')
-    x_trans = fields.Integer(string='Tunj. Transportasi')
-    x_perform = fields.Integer(string='Tunj. Prestasi')
-    x_other = fields.Integer(string='Lain-Lain')
-    x_presence = fields.Integer(string='Tunj. Kehadiran')
-    x_shift = fields.Integer(string='Tunj. Shift/Harian')
-    x_ovtrate = fields.Integer(string='Rate Overtime/Jam')
+    x_occup = fields.Integer(string='Grade Allowance')
+    x_family = fields.Integer(string='Family Allowance')
+    x_functional = fields.Integer(string='Functional Allowance')
+    x_trans = fields.Integer(string='Transport Allowance')
+    x_perform = fields.Integer(string='Performance Allowance')
+    x_other = fields.Integer(string='Others Allowance')
+    x_presence = fields.Integer(string='Presence Allowance')
+    x_shift = fields.Integer(string='Daily SHift Allowance')
+    x_ovtrate = fields.Integer(string='Hourly Overtime Rate')
 
 class company(models.Model):
     _name = 'res.company'
     _inherit = 'res.company'
-    x_meal = fields.Integer(string='Uang makan/hari')
+    x_meal = fields.Integer(string='Daily Meal Allowance')
+    x_umsk = fields.Integer(string='UMSK')
+    x_kwt_wage = fields.Integer(string='Contract Monthly Wage')
+    x_kwt_trans = fields.Integer(string='Contract Daily Transpot')
+    x_shift_op = fields.Integer(string='Daily Shift Allowance-Opr Level')
+    x_shift_gl = fields.Integer(string='Daily Shift Allowance-GL Level')
+    x_shift_sv = fields.Integer(string='Daily Shift Allowance-SV Level')
+    x_shift_am = fields.Integer(string='Daily Shift Allowance-AM Level')
+    x_shift_sm = fields.Integer(string='Daily Shift Allowance-SM Level')
+    x_shift_dm = fields.Integer(string='Daily Shift Allowance-DM Level')
