@@ -98,12 +98,20 @@ result = pot_spmi
         </record>
 
         <record id="rule_pot_jht_emp" model="hr.salary.rule">
-            <field name="name">x_Pot BPKS-TK JHT 2%</field>
+            <field name="name">x_Pot BPJS-TK JHT 2%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">JHTEMP</field>
             <field name="sequence">120</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=(contract.wage+contract.x_trans+contract.x_occup+contract.x_family+contract.x_functional+contract.x_perform)*0.02</field>
+        </record>
+        <record id="rule_pot_jht_com" model="hr.salary.rule">
+            <field name="name">x_Pot BPJS-TK JHT 3,7%</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">JHTCOM</field>
+            <field name="sequence">130</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=(contract.wage+contract.x_trans+contract.x_occup+contract.x_family+contract.x_functional+contract.x_perform)*0.037</field>
         </record>
 
         <record id="structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
@@ -121,7 +129,8 @@ result = pot_spmi
             ref('rule_tunj_shift'),
             ref('rule_uang_makan'),
             ref('rule_pot_spmi'),
-            ref('rule_pot_jht_emp')
+            ref('rule_pot_jht_emp'),
+            ref('rule_pot_jht_com')
             ])]"/>
         </record>
     </data>
