@@ -94,6 +94,7 @@ if PKP > range.maximum:
         pph21 += sisa_pkp*range.rate/100 
     else:
         pph21 += (range.maximum-range.minimum+1) * range.rate / 100
+        sisa_pkp = sisa_pkp-(range.maximum-range.minimun+1)
 else:
     pph21 = PKP*range.rate/100
 result = pph21
