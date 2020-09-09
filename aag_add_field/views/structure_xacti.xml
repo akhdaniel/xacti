@@ -97,7 +97,7 @@ result = pot_spmi
 </field>
         </record>
 
-        <record id="rule_pot_jht_empl" model="hr.salary.rule">
+        <record id="rule_pot_jht_emp" model="hr.salary.rule">
             <field name="name">x_Pot BPKS-TK JHT 2%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">JHTEMP</field>
