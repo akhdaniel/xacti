@@ -1,5 +1,10 @@
 <odoo>
     <data>
+        <record id="category_iqnore" model="hr.salary.rule.category">
+            <field name="name">x_ignore</field>
+            <field name="code">IGN</field>
+        </record>
+
         <record id="rule_pph21" model="hr.salary.rule">
             <field name="name">x_Potongan PPh21</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
@@ -8,11 +13,11 @@
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=PPH21TH/12</field>
         </record>
-        
+
         <record id="rule_pph21_ptkp" model="hr.salary.rule">
             <field name="name">x_Penghasilan Tidak Kena Pajak</field>
             <field name="parent_rule_id" ref="rule_pph21"/>
-            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="category_id" ref="category_iqnore"/>
             <field name="code">PTKP</field>
             <field name="sequence">200</field>
             <field name="amount_select">code</field>
@@ -23,7 +28,7 @@
         <record id="rule_pph21_disetahunkan" model="hr.salary.rule">
             <field name="name">x_Penghasilan Disetahunkan</field>
             <field name="parent_rule_id" ref="rule_pph21"/>
-            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="category_id" ref="category_iqnore"/>
             <field name="code">PSTH</field>
             <field name="sequence">210</field>
             <field name="amount_select">code</field>
@@ -33,7 +38,7 @@
         <record id="rule_pph21_biayajabatan" model="hr.salary.rule">
             <field name="name">x_Biaya Jabatan</field>
             <field name="parent_rule_id" ref="rule_pph21"/>
-            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="category_id" ref="category_iqnore"/>
             <field name="code">BJAB</field>
             <field name="sequence">220</field>
             <field name="amount_select">code</field>
@@ -43,7 +48,7 @@
         <record id="rule_pph21_netto" model="hr.salary.rule">
             <field name="name">x_Netto</field>
             <field name="parent_rule_id" ref="rule_pph21"/>
-            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="category_id" ref="category_iqnore"/>
             <field name="code">NETTO</field>
             <field name="sequence">230</field>
             <field name="amount_select">code</field>
@@ -53,7 +58,7 @@
         <record id="rule_pph21_pkp" model="hr.salary.rule">
             <field name="name">x_Pendapatan Kena Pajak</field>
             <field name="parent_rule_id" ref="rule_pph21"/>
-            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="category_id" ref="category_iqnore"/>
             <field name="code">PKP</field>
             <field name="sequence">240</field>
             <field name="amount_select">code</field>
@@ -64,7 +69,7 @@
         <record id="rule_pph21_setahun" model="hr.salary.rule">
             <field name="name">x_PPh21 Setahun</field>
             <field name="parent_rule_id" ref="rule_pph21"/>
-            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="category_id" ref="category_iqnore"/>
             <field name="code">PPH21TH</field>
             <field name="sequence">250</field>
             <field name="amount_select">code</field>
