@@ -49,7 +49,7 @@
         <record id="rule_pph21_setahun" model="hr.salary.rule">
             <field name="name">x_PPh21 Setahun</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">PPH21</field>
+            <field name="code">PPH21TH</field>
             <field name="sequence">250</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
@@ -79,6 +79,15 @@ else:
 result = pph21
 ]]>
             </field>
+        </record>
+
+        <record id="rule_pph21" model="hr.salary.rule">
+            <field name="name">x_Potongan PPh21</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">PPH21</field>
+            <field name="sequence">250</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=PPH21TH/12</field>
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
