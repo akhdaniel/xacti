@@ -56,25 +56,24 @@ sisa_pkp = PKP
 pph21 = 0 
 range = contract.company_id.pkp_ids[0]
 if PKP > range.maximum:
-    sisa_pkp = PKP - range.maximum   # 145-50 = 95
-    pph21 += range.maximum * range.rate / 100 # 50*5%
-if sisa_pkp > 0:
+    pph21 += range.maximum * range.rate / 100 # 50jt x 5%
+    sisa_pkp = PKP - range.maximum   # PKP-50jt
     range = contract.company_id.pkp_ids[1]
-    if sisa_pkp < (range.maximum-range.minimum+1):
-        pph21 += sisa_pkp * range.rate / 100 # sisa_pkp * 15%
+    if sisa_pkp <= (range.maximum-range.minimum+1): / jika sisa_pkp <= 200jt
+        pph21 += sisa_pkp * range.rate / 100 # sisa_pkp * 15% (Finish)
     else:
-        pph21 += range.maximum * range.rate /100 # range.maximum *15%
+        pph21 += (range.maximum-range.minimum+1) * range.rate /100 # 200jt * 15%
         sisa_pkp = sisa_pkp - (range.maximum-range,minimun+1)
-        if sisa_pkp > 0:
-            range = contract.company_id.pkp_ids[2]
-            if sisa_pkp < (range.maximum-range.minimum+1):
-                pph21 += sisa_pkp * range.rate / 100 # sisa_pkp * 25%
-            else:
-                pph21 += range.maximum * range.rate /100 # range.maximum *25%
-                sisa_pkp = sisa_pkp - (range.maximum-range,minimun+1)
-                if sisa_pkp > 0:
-                    range = contract.company_id.pkp_ids[3]
-                    pph21 += sisa_pkp * range.rate / 100 # sisa_pkp * 30%
+        range = contract.company_id.pkp_ids[2]
+        if sisa_pkp <= (range.maximum-range.minimum+1):
+            pph21 += sisa_pkp * range.rate / 100 # sisa_pkp * 25% (FInish)
+        else:
+            pph21 += (range.maximum-range.minimum+1) * range.rate /100 # 250jt x 25%
+            sisa_pkp = sisa_pkp - (range.maximum-range,minimun+1)
+            range = contract.company_id.pkp_ids[3]
+            pph21 += sisa_pkp * range.rate / 100 # sisa_pkp * 30% (Finish)
+else:
+    pph21 = PKP * range.rate / 100 # PKP * 5% (Finish)
 result = pph21
 ]]>
             </field>
