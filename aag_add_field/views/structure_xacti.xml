@@ -95,23 +95,7 @@ result = pot_spmi
 ]]>
 </field>
         </record>
-        <record id="rule_pot_spmi_med" model="hr.salary.rule">
-            <field name="name">x_Potongan SPMI Medical </field>
-            <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">SPMED</field>
-            <field name="sequence">115</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute"><![CDATA[
-pot_spmimed = 0 
-if employee.x_spmimed = 1:
-    pot_spmimed=contract.company_id.x_umsk * 0.005
-    else:
-    if employee.x_spmimed = 2:
-    pot_spmimed=contract.company_id.x_umsk * 0.01
-result = pot_spmimed
-]]>
-</field>
-        </record>
+
         <record id="rule_pot_jht_emp" model="hr.salary.rule">
             <field name="name">x_Pot BPJS-TK JHT 2%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
