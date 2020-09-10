@@ -82,7 +82,6 @@
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.company_id.x_meal</field>
         </record>
-
         <record id="rule_pot_spmi" model="hr.salary.rule">
             <field name="name">x_Potongan SPMI</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
@@ -96,7 +95,23 @@ result = pot_spmi
 ]]>
 </field>
         </record>
-
+        <record id="rule_pot_spmi_med" model="hr.salary.rule">
+            <field name="name">x_Potongan SPMI Medical </field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">SPMED</field>
+            <field name="sequence">115</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"><![CDATA[
+pot_spmi_med = 0 
+if employee.x_spmi_med = 1:
+    pot_spmi_med=contract.company_id.x_umsk * 0.005
+else
+    if employee.x_spmi_med = 2:
+    pot_spmi_med=contract.company_id.x_umsk * 0.01
+result = pot_spmi_med
+]]>
+</field>
+        </record>
         <record id="rule_pot_jht_emp" model="hr.salary.rule">
             <field name="name">x_Pot BPJS-TK JHT 2%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
@@ -161,6 +176,7 @@ result = pot_spmi
             ref('rule_tunj_shift'),
             ref('rule_uang_makan'),
             ref('rule_pot_spmi'),
+            ref('rule_pot_spmi_med'),
             ref('rule_pot_jht_emp'),
             ref('rule_pot_jht_com'),
             ref('rule_pot_pen_emp'),
