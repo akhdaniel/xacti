@@ -33,6 +33,7 @@
         'views/master_pkp.xml',
         'views/employee.xml',
         'views/company.xml',
+        'views/payslip.xml',
 
     ],
     # only loaded in demonstration mode
