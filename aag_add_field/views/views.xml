@@ -17,7 +17,6 @@
                 <field name="x_empsts"/>
                 <field name="x_allcd"/>
                 <field name="x_spmi"/>
-                <field name="x_spmimed"/>
                 <field name="x_nokop"/>
                 <field name="x_nobpjskes"/>
                 <field name="x_bpjskesadd"/>
