@@ -11,6 +11,7 @@ class employee(models.Model):
     x_allcd = fields.Char(string='Grade Code')
     x_spmi = fields.Boolean(string='Union Membership')
     x_spmi_med = fields.Integer(string='Med. Donation Code')
+    x_spmimed = fields.Integer(string='Med. Donation Code')
     x_nokop = fields.Char(string='Cooperation ID')
     x_nobpjskes = fields.Char(string='BPJS-Kes ID')
     x_bpjskesadd = fields.Integer(string='Add. BPJS-Kes')
