@@ -160,7 +160,6 @@ result = pot_spmi
             ref('rule_tunj_shift'),
             ref('rule_uang_makan'),
             ref('rule_pot_spmi'),
-            ref('rule_pot_spmi_med'),
             ref('rule_pot_jht_emp'),
             ref('rule_pot_jht_com'),
             ref('rule_pot_pen_emp'),
