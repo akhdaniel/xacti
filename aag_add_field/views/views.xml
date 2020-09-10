@@ -14,6 +14,7 @@
             <page string="Xacti Fields">
               <group>
                 <field name="x_idno"/>
+                <field name="x_empsts"/>
                 <field name="x_allcd"/>
                 <field name="x_spmi"/>
                 <field name="x_spmimed"/>
