@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "aag_add_field",
+    'name': "aag_pph21",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
