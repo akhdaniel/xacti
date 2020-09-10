@@ -122,7 +122,7 @@ result = pot_spmi
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 pot_spmi = 0 
-if employee.x_spmi == True: pot_spmi=contract.company_id.x_umsk * 0.01
+if employee.x_spmi_med == 1: pot_spmi=contract.company_id.x_umsk * 0.01
 result = pot_spmi
 ]]>
 </field>
