@@ -105,7 +105,7 @@ result = pot_spmi
 pot_spmi_med = 0 
 if employee.x_spmi_med = 1:
     pot_spmi_med=contract.company_id.x_umsk * 0.005
-else
+else:
     if employee.x_spmi_med = 2:
     pot_spmi_med=contract.company_id.x_umsk * 0.01
 result = pot_spmi_med
