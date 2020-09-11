@@ -16,8 +16,8 @@ class payslip(models.Model):
     pkp = fields.Integer("PKP", )
     pph21_thn = fields.Integer("PPH21 Setahun", )
     
-    tunj_pph = fields.Float("Tunjangan PPH")
-    pot_pph = fields.Float("Pot PPH")
+    tunj_pph = fields.Integer("Tunjangan PPH")
+    pot_pph = fields.Integer("Pot PPH")
 
     def compute_sheet(self):
         res = super(payslip, self).compute_sheet() 
@@ -26,11 +26,12 @@ class payslip(models.Model):
 
         i=0
 
-        selisih = int(round(self.pot_pph - self.tunj_pph))
+        selisih = round(self.pot_pph - self.tunj_pph)
         while selisih != 0:
-            _logger.info("--- iterasi %s, selisih=%s", i, selisih)
+            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
             self.tunj_pph = self.pot_pph
             self._calculate_pph()
+            selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
         return res 
 
@@ -44,8 +45,8 @@ class payslip(models.Model):
         self.bjab = min(0.05 * self.bruto , 6000000)	
         self.netto = self.bruto-self.bjab-(self.contract_id.wage + self.contract_id.x_tpk + self.contract_id.x_occup + self.contract_id.x_trans + self.contract_id.x_family + self.contract_id.x_presence + self.contract_id.x_functional)*0.02*12			
         self.pkp = self.netto - self.ptkp if self.netto - self.ptkp >0 else 0
-        self.pph21_thn = self.get_pph21_setahun()
-        self.pot_pph = self.pph21_thn/12
+        self.pph21_thn = round(self.get_pph21_setahun(), 0)
+        self.pot_pph = round(self.pph21_thn/12, 0)
 
     def get_pph21_setahun(self):
         sisa_pkp = self.pkp 
