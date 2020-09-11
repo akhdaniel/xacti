@@ -26,7 +26,7 @@ class payslip(models.Model):
 
         i=0
         while self.pot_pph - self.tunj_pph != 0:
-            _logger.info("--- iterasi %s", i)
+            _logger.info("--- iterasi %s, selisih=%s", i, (self.pot_pph - self.tunj_pph))
             self.tunj_pph = self.pot_pph
             self._calculate_pph()
             i+=1
