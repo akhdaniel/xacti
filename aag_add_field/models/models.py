@@ -64,6 +64,13 @@ class contract(models.Model):
 class company(models.Model):
     _name = 'res.company'
     _inherit = 'res.company'
+    x_stdtpk = fields.Integer(string='Standart TPK')
+    x_stdtpk_m1 = fields.Integer(string='TPK Male-1')
+    x_stdtpk_m2 = fields.Integer(string='TPK Male-2')
+    x_stdtpk_f1 = fields.Integer(string='TPK Female-1')
+    x_stdtpk_f2 = fields.Integer(string='TPK Female-2')
+    x_stdtpk_f3 = fields.Integer(string='TPK Female-3')
+    x_stdtpk_f4 = fields.Integer(string='TPK Female-4')
     x_meal = fields.Integer(string='Daily Meal Allowance')
     x_umsk = fields.Integer(string='UMSK')
     x_kwt_wage = fields.Integer(string='Contract Monthly Wage')

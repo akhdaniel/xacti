@@ -71,6 +71,13 @@
           <notebook position = 'inside'>
             <page string="Xacti Standard Rate">
               <group>
+                <field name="x_stdtpk"/>
+                <field name="x_stdtpk_m1"/>
+                <field name="x_stdtpk_m2"/>
+                <field name="x_stdtpk_f1"/>
+                <field name="x_stdtpk_f2"/>
+                <field name="x_stdtpk_f3"/>
+                <field name="x_stdtpk_f4"/>
                 <field name="x_meal"/>
                 <field name="x_umsk"/>
                 <field name="x_kwt_wage"/>
