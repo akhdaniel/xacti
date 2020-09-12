@@ -9,6 +9,8 @@ class employee(models.Model):
     x_idno = fields.Integer(string='Employee IDNO')
     x_empsts = fields.Char(string='Employee Status')
     x_allcd = fields.Char(string='Grade Code')
+    x_class = fields.Char(string='Class Code')
+    x_direct = fields.Boolean(string='Direct Employee')
     x_spmi = fields.Boolean(string='Union Membership')
     x_spmi_med = fields.Integer(string='Med. Donation Code')
     x_spmimed = fields.Integer(string='Med. Donation Code')

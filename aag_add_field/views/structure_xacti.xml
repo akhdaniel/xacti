@@ -38,7 +38,12 @@
             <field name="code">TJ_Trans</field>
             <field name="sequence">50</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_trans</field>
+            <field name="amount_python_compute"><![CDATA[
+transport = contract.x_trans 
+if employee.x_class == "WK": transport=contract.x_trans * 21
+result = transport
+]]>
+</field>
         </record>
         <record id="rule_tunj_lainlain" model="hr.salary.rule">
             <field name="name">x_Tunjangan Lain-Lain</field>
