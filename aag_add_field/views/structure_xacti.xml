@@ -1,10 +1,41 @@
 <odoo>
+
     <data>
+        <record id="category_iqnore" model="hr.salary.rule.category">
+            <field name="name">x_ignore</field>
+            <field name="code">IGN</field>
+        </record>    
+        <record id="rule_std_bpjskes" model="hr.salary.rule">
+            <field name="name">x_Standard BPJS-Kes</field>
+            <field name="category_id" ref="category_iqnore"/>
+            <field name="code">STD_BPKES</field>
+            <field name="sequence">4</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"><![CDATA[
+transport = contract.x_trans 
+if employee.x_class == "WK": transport=contract.x_trans * 21
+result = contract.wage + contract.x_tpk + transport
+]]>
+</field>
+        </record>  
+        <record id="rule_std_bpjstk" model="hr.salary.rule">
+            <field name="name">x_Standard BPJS-TK</field>
+            <field name="category_id" ref="category_iqnore"/>
+            <field name="code">STD_BPTK</field>
+            <field name="sequence">6</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"><![CDATA[
+transport = contract.x_trans 
+if employee.x_class == "WK": transport=contract.x_trans * 21
+result = contract.wage + contract.x_tpk + transport
+]]>
+</field>
+        </record>
         <record id="rule_tunj_gol" model="hr.salary.rule">
             <field name="name">x_Tunjangan Golongan</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
             <field name="code">TJ_GOL</field>
-            <field name="sequence">10</field>
+            <field name="sequence">20</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.x_occup</field>
         </record>
@@ -12,7 +43,7 @@
             <field name="name">x_Tunjangan Fungsional</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
             <field name="code">TJ_Func</field>
-            <field name="sequence">20</field>
+            <field name="sequence">25</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.x_functional</field>
         </record>
@@ -76,7 +107,8 @@ result = transport
             <field name="code">TSHIFT</field>
             <field name="sequence">80</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_shift</field>
+            <!-- <field name="amount_python_compute">result=contract.x_shift</field> -->
+            <field name="amount_python_compute">result=0</field>
         </record>
 
         <record id="rule_uang_makan" model="hr.salary.rule">
@@ -85,8 +117,9 @@ result = transport
             <field name="code">MEAL</field>
             <field name="sequence">80</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.company_id.x_meal</field>
-        </record>
+            <!-- <field name="amount_python_compute">result=contract.company_id.x_meal</field> -->
+            <field name="amount_python_compute">result=0</field>
+            </record>
         
         <record id="rule_tunj_jht_com" model="hr.salary.rule">
             <field name="name">x_Tunj BPJS-TK JHT 3,7%</field>
