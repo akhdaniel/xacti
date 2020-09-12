@@ -5,8 +5,8 @@ from odoo import models, fields, api
 class master_ptkp(models.Model):
     _name = 'aag_master_ptkp'
 
-    name = fields.Char(string="Code PTKP")
-    nominal = fields.Integer(string="nominal")
+    name = fields.Char(string="PTKP Code")
+    nominal = fields.Integer(string="PTKP Nominal")
 
 class master_pkp(models.Model):
     _name = 'aag_master_pkp'
@@ -20,11 +20,11 @@ class employee(models.Model):
     _name = 'hr.employee'
 
     _inherit = 'hr.employee'
-    ptkp_id = fields.Many2one(string='PTKP',comodel_name='aag_master_ptkp')
+    ptkp_id = fields.Many2one(string='PTKP Code',comodel_name='aag_master_ptkp')
 
 class company(models.Model):
     _name = 'res.company'
 
     _inherit = 'res.company'
-    pkp_ids = fields.One2many(string='PKP', comodel_name='aag_master_pkp', inverse_name='company_id')
+    pkp_ids = fields.One2many(string='Rate Penghasilan Kena Pajak', comodel_name='aag_master_pkp', inverse_name='company_id')
 
