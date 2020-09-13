@@ -69,7 +69,15 @@
       <field name="arch" type="xml">
 
           <notebook position = 'inside'>
-            <page string="Xacti Standard Rate">
+            <page string="Standard Rate">
+              <group>
+                <field name="x_meal"/>
+                <field name="x_umsk"/>
+                <field name="x_kwt_wage"/>
+                <field name="x_kwt_trans"/>
+              </group>
+            </page>
+            <page string="TPK Rate">
               <group>
                 <field name="x_stdtpk"/>
                 <field name="x_stdtpk_m1"/>
@@ -78,16 +86,23 @@
                 <field name="x_stdtpk_f2"/>
                 <field name="x_stdtpk_f3"/>
                 <field name="x_stdtpk_f4"/>
-                <field name="x_meal"/>
-                <field name="x_umsk"/>
-                <field name="x_kwt_wage"/>
-                <field name="x_kwt_trans"/>
+              </group>
+            </page>
+            <page string="Shift Rate">
+              <group>
                 <field name="x_shift_op"/>
                 <field name="x_shift_gl"/>
                 <field name="x_shift_sv"/>
                 <field name="x_shift_am"/>
                 <field name="x_shift_sm"/>
                 <field name="x_shift_dm"/>
+              </group>
+            </page>
+            <page string="BPJS Rate">
+              <group>
+                <field name="x_min_bpjskes"/>
+                <field name="x_max_bpjskes"/>
+                <field name="x_max_bpjspen"/>
               </group>
             </page>
           </notebook>
