@@ -7,12 +7,11 @@
       <field name="model">aag_koperasi.aag_koperasi</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="x_idno"/>
-          <field name="x_amount"/>
-          <field name="x_month"/>
-          <field name="x_year"/>
-          <field name="x_status"/>
-          <field name="x_remark"/>
+          <field name="name"/>
+          <field name="potongan"/>
+          <field name="status"/>
+          <field name="month"/>
+          <field name="year"/>
         </tree>
       </field>
     </record>

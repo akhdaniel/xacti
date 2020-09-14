@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aag_other_income_aag_other_income,aag_other_income.aag_other_income,model_aag_other_income_aag_other_income,base.group_user,1,1,1,1

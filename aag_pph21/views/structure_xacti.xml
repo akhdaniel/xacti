@@ -1,8 +1,8 @@
 <odoo>
     <data>
 
-        <record id="rule_tunjangan_pph21" model="hr.salary.rule">
-            <field name="name">x_Tunjangan PPh21</field>
+        <record id="rule_tunj_pph21" model="hr.salary.rule">
+            <field name="name">x_Tunj. PPh21</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
             <field name="code">TUNJ21</field>
             <field name="sequence">90</field>
@@ -11,7 +11,7 @@
         </record>
 
         <record id="rule_pot_pph21" model="hr.salary.rule">
-            <field name="name">x_Potongan PPh21</field>
+            <field name="name">x_Pot. PPh21</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">POT21</field>
             <field name="sequence">290</field>
@@ -26,7 +26,7 @@
             <field name="code">KTNS</field>
             <field name="rule_ids" eval="[
              (4,ref('rule_pot_pph21')),
-             (4,ref('rule_tunjangan_pph21'))
+             (4,ref('rule_tunj_pph21'))
              ]"/>
         </record>
 

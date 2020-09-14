@@ -23,7 +23,7 @@ class hr_payslip(models.Model):
         
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_KOP'))
+        cr.execute(sql, (self.contract_id.id, 'INPUT_MED_REIMBURSE'))
 
         sql = """select amount from aag_medical_reimburse_aag_medical_reimburse where idno=%s and month=%s and year=%s"""
         month = self.date_from.month 

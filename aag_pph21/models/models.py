@@ -27,4 +27,3 @@ class company(models.Model):
 
     _inherit = 'res.company'
     pkp_ids = fields.One2many(string='Rate Penghasilan Kena Pajak', comodel_name='aag_master_pkp', inverse_name='company_id')
-

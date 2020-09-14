@@ -8,7 +8,6 @@ _logger = logging.getLogger(__name__)
 
 class payslip(models.Model):
     _inherit = 'hr.payslip'
-
     ptkp = fields.Integer("PTKP", related="employee_id.ptkp_id.nominal")
     bruto = fields.Integer("Bruto", )
     bjab = fields.Integer("Biaya Jabatan", )
