@@ -14,10 +14,12 @@ class payslip(models.Model):
     netto = fields.Integer("Netto", )
     pkp = fields.Integer("PKP", )
     pph21_thn = fields.Integer("PPH21 Setahun", )
-    
+       
     tunj_pph = fields.Integer("Tunjangan PPH")
     pot_pph = fields.Integer("Pot PPH")
-
+    pph21med = fields.Integer("PPh21 Medical")
+    
+    
     def compute_sheet(self):
         res = super(payslip, self).compute_sheet() 
         _logger.info("--- compute sheet --- %s", self.line_ids )
@@ -37,12 +39,34 @@ class payslip(models.Model):
     def _calculate_pph(self):
         _logger.info("--- awal bruto = %s", self.bruto)
         _logger.info("--- new tunj_pph = %s", self.tunj_pph)
-        self.bruto = (self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph)*12
+    
+        INPUT_MED_REIMBURSE=0
+        for inp in self.input_line_ids: 
+            if inp.code=='INPUT_MED_REIMBURSE':
+                INPUT_MED_REIMBURSE=inp.amount
+        TJHTCOM=0
+        TACCTCOM=0
+        TDTHCOM=0
+        JHTEMP=0
+        PENEMP=0
+        for line in self.line_ids: 
+            if line.code=='TJHTCOM':
+                TJHTCOM=line.amount
+            if line.code=='TACCCOM':
+                TACCCOM=line.amount
+            if line.code=='TDTHCOM':
+                TDTHCOM=line.amount
+            if line.code=='JHTEMP':
+                JHTEMP=line.amount
+            if line.code=='PENEMP':
+                PENEMP=line.amount
+            
+        self.bruto = (self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + INPUT_MED_REIMBURSE + TJHTCOM + TACCCOM + TDTHCOM)*12
         _logger.info("--- new bruto = %s", self.bruto)
         self.env.cr.commit()
 
         self.bjab = min(0.05 * self.bruto , 6000000)	
-        self.netto = self.bruto-self.bjab-(self.contract_id.wage + self.contract_id.x_tpk + self.contract_id.x_occup + self.contract_id.x_trans + self.contract_id.x_family + self.contract_id.x_presence + self.contract_id.x_functional)*0.02*12			
+        self.netto = self.bruto-self.bjab-(JHTEMP + PENEMP) * 12			
         self.pkp = self.netto - self.ptkp if self.netto - self.ptkp >0 else 0
         self.pph21_thn = round(self.get_pph21_setahun(), 0)
         self.pot_pph = round(self.pph21_thn/12, 0)
