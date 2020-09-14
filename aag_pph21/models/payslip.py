@@ -24,6 +24,12 @@ class payslip(models.Model):
         res = super(payslip, self).compute_sheet() 
         _logger.info("--- compute sheet --- %s", self.line_ids )
 
+
+        # cari selisih med_reimburse
+        # cari selisih overtime
+        # cari selisih TRH
+        # cari selisih bonus 
+        
         # dengan med_reimburse
         self._calculate_pph(med_reimburse=True)
         i=0
