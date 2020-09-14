@@ -23,27 +23,45 @@ class payslip(models.Model):
     def compute_sheet(self):
         res = super(payslip, self).compute_sheet() 
         _logger.info("--- compute sheet --- %s", self.line_ids )
-        self._calculate_pph()
 
+        # dengan med_reimburse
+        self._calculate_pph(med_reimburse=True)
         i=0
-
         selisih = round(self.pot_pph - self.tunj_pph)
         while selisih != 0:
             _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
             self.tunj_pph = self.pot_pph
-            self._calculate_pph()
+            self._calculate_pph(med_reimburse=True)
             selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
+
+        self.pph21med = self.pot_pph          
+
+        # tanpa med_reimburse
+        self._calculate_pph(med_reimburse=False)
+        i=0
+        selisih = round(self.pot_pph - self.tunj_pph)
+        while selisih != 0:
+            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+            self.tunj_pph = self.pot_pph
+            self._calculate_pph(med_reimburse=False)
+            selisih = round(self.pot_pph - self.tunj_pph)
+            i+=1
+
+        self.pph21med = self.pph21med  - self.pot_pph
+
+
         return res 
 
-    def _calculate_pph(self):
+    def _calculate_pph(self, med_reimburse = False):
         _logger.info("--- awal bruto = %s", self.bruto)
         _logger.info("--- new tunj_pph = %s", self.tunj_pph)
     
         INPUT_MED_REIMBURSE=0
         for inp in self.input_line_ids: 
-            if inp.code=='INPUT_MED_REIMBURSE':
+            if inp.code=='INPUT_MED_REIMBURSE' and med_reimburse:
                 INPUT_MED_REIMBURSE=inp.amount
+
         TJHTCOM=0
         TACCTCOM=0
         TDTHCOM=0
