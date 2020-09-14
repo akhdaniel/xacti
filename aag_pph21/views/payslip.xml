@@ -21,6 +21,8 @@
 
                             <field name="tunj_pph" />
                             <field name="pot_pph" />
+                            <field name="pph21med" />
+                            <field name="pph21ovt" />
                         </group>                        
                     </page>
                 </notebook>

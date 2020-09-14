@@ -17,7 +17,9 @@ class payslip(models.Model):
        
     tunj_pph = fields.Integer("Tunjangan PPH")
     pot_pph = fields.Integer("Pot PPH")
+
     pph21med = fields.Integer("PPh21 Medical")
+    pph21ovt = fields.Integer("PPh21 Overtime")
     
     
     def compute_sheet(self):
@@ -25,48 +27,71 @@ class payslip(models.Model):
         _logger.info("--- compute sheet --- %s", self.line_ids )
 
 
+        # dengan med_reimburse, overtime
+        self._calculate_pph(med_reimburse=True, overtime=True)
+        i=0
+        selisih = round(self.pot_pph - self.tunj_pph)
+        while selisih != 0:
+            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+            self.tunj_pph = self.pot_pph
+            self._calculate_pph(med_reimburse=True, overtime=True)
+            selisih = round(self.pot_pph - self.tunj_pph)
+            i+=1
+
+        pph_all = self.pot_pph 
+
         # cari selisih med_reimburse
+        self.cari_selisih('pph21med', pph_all)
+
         # cari selisih overtime
-        # cari selisih TRH
+        self.cari_selisih('pph21ovt', pph_all)
+
+        # cari selisih THR
+
         # cari selisih bonus 
         
-        # dengan med_reimburse
-        self._calculate_pph(med_reimburse=True)
-        i=0
-        selisih = round(self.pot_pph - self.tunj_pph)
-        while selisih != 0:
-            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
-            self.tunj_pph = self.pot_pph
-            self._calculate_pph(med_reimburse=True)
-            selisih = round(self.pot_pph - self.tunj_pph)
-            i+=1
 
-        self.pph21med = self.pot_pph          
 
-        # tanpa med_reimburse
-        self._calculate_pph(med_reimburse=False)
-        i=0
-        selisih = round(self.pot_pph - self.tunj_pph)
-        while selisih != 0:
-            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
-            self.tunj_pph = self.pot_pph
-            self._calculate_pph(med_reimburse=False)
-            selisih = round(self.pot_pph - self.tunj_pph)
-            i+=1
-
-        self.pph21med = self.pph21med  - self.pot_pph
-
+        self.pot_pph = pph_all
+        self.tunj_pph = pph_all
 
         return res 
 
-    def _calculate_pph(self, med_reimburse = False):
+    def cari_selisih(self, komponen, pph_all):
+
+        if komponen == 'pph21med':
+            med_reimburse = False
+            overtime = True
+        elif komponen == 'pph21ovt':
+            med_reimburse = True
+            overtime = False
+
+        # tanpa med_reimburse, overtime
+        self._calculate_pph(med_reimburse=med_reimburse, overtime=overtime)
+        i=0
+        selisih = round(self.pot_pph - self.tunj_pph)
+        while selisih != 0:
+            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+            self.tunj_pph = self.pot_pph
+            self._calculate_pph(med_reimburse=med_reimburse, overtime=overtime)
+            selisih = round(self.pot_pph - self.tunj_pph)
+            i+=1
+        # self.pph21med = self.pph21med  - self.pot_pph
+        setattr(self, komponen, pph_all - self.pot_pph)
+
+    def _calculate_pph(self, med_reimburse=True, overtime=True ):
         _logger.info("--- awal bruto = %s", self.bruto)
         _logger.info("--- new tunj_pph = %s", self.tunj_pph)
     
         INPUT_MED_REIMBURSE=0
+        INPUT_OVERTIME=0
+
         for inp in self.input_line_ids: 
             if inp.code=='INPUT_MED_REIMBURSE' and med_reimburse:
                 INPUT_MED_REIMBURSE=inp.amount
+
+            if inp.code=='INPUT_OVERTIME' and overtime:
+                INPUT_OVERTIME=inp.amount
 
         TJHTCOM=0
         TACCTCOM=0
@@ -85,7 +110,7 @@ class payslip(models.Model):
             if line.code=='PENEMP':
                 PENEMP=line.amount
             
-        self.bruto = (self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + INPUT_MED_REIMBURSE + TJHTCOM + TACCCOM + TDTHCOM)*12
+        self.bruto = (self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + INPUT_MED_REIMBURSE + INPUT_OVERTIME + TJHTCOM + TACCCOM + TDTHCOM)*12
         _logger.info("--- new bruto = %s", self.bruto)
         self.env.cr.commit()
 
