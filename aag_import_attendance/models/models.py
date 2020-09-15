@@ -41,6 +41,7 @@ class employee(models.Model):
             sql += str((employee_id, CHECKTIME_IN.strftime("%Y-%m-%d %H:%I:%S"), CHECKTIME_OUT.strftime("%Y-%m-%d %H:%I:%S")))
 
         _logger.info("sql ==== %s", sql)
+        self.env.cr.execute(sql)
 
     def get_employee_id(self, IDNO):
         sql = "select id from hr_employee where x_idno=%s" % IDNO
