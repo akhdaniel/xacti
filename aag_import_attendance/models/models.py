@@ -48,6 +48,6 @@ class employee(models.Model):
         cr.execute(sql)
         result = cr.fetchone()
         if not result:
-            raise UserError('IDNO tidak ditemukan')
+            raise UserError('IDNO tidak ditemukan: %s' % IDNO)
         
         return result[0]
