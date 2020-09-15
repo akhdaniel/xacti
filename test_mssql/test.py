@@ -18,13 +18,13 @@ records = cur.fetchall()
 
 #---- process results
 sql = """insert into hr_attendance (employee_id, check_in, check_out) VALUES """
-values= []
+
 for rec in records:
-    IDNO = rec[0]
+    IDNO = int(rec[0])
     CHECKTIME_IN=rec[1]
     CHECKTIME_OUT=rec[2]
-    values.append (str(("(select id from hr_employee where x_idno=%s)" % IDNO, CHECKTIME_IN.strftime("%Y-%m-%d %H:%I:%S"), CHECKTIME_OUT.strftime("%Y-%m-%d %H:%I:%S"))) )
+    employee_id = self.get_employee_id(IDNO)
+    sql += str((employee_id, CHECKTIME_IN.strftime("%Y-%m-%d %H:%I:%S"), CHECKTIME_OUT.strftime("%Y-%m-%d %H:%I:%S")))
 
-sql = sql + ",".join(values)
 
 print(sql)
