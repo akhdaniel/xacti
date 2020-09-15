@@ -44,7 +44,7 @@ for rec in records:
     IDNO = rec[0]
     CHECKTIME_IN=rec[1]
     CHECKTIME_OUT=rec[2]
-    values.append( (IDNO, CHECKTIME_IN, CHECKTIME_OUT) )
+    values.append (str((IDNO, CHECKTIME_IN, CHECKTIME_OUT)) )
 
 sql = sql + ",".join(values)
 
