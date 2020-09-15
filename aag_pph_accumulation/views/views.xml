@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_pph_accumulation.list">
+      <field name="name">aag_pph_accumulation list</field>
+      <field name="model">aag_pph_accumulation.aag_pph_accumulation</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="x_accgrs"/>
+          <field name="x_accovt"/>
+          <field name="x_accmed"/>
+          <field name="x_accthr"/>
+          <field name="x_accbon"/>
+          <field name="x_accjht2"/>
+          <field name="x_accpen1"/>
+          <field name="x_pph_accgrs"/>
+          <field name="x_pph_accovt"/>
+          <field name="x_pph_accmed"/>
+          <field name="x_pph_accthr"/>
+          <field name="x_pph_accbon"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_pph_accumulation.action_window">
+      <field name="name">aag_pph_accumulation window</field>
+      <field name="res_model">aag_pph_accumulation.aag_pph_accumulation</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_pph_accumulation.action_server">
+      <field name="name">aag_pph_accumulation server</field>
+      <field name="model_id" ref="model_aag_pph_accumulation_aag_pph_accumulation"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_pph_accumulation" id="aag_pph_accumulation.menu_root"/>
+-->
+    <!-- menu categories -->
+
+    <menuitem name="PPh21 Accumulation" id="aag_pph_accumulation.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="PPh21 Accumulation" id="aag_pph_accumulation.menu_1_list" parent="aag_pph_accumulation.menu_1"
+              action="aag_pph_accumulation.action_window"/>
+    <!-- <menuitem name="Server to list" id="aag_pph_accumulation" parent="aag_pph_accumulation.menu_2"
+              action="aag_pph_accumulation.action_server"/> -->
+
+  </data>
+</odoo>

@@ -109,8 +109,11 @@ class payslip(models.Model):
                 JHTEMP=line.amount
             if line.code=='PENEMP':
                 PENEMP=line.amount
-            
-        self.bruto = (self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + INPUT_MED_REIMBURSE + INPUT_OVERTIME + TJHTCOM + TACCCOM + TDTHCOM)*12
+        
+        curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM) 
+        curr_irr_income = INPUT_OVERTIME + INPUT_MED_REIMBURSE + INPUT_THR + INPUT_BONUS 
+
+        self.bruto = (curr_reg_income * 12) + curr_irr_income 
         _logger.info("--- new bruto = %s", self.bruto)
         self.env.cr.commit()
 
