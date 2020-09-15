@@ -2,9 +2,9 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="aag_other_income.list">
-      <field name="name">aag_other_income list</field>
-      <field name="model">aag_other_income.aag_other_income</field>
+    <record model="ir.ui.view" id="aag_other_deduction.list">
+      <field name="name">aag_other_deduction list</field>
+      <field name="model">aag_other_deduction.aag_other_deduction</field>
       <field name="arch" type="xml">
         <tree>
           <field name="idno"/>
@@ -21,18 +21,18 @@
 
     <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="aag_other_income.action_window">
-      <field name="name">aag_other_income window</field>
-      <field name="res_model">aag_other_income.aag_other_income</field>
+    <record model="ir.actions.act_window" id="aag_other_deduction.action_window">
+      <field name="name">aag_other_deduction window</field>
+      <field name="res_model">aag_other_deduction.aag_other_deduction</field>
       <field name="view_mode">tree,form</field>
     </record>
 
 
     <!-- server action to the one above -->
 <!--
-    <record model="ir.actions.server" id="aag_other_income.action_server">
-      <field name="name">aag_other_income server</field>
-      <field name="model_id" ref="model_aag_other_income_aag_other_income"/>
+    <record model="ir.actions.server" id="aag_other_deduction.action_server">
+      <field name="name">aag_other_deduction server</field>
+      <field name="model_id" ref="model_aag_other_deduction_aag_other_deduction"/>
       <field name="state">code</field>
       <field name="code">
         action = {
@@ -46,18 +46,18 @@
 
     <!-- Top menu item -->
 <!--
-    <menuitem name="aag_other_income" id="aag_other_income.menu_root"/>
+    <menuitem name="aag_other_deduction" id="aag_other_deduction.menu_root"/>
 -->
     <!-- menu categories -->
 
-    <menuitem name="Other Income" id="aag_other_income.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    <menuitem name="Deduction" id="aag_other_deduction.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
 
     <!-- actions -->
 
-    <menuitem name="Other Income" id="aag_other_income.menu_1_list" parent="aag_other_income.menu_1"
-              action="aag_other_income.action_window"/>
-    <!-- <menuitem name="Server to list" id="aag_other_income" parent="aag_other_income.menu_2"
-              action="aag_other_income.action_server"/> -->
+    <menuitem name="Deduction" id="aag_other_deduction.menu_1_list" parent="aag_other_deduction.menu_1"
+              action="aag_other_deduction.action_window"/>
+    <!-- <menuitem name="Server to list" id="aag_other_deduction" parent="aag_other_deduction.menu_2"
+              action="aag_other_deduction.action_server"/> -->
 
   </data>
 </odoo>

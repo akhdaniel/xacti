@@ -48,7 +48,7 @@
 -->
     <!-- menu categories -->
 
-    <menuitem name="Medical Reimburse" id="aag_medical_reimburse.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    <menuitem name="Medical" id="aag_medical_reimburse.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
 
     <!-- actions -->
 

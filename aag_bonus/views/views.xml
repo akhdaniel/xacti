@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_bonus.list">
+      <field name="name">aag_bonus list</field>
+      <field name="model">aag_bonus.aag_bonus</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="idno"/>
+          <field name="amount"/>
+          <field name="std_bonus"/>
+          <field name="percentage"/>
+          <field name="remark"/>
+          <field name="month"/>
+          <field name="year"/>
+          <field name="status"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_bonus.action_window">
+      <field name="name">aag_bonus window</field>
+      <field name="res_model">aag_bonus.aag_bonus</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_bonus.action_server">
+      <field name="name">aag_bonus server</field>
+      <field name="model_id" ref="model_aag_bonus_aag_bonus"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_bonus" id="aag_bonus.menu_root"/>
+-->
+    <!-- menu categories -->
+
+    <menuitem name="BONUS" id="aag_bonus.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="BONUS" id="aag_bonus.menu_1_list" parent="aag_bonus.menu_1"
+              action="aag_bonus.action_window"/>
+    <!-- <menuitem name="Server to list" id="aag_bonus" parent="aag_bonus.menu_2"
+              action="aag_bonus.action_server"/> -->
+
+  </data>
+</odoo>

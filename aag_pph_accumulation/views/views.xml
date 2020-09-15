@@ -55,7 +55,7 @@
 -->
     <!-- menu categories -->
 
-    <menuitem name="PPh21 Accumulation" id="aag_pph_accumulation.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    <menuitem name="PPh21 Acc." id="aag_pph_accumulation.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
 
     <!-- actions -->
 
