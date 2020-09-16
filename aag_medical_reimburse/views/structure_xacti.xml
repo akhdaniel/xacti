@@ -1,13 +1,13 @@
 <odoo>
     <data>
 
-        <record id="rule_bonus" model="hr.salary.rule">
-            <field name="name">x_BONUS</field>
+        <record id="rule_medical_reimbursement" model="hr.salary.rule">
+            <field name="name">x_Medical Reimbursement</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">BONUS</field>
-            <field name="sequence">96</field>
+            <field name="code">MEDICAL</field>
+            <field name="sequence">89</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=inputs.INPUT_BONUS.amount</field>
+            <field name="amount_python_compute">result=inputs.INPUT_MEDICAL.amount</field>
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
@@ -15,7 +15,7 @@
             <field name="parent_id" ref="hr_payroll_community.structure_base"/>
             <field name="code">KTNS</field>
             <field name="rule_ids" eval="[
-             (4,ref('rule_bonus'))
+             (4,ref('rule_medical_reimbursement'))
              ]"/>
         </record>
 

@@ -15,7 +15,7 @@
             <field name="parent_id" ref="hr_payroll_community.structure_base"/>
             <field name="code">KTNS</field>
             <field name="rule_ids" eval="[
-             (4,ref('rule_thr))
+             (4,ref('rule_thr'))
              ]"/>
         </record>
 
