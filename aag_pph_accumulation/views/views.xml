@@ -7,6 +7,7 @@
       <field name="model">aag_pph_accumulation.aag_pph_accumulation</field>
       <field name="arch" type="xml">
         <tree>
+          <field name="idno"/>
           <field name="x_accgrs"/>
           <field name="x_accovt"/>
           <field name="x_accmed"/>

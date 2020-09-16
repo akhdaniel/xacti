@@ -142,10 +142,23 @@ class payslip(models.Model):
             if line.code=='PENEMP':
                 PENEMP=line.amount
         
+
+        akumulasi = self.cari_akumulasi()
+
         curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM
+
+        total_reg_income_accum = curr_reg_income + (akumulasi['x_accgrs'] if akumulasi else 0)
+
         curr_irr_income = INPUT_MEDICAL + INPUT_THR + INPUT_BONUS
+
+        total_irr_income_accum =  curr_irr_income + (akumulasi['x_accovt']+akumulasi['x_accmed']+akumulasi['x_accthr']+akumulasi['x_accbon'] if akumulasi else 0)
+
         
-        self.bruto = (curr_reg_income * 12) + curr_irr_income 
+        # self.bruto = (curr_reg_income * 12) + curr_irr_income 
+        # ganti kalkulasi menjadi: 
+        bulan_berjalan = self.date_to.month 
+        self.bruto = ( total_reg_income_accum * 12 )/bulan_berjalan + total_irr_income_accum
+
         _logger.info("--- new bruto = %s", self.bruto)
         self.env.cr.commit()
 
@@ -180,3 +193,9 @@ class payslip(models.Model):
             pph21 = self.pkp*range.rate/100        
         return pph21
 
+    def cari_akumulasi(self):
+        cr = self.env.cr
+        sql = "select * from aag_pph_accumulation_aag_pph_accumulation where idno=%s"
+        cr.execute(sql, (self.employee_id.x_idno,))
+        akumulasi = cr.dictfetchone()
+        return akumulasi
