@@ -166,7 +166,8 @@ class payslip(models.Model):
         self.netto = self.bruto-self.bjab-(JHTEMP + PENEMP) * 12			
         self.pkp = self.netto - self.ptkp if self.netto - self.ptkp >0 else 0
         self.pph21_thn = round(self.get_pph21_setahun(), 0)
-        self.pot_pph = round(self.pph21_thn/12, 0)
+        pph_sdh_dibayar = akumulasi['x_pph_accgrs']+akumulasi['x_pph_accovt']+akumulasi['x_pph_accmed']+akumulasi['x_pph_accthr']+akumulasi['x_pph_accbon'] if akumulasi else 0
+        self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan - pph_sdh_dibayar, 0)
 
     def get_pph21_setahun(self):
         sisa_pkp = self.pkp 
