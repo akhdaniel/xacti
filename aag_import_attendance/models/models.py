@@ -33,13 +33,15 @@ class employee(models.Model):
         #---- process results
         sql = """insert into hr_attendance (employee_id, check_in, check_out) VALUES """
 
+        values = []
         for rec in records:
             IDNO = int(rec[0])
             CHECKTIME_IN=rec[1]
             CHECKTIME_OUT=rec[2]
             employee_id = self.get_employee_id(IDNO)
-            sql += str((employee_id, CHECKTIME_IN.strftime("%Y-%m-%d %H:%I:%S"), CHECKTIME_OUT.strftime("%Y-%m-%d %H:%I:%S")))
+            values.append(str((employee_id, CHECKTIME_IN.strftime("%Y-%m-%d %H:%I:%S"), CHECKTIME_OUT.strftime("%Y-%m-%d %H:%I:%S"))))
 
+        sql += ",".join(values)
         _logger.info("sql ==== %s", sql)
         self.env.cr.execute(sql)
 
