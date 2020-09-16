@@ -22,26 +22,28 @@ class payslip(models.Model):
     pph21ovt = fields.Integer("PPh21 Overtime")
     pph21thr = fields.Integer("PPh21 THR")
     pph21bon = fields.Integer("PPh21 Bonus")
+    pph21irr = fields.Integer("PPh21 Irregular")
+    pph21reg = fields.Integer("PPh21 Regular")
     
     def compute_sheet(self):
         res = super(payslip, self).compute_sheet() 
         _logger.info("--- compute sheet --- %s", self.line_ids )
 
 
-        # dengan med_reimburse, overtime
-        self._calculate_pph(med_reimburse=True, overtime=True, thr=True, bonus=True)
+        # dengan medical, overtime
+        self._calculate_pph(medical=True, overtime=True, thr=True, bonus=True)
         i=0
         selisih = round(self.pot_pph - self.tunj_pph)
         while selisih != 0:
             _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
             self.tunj_pph = self.pot_pph
-            self._calculate_pph(med_reimburse=True, overtime=True, thr=True, bonus=True) 
+            self._calculate_pph(medical=True, overtime=True, thr=True, bonus=True) 
             selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
 
         pph_all = self.pot_pph 
 
-        # cari selisih med_reimburse
+        # cari selisih medical
         self.cari_selisih('pph21med', pph_all)
 
         # cari selisih overtime
@@ -55,63 +57,63 @@ class payslip(models.Model):
         
         self.pot_pph = pph_all
         self.tunj_pph = pph_all
-
+        self.pph21irr = self.pph21ovt + self.pph21med + self.pph21thr + self.pph21bon
+        self.pph21reg = pph_all - self.pph21irr
+                
         return res 
 
     def cari_selisih(self, komponen, pph_all):
 
         if komponen == 'pph21med':
-            med_reimburse = False
+            medical = False
             overtime = True
             thr = True
             bonus = True
         elif komponen == 'pph21ovt':
-            med_reimburse = True
+            medical = True
             overtime = False
             thr = True
             bonus = True
         elif komponen == 'pph21thr':
-            med_reimburse = True
+            medical = True
             overtime = True
             thr = False
             bonus = True
         elif komponen == 'pph21bon':
-            med_reimburse = True
+            medical = True
             overtime = True
             thr = True
             bonus = False
 
 
-        # tanpa med_reimburse, overtime
+        # tanpa medical, overtime
         
-        self._calculate_pph(med_reimburse=med_reimburse, overtime=overtime, thr=thr, bonus=bonus)
+        self._calculate_pph(medical=medical, overtime=overtime, thr=thr, bonus=bonus)
         
         i=0
         selisih = round(self.pot_pph - self.tunj_pph)
         while selisih != 0:
             _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
             self.tunj_pph = self.pot_pph
-            self._calculate_pph(med_reimburse=med_reimburse, overtime=overtime, thr=thr, bonus=bonus)
+            self._calculate_pph(medical=medical, overtime=overtime, thr=thr, bonus=bonus)
             selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
         # self.pph21med = self.pph21med  - self.pot_pph
         setattr(self, komponen, pph_all - self.pot_pph)
 
 
-
-
-    def _calculate_pph(self, med_reimburse=True, overtime=True, thr=True, bonus=True ):
+    def _calculate_pph(self, medical=True, overtime=True, thr=True, bonus=True ):
         _logger.info("--- awal bruto = %s", self.bruto)
         _logger.info("--- new tunj_pph = %s", self.tunj_pph)
     
-        INPUT_MED_REIMBURSE=0
+        INPUT_MEDICAL=0
         INPUT_OVERTIME=0
         INPUT_THR=0
         INPUT_BONUS=0
 
         for inp in self.input_line_ids: 
-            if inp.code=='INPUT_MED_REIMBURSE' and med_reimburse:
-                INPUT_MED_REIMBURSE=inp.amount
+            if inp.code=='INPUT_MEDICAL' and medical:
+                INPUT_MEDICAL=inp.amount
 
             if inp.code=='INPUT_OVERTIME' and overtime:
                 INPUT_OVERTIME=inp.amount
@@ -120,13 +122,14 @@ class payslip(models.Model):
                 INPUT_THR=inp.amount
 
             if inp.code=='INPUT_BONUS' and bonus:
-                INPUT_THR=inp.amount
+                INPUT_BONUS=inp.amount
 
         TJHTCOM=0
         TACCTCOM=0
         TDTHCOM=0
         JHTEMP=0
         PENEMP=0
+
         for line in self.line_ids: 
             if line.code=='TJHTCOM':
                 TJHTCOM=line.amount
@@ -140,7 +143,7 @@ class payslip(models.Model):
                 PENEMP=line.amount
         
         curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM
-        curr_irr_income = INPUT_OVERTIME + INPUT_MED_REIMBURSE + INPUT_THR + INPUT_BONUS 
+        curr_irr_income = INPUT_MEDICAL + INPUT_THR + INPUT_BONUS
         
         self.bruto = (curr_reg_income * 12) + curr_irr_income 
         _logger.info("--- new bruto = %s", self.bruto)

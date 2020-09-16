@@ -23,6 +23,11 @@
                             <field name="pot_pph" />
                             <field name="pph21med" />
                             <field name="pph21ovt" />
+                            <field name="pph21thr" />
+                            <field name="pph21bon" />
+                            <field name="pph21irr" />
+                            <field name="pph21reg" />
+
                         </group>                        
                     </page>
                 </notebook>
