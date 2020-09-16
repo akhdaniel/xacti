@@ -38,8 +38,10 @@ class employee(models.Model):
             IDNO = int(rec[0])
             CHECKTIME_IN=rec[1]
             CHECKTIME_OUT=rec[2]
-            employee_id = self.get_employee_id(IDNO)
-            values.append(str((employee_id, CHECKTIME_IN.strftime("%Y-%m-%d %H:%I:%S"), CHECKTIME_OUT.strftime("%Y-%m-%d %H:%I:%S"))))
+            result = self.get_employee_id(IDNO)
+            if result:
+                employee_id = result[0]
+                values.append(str((employee_id, CHECKTIME_IN.strftime("%Y-%m-%d %H:%I:%S"), CHECKTIME_OUT.strftime("%Y-%m-%d %H:%I:%S"))))
 
         sql += ",".join(values)
         _logger.info("sql ==== %s", sql)
@@ -50,7 +52,7 @@ class employee(models.Model):
         cr = self.env.cr 
         cr.execute(sql)
         result = cr.fetchone()
-        if not result:
-            raise UserError('IDNO tidak ditemukan: %s' % IDNO)
+        # if not result:
+        #     raise UserError('IDNO tidak ditemukan: %s' % IDNO)
         
-        return result[0]
+        return result
