@@ -101,6 +101,6 @@ class payslip(models.Model):
         cr = self.env.cr
         for rec in self:
             sql = "select total from hr_payslip_line where slip_id=%s and code='NET'"
-            cr.execute(sql, (self.id,))
+            cr.execute(sql, (rec.id,))
             result = cr.fetchone()
             rec.amount_net = result[0] if result else 0
