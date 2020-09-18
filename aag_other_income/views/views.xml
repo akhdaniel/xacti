@@ -1,8 +1,8 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-
     <record model="ir.ui.view" id="aag_other_income.list">
+
       <field name="name">aag_other_income list</field>
       <field name="model">aag_other_income.aag_other_income</field>
       <field name="arch" type="xml">
@@ -49,14 +49,12 @@
     <menuitem name="aag_other_income" id="aag_other_income.menu_root"/>
 -->
     <!-- menu categories -->
-
     <menuitem name="Other Income" id="aag_other_income.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
-
     <!-- actions -->
-
     <menuitem name="Other Income" id="aag_other_income.menu_1_list" parent="aag_other_income.menu_1"
               action="aag_other_income.action_window"/>
-    <!-- <menuitem name="Server to list" id="aag_other_income" parent="aag_other_income.menu_2"
+    
+<!-- <menuitem name="Server to list" id="aag_other_income" parent="aag_other_income.menu_2"
               action="aag_other_income.action_server"/> -->
 
   </data>

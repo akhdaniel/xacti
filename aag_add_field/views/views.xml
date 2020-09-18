@@ -13,7 +13,7 @@
           </field>
       </field>
     </record>
-
+  
     <record model="ir.ui.view" id="payslip_net_tree">
       <field name="name">payslip_net_tree</field>
       <field name="model">hr.payslip</field>
@@ -24,8 +24,7 @@
           </field>
       </field>
     </record>
-
-
+  
     <record model="ir.ui.view" id="employee_IDNO">
       <field name="name">employee_IDNO</field>
       <field name="model">hr.employee</field>

@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+
+        <record id="rule_pot_bpjs_kes_dtk" model="hr.salary.rule">
+            <field name="name">x_Pot. BPJS Kes. DTK</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">BPJSKES_DTK</field>
+            <field name="sequence">115</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_BPJSKES_DTK.amount</field>
+        </record>
+
+        <record id="rule_tunj_bpjs_kes_dtp" model="hr.salary.rule">
+            <field name="name">x_Tunj. BPJS Kes. DTP</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="code">TBPJSKES_DTP</field>
+            <field name="sequence">82</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_BPJSKES_DTP.amount</field>
+        </record>
+
+        <record id="rule_pot_bpjs_kes_dtp" model="hr.salary.rule">
+            <field name="name">x_Pot. BPJS Kes. DTP</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">BPJSKES_DTP</field>
+            <field name="sequence">117</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_BPJSKES_DTP.amount</field>
+        </record>
+
+        <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
+            <field name="name">x_Karyawan Tetap NS</field>
+            <field name="parent_id" ref="hr_payroll_community.structure_base"/>
+            <field name="code">KTNS</field>
+            <field name="rule_ids" eval="[
+             (4,ref('rule_pot_bpjs_kes_dtk')),
+             (4,ref('rule_tunj_bpjs_kes_dtp')),
+             (4,ref('rule_pot_bpjs_kes_dtp'))
+             ]"/>
+        </record>
+
+    </data>
+</odoo>

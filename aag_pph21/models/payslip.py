@@ -125,10 +125,11 @@ class payslip(models.Model):
                 INPUT_BONUS=inp.amount
 
         TJHTCOM=0
-        TACCTCOM=0
+        TACCCOM=0
         TDTHCOM=0
         JHTEMP=0
         PENEMP=0
+        TBPJSKES_DTP=0
 
         for line in self.line_ids: 
             if line.code=='TJHTCOM':
@@ -141,11 +142,12 @@ class payslip(models.Model):
                 JHTEMP=line.amount
             if line.code=='PENEMP':
                 PENEMP=line.amount
+            if line.code=='BPJSKES':
+                TBPJSKES_DTP=line.amount
         
-
         akumulasi = self.cari_akumulasi()
 
-        curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM
+        curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM + TBPJSKES_DTP
 
         total_reg_income_accum = curr_reg_income + (akumulasi['x_accgrs'] if akumulasi else 0)
 
@@ -153,6 +155,9 @@ class payslip(models.Model):
 
         total_irr_income_accum =  curr_irr_income + (akumulasi['x_accovt']+akumulasi['x_accmed']+akumulasi['x_accthr']+akumulasi['x_accbon'] if akumulasi else 0)
 
+        curr_empl_pension = JHTEMP + PENEMP
+
+        total_empl_pension_accum =  curr_empl_pension + (akumulasi['x_accjht2']+akumulasi['x_accpen1'] if akumulasi else 0)
         
         # self.bruto = (curr_reg_income * 12) + curr_irr_income 
         # ganti kalkulasi menjadi: 
@@ -163,7 +168,7 @@ class payslip(models.Model):
         self.env.cr.commit()
 
         self.bjab = min(0.05 * self.bruto , 6000000)	
-        self.netto = self.bruto-self.bjab-(JHTEMP + PENEMP) * 12			
+        self.netto = self.bruto-self.bjab-((total_empl_pension_accum * 12)/bulan_berjalan) 			
         self.pkp = self.netto - self.ptkp if self.netto - self.ptkp >0 else 0
         self.pph21_thn = round(self.get_pph21_setahun(), 0)
         pph_sdh_dibayar = akumulasi['x_pph_accgrs']+akumulasi['x_pph_accovt']+akumulasi['x_pph_accmed']+akumulasi['x_pph_accthr']+akumulasi['x_pph_accbon'] if akumulasi else 0

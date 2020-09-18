@@ -103,7 +103,7 @@ result = transport
             <field name="amount_python_compute"><![CDATA[
 transport = contract.x_trans 
 if employee.x_class == "WK": transport=contract.x_trans * 21
-result = contract.wage + contract.x_tpk + contract.x_occup + transport + contract.x_family + contract.x_presence + contract.x_perform
+result = contract.wage + contract.x_tpk + contract.x_occup + transport + contract.x_family + contract.x_presence
 ]]>
 </field>
         </record>

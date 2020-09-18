@@ -1,0 +1,63 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_absensi.list">
+      <field name="name">aag_absensi list</field>
+      <field name="model">aag_absensi.aag_absensi</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="idno"/>
+          <field name="date"/>
+          <field name="month"/>
+          <field name="year"/>
+          <field name="code"/>
+          <field name="remark"/>
+          <field name="status"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_absensi.action_window">
+      <field name="name">aag_absensi window</field>
+      <field name="res_model">aag_absensi.aag_absensi</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_absensi.action_server">
+      <field name="name">aag_absensi server</field>
+      <field name="model_id" ref="model_aag_absensi_aag_absensi"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_absensi" id="aag_absensi.menu_root"/>
+-->
+    <!-- menu categories -->
+
+    <menuitem name="Absenteeism" id="aag_absensi.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Absenteeism" id="aag_absensi.menu_1_list" parent="aag_absensi.menu_1"
+              action="aag_absensi.action_window"/>
+    <!-- <menuitem name="Server to list" id="aag_absensi" parent="aag_absensi.menu_2"
+              action="aag_absensi.action_server"/> -->
+
+  </data>
+</odoo>

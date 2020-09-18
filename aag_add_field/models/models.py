@@ -85,22 +85,17 @@ class company(models.Model):
     x_max_bpjskes = fields.Integer(string='Max. BPJS-Kes.')
     x_max_bpjspen = fields.Integer(string='Max. BPJS-Pensiun')
 
-
 class payslip(models.Model):
     _name = 'hr.payslip'
     _inherit = 'hr.payslip'
 
     amount_net = fields.Integer("Net salary", compute="_get_amount_net")
 
-
     def _get_amount_net(self):
-        # for rec in self:
-        #     for line in rec.line_ids:
-        #         if line.code == 'NET':
-        #             rec.amount_net = line.amount 
-        cr = self.env.cr
+        
         for rec in self:
+            cr = self.env.cr
             sql = "select total from hr_payslip_line where slip_id=%s and code='NET'"
-            cr.execute(sql, (self.id,))
+            cr.execute(sql, (rec.id,))
             result = cr.fetchone()
             rec.amount_net = result[0] if result else 0
