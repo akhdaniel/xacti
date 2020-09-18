@@ -145,7 +145,7 @@ class payslip(models.Model):
             if line.code=='BPJSKES':
                 TBPJSKES_DTP=line.amount
         
-        akumulasi = self.cari_akumulasi()
+        akumulasi = self.cari_akumulasi(medical=medical, overtime=overtime, thr=thr, bonus=bonus )
 
         curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM + TBPJSKES_DTP
 
@@ -199,9 +199,22 @@ class payslip(models.Model):
             pph21 = self.pkp*range.rate/100        
         return pph21
 
-    def cari_akumulasi(self):
+    def cari_akumulasi(self, medical=True, overtime=True, thr=True, bonus=True):
         cr = self.env.cr
         sql = "select * from aag_pph_accumulation_aag_pph_accumulation where idno=%s"
         cr.execute(sql, (self.employee_id.x_idno,))
         akumulasi = cr.dictfetchone()
+
+        if not medical:
+            akumulasi['x_accmed'] = 0
+
+        if not overtime:
+            akumulasi['x_accovt'] = 0
+
+        if not thr:
+            akumulasi['x_accthr'] = 0
+
+        if not bonus:
+            akumulasi['x_accbon'] = 0
+
         return akumulasi
