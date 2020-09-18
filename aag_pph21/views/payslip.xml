@@ -18,7 +18,7 @@
                             <field name="netto" />
                             <field name="pkp" />
                             <field name="pph21_thn" />
-
+                            <field name="pph21_paid" />
                             <field name="tunj_pph" />
                             <field name="pot_pph" />
                             <field name="pph21med" />

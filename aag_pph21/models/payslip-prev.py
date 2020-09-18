@@ -42,32 +42,24 @@ class payslip(models.Model):
             selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
 
-
         pph_all = self.pot_pph 
 
         # cari selisih medical
         self.cari_selisih('pph21med', pph_all)
-    
+
         # cari selisih overtime
         self.cari_selisih('pph21ovt', pph_all)
-    
+
         # cari selisih THR
         self.cari_selisih('pph21thr', pph_all)
-    
+
         # cari selisih bonus 
         self.cari_selisih('pph21bon', pph_all)
-    
-        irr_acc = self.find_irr_acc()        
-        self.pph21ovt = self.pph21ovt - (irr_acc['x_pph_accovt'] if irr_acc else 0)
-        self.pph21med = self.pph21med - (irr_acc['x_pph_accmed'] if irr_acc else 0)
-        self.pph21thr = self.pph21thr - (irr_acc['x_pph_accthr'] if irr_acc else 0)
-        self.pph21bon = self.pph21bon - (irr_acc['x_pph_accbon'] if irr_acc else 0)
-
-        self.pot_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
-        self.tunj_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
-
+        
+        self.pot_pph = pph_all
+        self.tunj_pph = pph_all
         self.pph21irr = self.pph21ovt + self.pph21med + self.pph21thr + self.pph21bon
-        self.pph21reg = self.pot_pph - self.pph21irr
+        self.pph21reg = pph_all - self.pph21irr
                 
         return res 
 
@@ -177,18 +169,13 @@ class payslip(models.Model):
         self.env.cr.commit()
 
         self.bjab = min(0.05 * self.bruto , 6000000)	
-        self.netto = self.bruto-self.bjab-((total_empl_pension_accum * 12)/bulan_berjalan)
-        # self.netto = self.bruto-self.bjab-total_empl_pension_accum 			
+        # self.netto = self.bruto-self.bjab-((total_empl_pension_accum * 12)/bulan_berjalan)
+        self.netto = self.bruto-self.bjab-total_empl_pension_accum 			
         self.pkp = self.netto - self.ptkp if self.netto - self.ptkp >0 else 0
         self.pph21_thn = round(self.get_pph21_setahun(), 0)
         pph_sdh_dibayar = akumulasi['x_pph_accgrs']+akumulasi['x_pph_accovt']+akumulasi['x_pph_accmed']+akumulasi['x_pph_accthr']+akumulasi['x_pph_accbon'] if akumulasi else 0
         self.pph21_paid = pph_sdh_dibayar
-
-        # untuk selisih irrregular income
-        # pengurangan sudah dibayar (pph_sdh_dibayar) harus dipindah saat sudah didapat selisihnya
-        #self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan - pph_sdh_dibayar, 0)
-        
-        self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan, 0)
+        self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan - pph_sdh_dibayar, 0)
         # bisa minus, kalau minus -> pot_pph=0.. min(pot_pph, 0 )
         # self.pot_pph = max(self.pot_pph, 0)
     
@@ -236,11 +223,3 @@ class payslip(models.Model):
             akumulasi['x_accbon'] = 0
 
         return akumulasi
-
-    def find_irr_acc(self):
-        cr = self.env.cr
-        sql = "select * from aag_pph_accumulation_aag_pph_accumulation where idno=%s"
-        cr.execute(sql, (self.employee_id.x_idno,))
-        irr_acc = cr.dictfetchone()
-
-        return irr_acc
