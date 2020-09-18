@@ -29,7 +29,7 @@ class hr_payslip(models.Model):
         })     
 
         input_other_002 = 'INPUT_OTHER_002'
-        amount = self.get_input_code(input_other_001,'002')
+        amount = self.get_input_code(input_other_002,'002')
         res.append({
             'name': 'Other Income 002',
             'code': input_other_002,
