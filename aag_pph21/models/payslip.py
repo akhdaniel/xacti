@@ -173,6 +173,8 @@ class payslip(models.Model):
         self.pph21_thn = round(self.get_pph21_setahun(), 0)
         pph_sdh_dibayar = akumulasi['x_pph_accgrs']+akumulasi['x_pph_accovt']+akumulasi['x_pph_accmed']+akumulasi['x_pph_accthr']+akumulasi['x_pph_accbon'] if akumulasi else 0
         self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan - pph_sdh_dibayar, 0)
+        # bisa minus, kalau minus -> pot_pph=0.. min(pot_pph, 0 )
+        self.pot_pph = max(self.pot_pph, 0)
 
     def get_pph21_setahun(self):
         sisa_pkp = self.pkp 
