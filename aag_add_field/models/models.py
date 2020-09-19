@@ -75,6 +75,7 @@ class company(models.Model):
     x_umsk = fields.Integer(string='UMSK/Month')
     x_kwt_wage = fields.Integer(string='KWT Monthly Wage')
     x_kwt_trans = fields.Integer(string='KWT Daily Transport')
+    x_coop_fee = fields.Integer(string='Cooperation Fee')
     x_shift_op = fields.Integer(string='Shift Alw.-OP/Day')
     x_shift_gl = fields.Integer(string='Shift Alw.-GL/Day')
     x_shift_sv = fields.Integer(string='Shift Alw.-SV/Day')
@@ -84,6 +85,9 @@ class company(models.Model):
     x_min_bpjskes = fields.Integer(string='Min. BPJS-Kes.')
     x_max_bpjskes = fields.Integer(string='Max. BPJS-Kes.')
     x_max_bpjspen = fields.Integer(string='Max. BPJS-Pensiun')
+    x_payday = fields.Integer(string='Pay Day')
+    x_paymonth = fields.Integer(string='Pay Month')
+    x_payyear = fields.Integer(string='Pay Year')
 
 class payslip(models.Model):
     _name = 'hr.payslip'

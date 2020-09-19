@@ -25,7 +25,7 @@ class hr_payslip(models.Model):
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
         cr.execute(sql, (self.contract_id.id, 'INPUT_KOP'))
 
-        sql = """select x_amount from aag_koperasi_aag_koperasi where x_idno=%s and x_month=%s and x_year=%s"""
+        sql = """select amount from aag_koperasi_aag_koperasi where idno=%s and month=%s and year=%s"""
         month = self.date_to.month 
         year = self.date_to.year 
         cr.execute(sql, (self.employee_id.x_idno, month, year))

@@ -28,7 +28,7 @@
         'views/structure_xacti.xml',
         'views/views.xml',
         'views/templates.xml',
-	#    'views/view_ptkp.xml',
+	'views/view_ptkp.xml',
         'views/master_ptkp.xml',
         'views/views_pkp.xml',
         'views/master_pkp.xml',

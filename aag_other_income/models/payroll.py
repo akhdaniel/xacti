@@ -18,39 +18,53 @@ class hr_payslip(models.Model):
     @api.model
     def get_inputs(self, contracts, date_from, date_to):
         res = super(hr_payslip, self).get_inputs(contracts, date_from, date_to)
-        
-        input_other_01 = 'INPUT_OTHER_01'
-        amount = self.get_input_code(input_other_01,'01')
+
+        amount = 0        
+        input_income_01 = 'INPUT_INCOME_01'
+        amount = self.get_input_code(input_income_01,'01')
         res.append({
             'name': 'Other Income 01-Gaji Pokok',
-            'code': input_other_01,
+            'code': input_income_01,
             'amount': amount,
             'contract_id': self.contract_id.id 
         })     
 
-        input_other_05 = 'INPUT_OTHER_05'
-        amount = self.get_input_code(input_other_05,'05')
+        amount = 0        
+        input_income_05 = 'INPUT_INCOME_05'
+        amount = self.get_input_code(input_income_05,'05')
         res.append({
             'name': 'Other Income 05-Transport',
-            'code': input_other_05,
+            'code': input_income_05,
             'amount': amount,
             'contract_id': self.contract_id.id
- 
         })
-        input_other_09 = 'INPUT_OTHER_09'
-        amount = self.get_input_code(input_other_09,'09')
+
+        amount = 0        
+        input_income_08 = 'INPUT_INCOME_08'
+        amount = self.get_input_code(input_income_08,'08')
         res.append({
-            'name': 'Other Income 09-Uang Makan',
-            'code': input_other_09,
+            'name': 'Other Income 08-Lain Lain',
+            'code': input_income_08,
             'amount': amount,
             'contract_id': self.contract_id.id 
         })
- 
-        input_other_10 = 'INPUT_OTHER_10'
-        amount = self.get_input_code(input_other_10,'10')
+
+        amount = 0        
+        input_income_09 = 'INPUT_INCOME_09'
+        amount = self.get_input_code(input_income_09,'09')
+        res.append({
+            'name': 'Other Income 09-Uang Makan',
+            'code': input_income_09,
+            'amount': amount,
+            'contract_id': self.contract_id.id 
+        })
+
+        amount = 0        
+        input_income_10 = 'INPUT_INCOME_10'
+        amount = self.get_input_code(input_income_10,'10')
         res.append({
             'name': 'Other Income 10-Tunj. Shift',
-            'code': input_other_10,
+            'code': input_income_10,
             'amount': amount,
             'contract_id': self.contract_id.id 
         })

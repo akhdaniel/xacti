@@ -54,7 +54,7 @@
 
     <!-- actions -->
 
-    <menuitem name="Deduction" id="aag_other_deduction.menu_1_list" parent="aag_other_deduction.menu_1"
+    <menuitem name="Other Deduction" id="aag_other_deduction.menu_1_list" parent="aag_other_deduction.menu_1"
               action="aag_other_deduction.action_window"/>
     <!-- <menuitem name="Server to list" id="aag_other_deduction" parent="aag_other_deduction.menu_2"
               action="aag_other_deduction.action_server"/> -->

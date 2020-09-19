@@ -36,7 +36,20 @@
             <field name="code">TJ_Perf</field>
             <field name="sequence">40</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_perform</field>
+<!--            <field name="amount_python_compute">result=contract.x_perform</field> -->
+            <field name="amount_python_compute"><![CDATA[
+performance = 0
+if contract.x_perform != 0:
+    if contract.company_id.x_paymonth == 3: performance = contract.x_perform * 3
+    else:
+        if contract.company_id.x_paymonth == 6: performance = contract.x_perform * 3
+        else:
+            if contract.company_id.x_paymonth == 9: performance = contract.x_perform * 3
+            else:
+                if contract.company_id.x_paymonth == 12: performance = contract.x_perform * 3
+result = performance
+]]>
+</field>
         </record>
         <record id="rule_tunj_transportasi" model="hr.salary.rule">
             <field name="name">x_Tunj. Transportasi</field>
@@ -51,14 +64,6 @@ result = transport
 ]]>
 </field>
         </record>
-        <record id="rule_tunj_lainlain" model="hr.salary.rule">
-            <field name="name">x_Tunj. Lain-Lain</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Lain_lain</field>
-            <field name="sequence">60</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_other</field>
-        </record>
         <record id="rule_tunj_kehadiran" model="hr.salary.rule">
             <field name="name">x_Tunj. Kehadiran</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
@@ -67,33 +72,8 @@ result = transport
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.x_presence</field>
         </record>
-        <record id="rule_tpk" model="hr.salary.rule">
-            <field name="name">x_TPK</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TPK</field>
-            <field name="sequence">80</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=contract.x_tpk</field>
-        </record>
-        <record id="rule_tunj_shift" model="hr.salary.rule">
-            <field name="name">x_Tunj. Shift</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TSHIFT</field>
-            <field name="sequence">80</field>
-            <field name="amount_select">code</field>
-            <!-- <field name="amount_python_compute">result=contract.x_shift</field> -->
-            <field name="amount_python_compute">result=inputs.INPUT_OTHER_10.amount</field>
-        </record>
-        <record id="rule_uang_makan" model="hr.salary.rule">
-            <field name="name">x_Uang makan</field>
-            <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">MEAL</field>
-            <field name="sequence">80</field>
-            <field name="amount_select">code</field>
-            <!-- <field name="amount_python_compute">result=contract.company_id.x_meal</field> -->
-            <field name="amount_python_compute">result=inputs.INPUT_OTHER_09.amount</field>
-        </record>
-            <record id="rule_std_bpjstk" model="hr.salary.rule">
+
+        <record id="rule_std_bpjstk" model="hr.salary.rule">
             <field name="name">x_Standard BPJS-TK</field>
             <field name="parent_rule_id" ref="rule_tunj_jht_com"/>
             <field name="category_id" ref="category_iqnore"/>
@@ -273,11 +253,7 @@ result = dph_bpjskes
             ref('rule_tunj_keluarga'),
             ref('rule_tunj_performance'),
             ref('rule_tunj_transportasi'),
-            ref('rule_tunj_lainlain'),
             ref('rule_tunj_kehadiran'),
-            ref('rule_tpk'),
-            ref('rule_tunj_shift'),
-            ref('rule_uang_makan'),
             ref('rule_tunj_jht_com'),
             ref('rule_tunj_acc_com'),
             ref('rule_tunj_dth_com'),

@@ -21,7 +21,7 @@
             <field name="nominal">58500000</field>
         </record>
         <record id="master_ptkp_k1" model="aag_master_ptkp">
-            <field name="name">TK/1</field>
+            <field name="name">K/1</field>
             <field name="nominal">63000000</field>
         </record>
         <record id="master_ptkp_k2" model="aag_master_ptkp">

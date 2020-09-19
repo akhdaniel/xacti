@@ -7,7 +7,12 @@
             <field name="code">POTKOP</field>
             <field name="sequence">115</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=inputs.INPUT_KOP.amount</field>
+            <field name="amount_python_compute"><![CDATA[
+pot_kop = 0 
+if employee.x_nokop != '': pot_kop = contract.company_id.x_coop_fee + inputs.INPUT_KOP.amount
+result = pot_kop
+]]>
+</field>
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">

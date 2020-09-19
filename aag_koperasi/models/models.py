@@ -8,9 +8,9 @@ class aag_koperasi(models.Model):
     _description = 'aag_koperasi.aag_koperasi'
 
     # name = fields.Char('NIK')
-    x_idno = fields.Integer('IDNO')
-    x_amount = fields.Float('Potongan')
-    x_month = fields.Integer('Month')
-    x_year = fields.Integer('Year')
-    x_status = fields.Boolean('Status')
-    x_remark = fields.Char('Remark')
+    idno = fields.Integer('IDNO')
+    amount = fields.Float('Potongan')
+    remark = fields.Char('Remark')
+    month = fields.Integer('Month')
+    year = fields.Integer('Year')
+    status = fields.Boolean('Status')
