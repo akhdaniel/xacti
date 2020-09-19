@@ -19,20 +19,38 @@ class hr_payslip(models.Model):
     def get_inputs(self, contracts, date_from, date_to):
         res = super(hr_payslip, self).get_inputs(contracts, date_from, date_to)
         
-        input_other_001 = 'INPUT_OTHER_001'
-        amount = self.get_input_code(input_other_001,'001')
+        input_other_01 = 'INPUT_OTHER_01'
+        amount = self.get_input_code(input_other_01,'01')
         res.append({
-            'name': 'Other Income 001',
-            'code': input_other_001,
+            'name': 'Other Income 01-Gaji Pokok',
+            'code': input_other_01,
             'amount': amount,
             'contract_id': self.contract_id.id 
         })     
 
-        input_other_002 = 'INPUT_OTHER_002'
-        amount = self.get_input_code(input_other_002,'002')
+        input_other_05 = 'INPUT_OTHER_05'
+        amount = self.get_input_code(input_other_05,'05')
         res.append({
-            'name': 'Other Income 002',
-            'code': input_other_002,
+            'name': 'Other Income 05-Transport',
+            'code': input_other_05,
+            'amount': amount,
+            'contract_id': self.contract_id.id
+ 
+        })
+        input_other_09 = 'INPUT_OTHER_09'
+        amount = self.get_input_code(input_other_09,'09')
+        res.append({
+            'name': 'Other Income 09-Uang Makan',
+            'code': input_other_09,
+            'amount': amount,
+            'contract_id': self.contract_id.id 
+        })
+ 
+        input_other_10 = 'INPUT_OTHER_10'
+        amount = self.get_input_code(input_other_10,'10')
+        res.append({
+            'name': 'Other Income 10-Tunj. Shift',
+            'code': input_other_10,
             'amount': amount,
             'contract_id': self.contract_id.id 
         })

@@ -19,38 +19,20 @@ class hr_payslip(models.Model):
     def get_inputs(self, contracts, date_from, date_to):
         res = super(hr_payslip, self).get_inputs(contracts, date_from, date_to)
         
-        input_deduc_01 = 'INPUT_DEDUC_01'
-        amount = self.get_input_code(input_deduc_01,'01')
+        input_abs_01 = 'INPUT_ABS_01'
+        amount = self.get_input_code(input_abs_01,1')
         res.append({
-            'name': 'Other Deduction 01-Gaji Pokok',
-            'code': input_deduc_01,
+            'name': 'Input Abs 01',
+            'code': input_abs_01,
             'amount': amount,
             'contract_id': self.contract_id.id 
         })     
 
-        input_deduc_05 = 'INPUT_DEDUC_05'
-        amount = self.get_input_code(input_deduc_05,'05')
+        input_abs_05 = 'INPUT_ABS_05'
+        amount = self.get_input_code(input_abs_05,5')
         res.append({
-            'name': 'Other Deduction 05-Transport',
-            'code': input_deduc_05,
-            'amount': amount,
-            'contract_id': self.contract_id.id
- 
-        })
-        input_deduc_09 = 'INPUT_DEDUC_09'
-        amount = self.get_input_code(input_deduc_09,'09')
-        res.append({
-            'name': 'Other Deduction 09-Uang Makan',
-            'code': input_deduc_09,
-            'amount': amount,
-            'contract_id': self.contract_id.id 
-        })
- 
-        input_deduc_10 = 'INPUT_DEDUC_10'
-        amount = self.get_input_code(input_deduc_10,'10')
-        res.append({
-            'name': 'Other Deduction 10-Tunj. Shift',
-            'code': input_deduc_10,
+            'name': 'Input Abs 05',
+            'code': input_abs_05,
             'amount': amount,
             'contract_id': self.contract_id.id 
         })
@@ -62,7 +44,7 @@ class hr_payslip(models.Model):
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
         cr.execute(sql, (self.contract_id.id, input_code))
 
-        sql = """select sum(amount) from aag_other_deduction_aag_other_deduction where idno=%s and month=%s and year=%s and code=%s"""
+        sql = """select sum(amount) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
         month = self.date_from.month 
         year = self.date_from.year 
         cr.execute(sql, (self.employee_id.x_idno, month, year, code))

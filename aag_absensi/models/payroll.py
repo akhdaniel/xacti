@@ -21,7 +21,7 @@ class hr_payslip(models.Model):
 
         amount = 0
 #=======================================
-# HITUNG CUTI LIBUR
+# HITUNG CUTI LIBUR (FULL DAY)
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
@@ -36,13 +36,34 @@ class hr_payslip(models.Model):
             amount = result[0]
 
         res.append({
-            'name': 'Absensi 01',
+            'name': 'Absensi 01-Cuti Libur',
             'code': 'INPUT_ABS_01',
             'amount': amount,
             'contract_id': self.contract_id.id 
         })
 #=======================================
-# HITUNG SAKIT (SD) 
+# HITUNG CUTI LIBUR (HALF DAY)
+#=======================================
+        cr = self.env.cr 
+        sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
+        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_11'))
+
+        sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
+        month = self.date_from.month 
+        year = self.date_from.year
+        cr.execute(sql, (self.employee_id.x_idno, month, year, 11))
+        result = cr.fetchone()
+        if result:
+            amount = result[0]
+
+        res.append({
+            'name': 'Absensi 11-Cuti Setengah Hari',
+            'code': 'INPUT_ABS_11',
+            'amount': amount,
+            'contract_id': self.contract_id.id 
+        })
+#=======================================
+# HITUNG SAKIT (05) 
 #=======================================        
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
@@ -57,13 +78,13 @@ class hr_payslip(models.Model):
             amount = result[0]
 
         res.append({
-            'name': 'Absensi 05',
+            'name': 'Absensi 05-Sakit',
             'code': 'INPUT_ABS_05',
             'amount': amount,
             'contract_id': self.contract_id.id 
         })
 #=======================================
-# HITUNG ABSENT (05)
+# HITUNG ABSENT (06)
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
@@ -78,8 +99,51 @@ class hr_payslip(models.Model):
             amount = result[0]
 
         res.append({
-            'name': 'Absensi 06',
+            'name': 'Absensi 06-Absent',
             'code': 'INPUT_ABS_06',
+            'amount': amount,
+            'contract_id': self.contract_id.id 
+        })
+
+#=======================================
+# HITUNG CUTI HAMIL (07)
+#=======================================
+        cr = self.env.cr 
+        sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
+        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_07'))
+
+        sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
+        month = self.date_from.month 
+        year = self.date_from.year
+        cr.execute(sql, (self.employee_id.x_idno, month, year, 7))
+        result = cr.fetchone()
+        if result:
+            amount = result[0]
+
+        res.append({
+            'name': 'Absensi 07-Cuti Hamil',
+            'code': 'INPUT_ABS_07',
+            'amount': amount,
+            'contract_id': self.contract_id.id 
+        })
+#=======================================
+# HITUNG CUTI MELAHIRKAN (08)
+#=======================================
+        cr = self.env.cr 
+        sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
+        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_08'))
+
+        sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
+        month = self.date_from.month 
+        year = self.date_from.year
+        cr.execute(sql, (self.employee_id.x_idno, month, year, 8))
+        result = cr.fetchone()
+        if result:
+            amount = result[0]
+
+        res.append({
+            'name': 'Absensi 08-Cuti Melahirkan',
+            'code': 'INPUT_ABS_08',
             'amount': amount,
             'contract_id': self.contract_id.id 
         })
