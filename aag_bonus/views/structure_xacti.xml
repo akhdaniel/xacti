@@ -4,7 +4,7 @@
         <record id="rule_bonus" model="hr.salary.rule">
             <field name="name">x_BONUS</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">BONUS</field>
+            <field name="code">I_BONUS</field>
             <field name="sequence">96</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=inputs.INPUT_BONUS.amount</field>

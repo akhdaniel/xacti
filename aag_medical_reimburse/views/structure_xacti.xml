@@ -4,7 +4,7 @@
         <record id="rule_medical_reimbursement" model="hr.salary.rule">
             <field name="name">x_Medical Reimbursement</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">MEDICAL</field>
+            <field name="code">I_MEDICAL</field>
             <field name="sequence">89</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=inputs.INPUT_MEDICAL.amount</field>

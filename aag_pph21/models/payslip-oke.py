@@ -30,6 +30,7 @@ class payslip(models.Model):
         res = super(payslip, self).compute_sheet() 
         _logger.info("--- compute sheet --- %s", self.line_ids )
 
+
         # dengan medical, overtime
         self._calculate_pph(medical=True, overtime=True, thr=True, bonus=True)
         i=0
@@ -114,153 +115,56 @@ class payslip(models.Model):
         _logger.info("--- awal bruto = %s", self.bruto)
         _logger.info("--- new tunj_pph = %s", self.tunj_pph)
     
-# ==== GET DATA FROM PAYSLIP TO FIND CUURENT MONTH ACTUAL INCOME/DEDUCTION ==== 
- # ==== INIT. INCOME RULE'S CODE ==== 
-    # == REGULAR INCOME
-        BASIC=0
-        I_BASIC=0
-        I_TPK=0
-        I_OCCUP=0
-        I_PRESENCE=0
-        I_FAMILY=0
-        I_FUNCTIONAL=0
-        I_TRANSPORT=0
-        I_PERFORM=0
-        I_OTHER=0
-        I_SHIFT=0
-        # I_MEAL=0        UANG MAKAN TDK DIPUNGUT PAJAK
-        I_JHTCOM=0
-        I_ACCCOM=0
-        I_DTHCOM=0
-        I_BPJSKES_COM=0
-    # == IRREGULAR INCOME ==
-        I_OVERTIME=0
-        I_MEDICAL=0
-        I_THR=0
-        I_BONUS=0
+        INPUT_MEDICAL=0
+        INPUT_OVERTIME=0
+        INPUT_THR=0
+        INPUT_BONUS=0
 
- # ==== INIT. DEDUCTION RULE'S CODE ==== 
-    # == REGULAR INCOME
-        D_BASIC=0
-    #    D_TPK=0
-    #    D_OCCUP=0
-    #    D_PRESENCE=0
-    #    D_FAMILY=0
-    #    D_FUNCTIONAL=0
-        D_TRANSPORT=0
-    #    D_PERFORM=0
-        D_OTHER=0
-    #    D_SHIFT=0
-    #    D_MEAL=0
-    #    D_JHTCOM=0
-    #    D_ACCCOM=0
-    #    D_DTHCOM=0
-    #    D_BPJSKES_COM=0
+        for inp in self.input_line_ids: 
+            if inp.code=='INPUT_MEDICAL' and medical:
+                INPUT_MEDICAL=inp.amount
 
-        D_JHTEMP=0
-        D_PENEMP=0
-    #   D_BPJSKES_EMP=0
+            if inp.code=='INPUT_OVERTIME' and overtime:
+                INPUT_OVERTIME=inp.amount
+            
+            if inp.code=='INPUT_THR' and thr:
+                INPUT_THR=inp.amount
 
-    # == IRREGULAR INCOME ==
-    #    D_OVERTIME=0
-    #    D_MEDIC=0
-    #    D_THR=0
-    #    D_BONUS=0
+            if inp.code=='INPUT_BONUS' and bonus:
+                INPUT_BONUS=inp.amount
 
-# ==== READ DATA FROM PAYSLIP ==== 
-    # === READ INCOME ====
+        TJHTCOM=0
+        TACCCOM=0
+        TDTHCOM=0
+        JHTEMP=0
+        PENEMP=0
+        TBPJSKES_DTP=0
+
         for line in self.line_ids: 
-            if line.code=='BASIC':
-                BASIC=line.amount
-            if line.code=='I_BASIC':
-                I_BASIC=line.amount
-            if line.code=='I_TPK':
-                I_TPK=line.amount
-            if line.code=='I_OCCUP':
-                I_OCCUP=line.amount
-            if line.code=='I_PRESENCE':
-                I_PRESENCE=line.amount
-            if line.code=='I_FAMILY':
-                I_FAMILY=line.amount
-            if line.code=='I_FUNCTIONAL':
-                I_FUNCTIONAL=line.amount
-            if line.code=='I_TRANSPORT':
-                I_TRANSPORT=line.amount
-            if line.code=='I_PERFORM':
-                I_PERFORM=line.amount
-            if line.code=='I_OTHER':
-                I_OTHER=line.amount
-            if line.code=='I_SHIFT':
-                I_SHIFT=line.amount
-#            if line.code=='I_MEAL':
-#                I_MEAL=line.amount
-            if line.code=='I_JHTCOM':
-                I_JHTCOM=line.amount
-            if line.code=='I_ACCCOM':
-                I_ACCCOM=line.amount
-            if line.code=='I_DTHCOM':
-                I_DTHCOM=line.amount
-            if line.code=='I_BPJSKES_COM':
-                I_BPJSKES_COM=line.amount
-
-            if line.code=='I_OVERTIME':
-                I_OVERTIME=line.amount
-            if line.code=='I_MEDICAL':
-                I_MEDICAL=line.amount
-            if line.code=='I_THR':
-                I_THR=line.amount
-            if line.code=='I_BONUS':
-                I_BONUS=line.amount
-    # === READ DEDUCTION ====
-            if line.code=='D_BASIC':
-                D_BASIC=line.amount
-            if line.code=='D_TRANSPORT':
-                D_TRANSPORT=line.amount
-            if line.code=='D_OTHER':
-                D_OTHER=line.amount
-
-            if line.code=='D_JHTEMP':
-                D_JHTEMP=line.amount
-            if line.code=='D_PENEMP':
-                D_PENEMP=line.amount
-#            if line.code=='D_BPJSKES_EMP':
-#                D_BPJSKES_EMP=line.amount
-
-# === CALCULATE NET INCOME =======================
-        net_basic=BASIC+I_BASIC-D_BASIC
-        # I_TPK=I_TPK-D_TPK
-        # I_OCCUP=I_OCCUP-D_OCCUP
-        # I_PRESENCE=I_PRESENCE-D_PRESENCE
-        # I_FAMILY=I_FAMILY-D_FAMILY
-        # I_FUNCTIONAL=I_FUNCTIONAL-D_FUNCTIONAL
-        net_transport=I_TRANSPORT-D_TRANSPORT
-        # I_PERFORM=I_PERFORM-D_PERFORM
-        net_other=I_OTHER-D_OTHER
-        # I_SHIFT=I_SHIFT-D_SHIFT
-        # I_MEAL=I_MEAL-D_MEAL
-        # I_JHTCOM=0
-        # I_ACCCOM=0
-        # I_DTHCOM=0
-        # I_BPJSKES_COM=0
-    # == IRREGULAR INCOME ==
-        # I_OVERTIME=0
-        # I_MEDICAL=0
-        # I_THR=0
-        # I_BONUS=0
-
-
+            if line.code=='TJHTCOM':
+                TJHTCOM=line.amount
+            if line.code=='TACCCOM':
+                TACCCOM=line.amount
+            if line.code=='TDTHCOM':
+                TDTHCOM=line.amount
+            if line.code=='JHTEMP':
+                JHTEMP=line.amount
+            if line.code=='PENEMP':
+                PENEMP=line.amount
+            if line.code=='BPJSKES':
+                TBPJSKES_DTP=line.amount
+        
         akumulasi = self.cari_akumulasi(medical=medical, overtime=overtime, thr=thr, bonus=bonus )
         
-        # curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM + TBPJSKES_DTP
-        curr_reg_income = net_basic+I_TPK+net_transport+I_PRESENCE+I_OCCUP+I_FAMILY+I_FUNCTIONAL+I_PERFORM+net_other+I_SHIFT+self.tunj_pph+I_JHTCOM+I_ACCCOM+I_DTHCOM+I_BPJSKES_COM
+        curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM + TBPJSKES_DTP
 
         total_reg_income_accum = curr_reg_income + (akumulasi['x_accgrs'] if akumulasi else 0)
 
-        curr_irr_income = I_OVERTIME + I_MEDICAL + I_THR + I_BONUS
+        curr_irr_income = INPUT_MEDICAL + INPUT_THR + INPUT_BONUS
 
         total_irr_income_accum =  curr_irr_income + (akumulasi['x_accovt']+akumulasi['x_accmed']+akumulasi['x_accthr']+akumulasi['x_accbon'] if akumulasi else 0)
 
-        curr_empl_pension = D_JHTEMP + D_PENEMP
+        curr_empl_pension = JHTEMP + PENEMP
 
         total_empl_pension_accum =  curr_empl_pension + (akumulasi['x_accjht2']+akumulasi['x_accpen1'] if akumulasi else 0)
         
@@ -281,8 +185,8 @@ class payslip(models.Model):
         self.pph21_paid = pph_sdh_dibayar
 
         # untuk selisih irrregular income
-        # pengurangan sudah dibayar (pph_sdh_dibayar) dihitung saat sudah didapat selisihnya
-        # self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan - pph_sdh_dibayar, 0)
+        # pengurangan sudah dibayar (pph_sdh_dibayar) harus dipindah saat sudah didapat selisihnya
+        #self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan - pph_sdh_dibayar, 0)
         
         self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan, 0)
         # bisa minus, kalau minus -> pot_pph=0.. min(pot_pph, 0 )
@@ -339,4 +243,4 @@ class payslip(models.Model):
         cr.execute(sql, (self.employee_id.x_idno,))
         irr_acc = cr.dictfetchone()
 
-        return irr_acc    
+        return irr_acc

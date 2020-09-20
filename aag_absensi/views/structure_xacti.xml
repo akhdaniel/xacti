@@ -4,7 +4,7 @@
         <record id="rule_pot_gaji_pokok" model="hr.salary.rule">
             <field name="name">x_Pot. Gaji Pokok</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">POT_GAPOK</field>
+            <field name="code">D_BASIC</field>
             <field name="sequence">300</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=(contract.wage/30)*inputs.INPUT_ABS_06.amount + inputs.INPUT_DEDUC_01.amount</field>
@@ -12,7 +12,7 @@
         <record id="rule_tpk" model="hr.salary.rule">
             <field name="name">x_TPK</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TPK</field>
+            <field name="code">I_TPK</field>
             <field name="sequence">80</field>
             <field name="amount_select">code</field>
     <!--        <field name="amount_python_compute">result=contract.x_tpk</field> -->
@@ -44,7 +44,7 @@ result = tpk
         <record id="rule_pot_transport" model="hr.salary.rule">
             <field name="name">x_Pot. Transport</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">POT_TRANS</field>
+            <field name="code">D_TRANSPORT</field>
             <field name="sequence">310</field>
             <field name="amount_select">code</field>
 <!--            <field name="amount_python_compute">result=(contract.x_trans/21)*(inputs.INPUT_ABS_06.amount+inputs.INPUT_ABS_05.amount) + inputs.INPUT_DEDUC_05.amount</field> -->

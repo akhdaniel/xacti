@@ -4,8 +4,8 @@
         <record id="rule_tunj_pph21" model="hr.salary.rule">
             <field name="name">x_Tunj. PPh21</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TUNJ21</field>
-            <field name="sequence">94</field>
+            <field name="code">I_PPH21</field>
+            <field name="sequence">150</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=payslip.tunj_pph</field>
         </record>
@@ -13,8 +13,8 @@
         <record id="rule_pot_pph21" model="hr.salary.rule">
             <field name="name">x_Pot. PPh21</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">POT21</field>
-            <field name="sequence">290</field>
+            <field name="code">D_PPH21</field>
+            <field name="sequence">630</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=payslip.pot_pph</field>
         </record>

@@ -9,32 +9,32 @@
         <record id="rule_tunj_gol" model="hr.salary.rule">
             <field name="name">x_Tunj. Golongan</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_GOL</field>
-            <field name="sequence">20</field>
+            <field name="code">I_OCCUP</field>
+            <field name="sequence">30</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.x_occup</field>
         </record>
         <record id="rule_tunj_fungsional" model="hr.salary.rule">
             <field name="name">x_Tunj. Fungsional</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Func</field>
-            <field name="sequence">25</field>
+            <field name="code">I_FUNCTIONAL</field>
+            <field name="sequence">40</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.x_functional</field>
         </record>
         <record id="rule_tunj_keluarga" model="hr.salary.rule">
             <field name="name">x_Tunj. Keluarga</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Fam</field>
-            <field name="sequence">30</field>
+            <field name="code">I_FAMILY</field>
+            <field name="sequence">50</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.x_family</field>
         </record>
         <record id="rule_tunj_performance" model="hr.salary.rule">
             <field name="name">x_Tunj. Performance</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Perf</field>
-            <field name="sequence">40</field>
+            <field name="code">I_PERFORM</field>
+            <field name="sequence">60</field>
             <field name="amount_select">code</field>
 <!--            <field name="amount_python_compute">result=contract.x_perform</field> -->
             <field name="amount_python_compute"><![CDATA[
@@ -51,11 +51,11 @@ result = performance
 ]]>
 </field>
         </record>
-        <record id="rule_tunj_transportasi" model="hr.salary.rule">
+        <record id="rule_tunj_transport" model="hr.salary.rule">
             <field name="name">x_Tunj. Transportasi</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Trans</field>
-            <field name="sequence">50</field>
+            <field name="code">I_TRANSPORT</field>
+            <field name="sequence">70</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 transport = contract.x_trans 
@@ -67,8 +67,8 @@ result = transport
         <record id="rule_tunj_kehadiran" model="hr.salary.rule">
             <field name="name">x_Tunj. Kehadiran</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJ_Kehadiran</field>
-            <field name="sequence">70</field>
+            <field name="code">I_PRESENCE</field>
+            <field name="sequence">80</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=contract.x_presence</field>
         </record>
@@ -78,7 +78,7 @@ result = transport
             <field name="parent_rule_id" ref="rule_tunj_jht_com"/>
             <field name="category_id" ref="category_iqnore"/>
             <field name="code">STD_BPTK</field>
-            <field name="sequence">82</field>
+            <field name="sequence">90</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 transport = contract.x_trans 
@@ -90,24 +90,24 @@ result = contract.wage + contract.x_tpk + contract.x_occup + transport + contrac
         <record id="rule_tunj_jht_com" model="hr.salary.rule">
             <field name="name">x_Tunj. BPJS-TK JHT 3,7%</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TJHTCOM</field>
-            <field name="sequence">83</field>
+            <field name="code">I_JHTCOM</field>
+            <field name="sequence">100</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = STD_BPTK * 0.037</field>
         </record>
         <record id="rule_tunj_acc_com" model="hr.salary.rule">
             <field name="name">x_Tunj. BPJS-TK Kec 0,89%</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TACCCOM</field>
-            <field name="sequence">84</field>
+            <field name="code">I_ACCCOM</field>
+            <field name="sequence">110</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result= STD_BPTK * 0.0089</field>
         </record>
         <record id="rule_tunj_dth_com" model="hr.salary.rule">
             <field name="name">x_Tunj. BPJS-TK Kem 3,7%</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TDTHCOM</field>
-            <field name="sequence">86</field>
+            <field name="code">I_DTHCOM</field>
+            <field name="sequence">120</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = STD_BPTK * 0.003</field>
         </record>
@@ -116,7 +116,7 @@ result = contract.wage + contract.x_tpk + contract.x_occup + transport + contrac
             <field name="parent_rule_id" ref="rule_tunj_pen_com"/>
             <field name="category_id" ref="category_iqnore"/>
             <field name="code">STD_BPPEN</field>
-            <field name="sequence">87</field>
+            <field name="sequence">130</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 dph_pensiun = 0
@@ -131,8 +131,8 @@ result = dph_pensiun
         <record id="rule_tunj_pen_com" model="hr.salary.rule">
             <field name="name">x_Tunj. BPJS-Pensiun 2%</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
-            <field name="code">TPENCOM</field>
-            <field name="sequence">88</field>
+            <field name="code">I_PENCOM</field>
+            <field name="sequence">140</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = STD_BPPEN * 0.02</field>
         </record>
@@ -140,8 +140,8 @@ result = dph_pensiun
             <field name="name">x_Pot. SPMI COS</field>
             <field name="parent_rule_id" ref="rule_pot_spmi"/>
             <field name="category_id" ref="category_iqnore"/>
-            <field name="code">SPMI_COS</field>
-            <field name="sequence">108</field>
+            <field name="code">D_SPMICOS</field>
+            <field name="sequence">506</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 pot_spmi_cos = 0 
@@ -154,8 +154,8 @@ result = pot_spmi_cos
             <field name="name">x_Pot. SPMI Med</field>
             <field name="parent_rule_id" ref="rule_pot_spmi"/>
             <field name="category_id" ref="category_iqnore"/>
-            <field name="code">SPMI_MED</field>
-            <field name="sequence">109</field>
+            <field name="code">D_SPMIMED</field>
+            <field name="sequence">508</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 pot_spmi_med = 0 
@@ -169,66 +169,66 @@ result = pot_spmi_med
         <record id="rule_pot_spmi" model="hr.salary.rule">
             <field name="name">x_Pot. SPMI</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">SPMI</field>
-            <field name="sequence">110</field>
+            <field name="code">D_SPMI</field>
+            <field name="sequence">510</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = SPMI_COS + SPMI_MED</field>
+            <field name="amount_python_compute">result = D_SPMICOS + D_SPMIMED</field>
         </record>        
 
         <record id="rule_pot_jht_emp" model="hr.salary.rule">
             <field name="name">x_Pot. BPJS-TK JHT 2%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">JHTEMP</field>
-            <field name="sequence">120</field>
+            <field name="code">D_JHTEMP</field>
+            <field name="sequence">540</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=  STD_BPTK * 0.02</field>
         </record>
         <record id="rule_pot_jht_com" model="hr.salary.rule">
             <field name="name">x_Pot. BPJS-TK JHT 3,7%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">JHTCOM</field>
-            <field name="sequence">130</field>
+            <field name="code">D_JHTCOM</field>
+            <field name="sequence">550</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = TJHTCOM</field>
+            <field name="amount_python_compute">result = I_JHTCOM</field>
         </record>
         <record id="rule_pot_acc_com" model="hr.salary.rule">
             <field name="name">x_Pot. BPJS-TK Kec 0,89%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">ACCCOM</field>
-            <field name="sequence">134</field>
+            <field name="code">D_ACCCOM</field>
+            <field name="sequence">560</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result= TACCCOM</field>
+            <field name="amount_python_compute">result= I_ACCCOM</field>
         </record>
         <record id="rule_pot_dth_com" model="hr.salary.rule">
             <field name="name">x_Pot. BPJS-TK Kem 3,7%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">DTHCOM</field>
-            <field name="sequence">136</field>
+            <field name="code">D_DTHCOM</field>
+            <field name="sequence">570</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = TDTHCOM</field>
+            <field name="amount_python_compute">result = I_DTHCOM</field>
         </record>
         <record id="rule_pot_pen_emp" model="hr.salary.rule">
             <field name="name">x_Pot. BPJS-Pensiun 1%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">PENEMP</field>
-            <field name="sequence">140</field>
+            <field name="code">D_PENEMP</field>
+            <field name="sequence">580</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = STD_BPPEN * 0.01</field>
         </record>
         <record id="rule_pot_pen_com" model="hr.salary.rule">
             <field name="name">x_Pot. BPJS-Pensiun 2%</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">PENCOM</field>
-            <field name="sequence">150</field>
+            <field name="code">D_PENCOM</field>
+            <field name="sequence">590</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = TPENCOM</field>
+            <field name="amount_python_compute">result = I_PENCOM</field>
         </record>
 
         <record id="rule_std_bpjskes" model="hr.salary.rule">
             <field name="name">x_Standard BPJS-Kes</field>
             <field name="category_id" ref="category_iqnore"/>
             <field name="code">STD_BPKES</field>
-            <field name="sequence">2</field>
+            <field name="sequence">145</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 dph_bpjskes = 0
@@ -243,6 +243,7 @@ result = dph_bpjskes
 </field>
         </record>  
 
+<!--  ============  ADD RULE TO SALARY STRUCTURE ================  -->
 
         <record id="structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
             <field name="name">x_Karyawan Tetap NS</field>
@@ -252,7 +253,7 @@ result = dph_bpjskes
             ref('rule_tunj_fungsional'),
             ref('rule_tunj_keluarga'),
             ref('rule_tunj_performance'),
-            ref('rule_tunj_transportasi'),
+            ref('rule_tunj_transport'),
             ref('rule_tunj_kehadiran'),
             ref('rule_tunj_jht_com'),
             ref('rule_tunj_acc_com'),
