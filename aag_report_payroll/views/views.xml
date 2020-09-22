@@ -1,28 +1,64 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="aag_report_payroll.list">
-      <field name="name">aag_report_payroll list</field>
-      <field name="model">aag_report_payroll.aag_report_payroll</field>
+
+    <record model="ir.ui.view" id="aag_report_header_list">
+      <field name="name">aag_report_header_list</field>
+      <field name="model">aag.report_header</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="month"/>
+          <field name="year"/>
         </tree>
       </field>
     </record>
--->
+
+    <record model="ir.ui.view" id="aag_report_header_form">
+      <field name="name">aag_report_header_form</field>
+      <field name="model">aag.report_header</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="action_generate"
+              string="Generate Report"
+              class="primary"
+              type="object"
+            />
+            <button name="action_export"
+              string="Export XLS"
+              type="object"
+            />
+          </header>
+          <group>
+            <field name="name"/>
+            <field name="month"/>
+            <field name="year"/>
+          </group>
+          <notebook>
+            <page name="detail" string="Detail">
+              <field name="detail_ids">
+                <tree>
+                  <field name="idno"/>
+                  <field name="wage"/>
+                  <field name="transport"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>
+
 
     <!-- actions opening views on models -->
-<!--
+
     <record model="ir.actions.act_window" id="aag_report_payroll.action_window">
-      <field name="name">aag_report_payroll window</field>
-      <field name="res_model">aag_report_payroll.aag_report_payroll</field>
+      <field name="name">aag_report_heder window</field>
+      <field name="res_model">aag.report_header</field>
       <field name="view_mode">tree,form</field>
     </record>
--->
+
 
     <!-- server action to the one above -->
 <!--
@@ -56,5 +92,15 @@
     <menuitem name="Server to list" id="aag_report_payroll" parent="aag_report_payroll.menu_2"
               action="aag_report_payroll.action_server"/>
 -->
+
+    <!-- menu categories -->
+    <menuitem name="Report" id="aag_report_payroll.menu_1" 
+      parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    
+    <!-- actions -->
+    <menuitem name="Report Detail Payroll" id="aag_report_payroll.menu_report_detail" 
+      parent="aag_report_payroll.menu_1"
+      action="aag_report_payroll.action_window"/>
+    
   </data>
 </odoo>

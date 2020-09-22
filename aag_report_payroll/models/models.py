@@ -1,18 +1,39 @@
 # -*- coding: utf-8 -*-
 
-# from odoo import models, fields, api
+from odoo import models, fields, api
+
+import logging
+_logger = logging.getLogger(__name__)
 
 
-# class aag_report_payroll(models.Model):
-#     _name = 'aag_report_payroll.aag_report_payroll'
-#     _description = 'aag_report_payroll.aag_report_payroll'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+class report_header(models.Model):
+    _name = 'aag.report_header'
+    _description = 'payroll header'
+
+    name = fields.Char("Name")
+    month = fields.Integer("Month")
+    year = fields.Integer("Year")
+
+    detail_ids = fields.One2many(comodel_name="aag.report_detail", inverse_name="header_id")
+
+
+
+    def action_generate(self):
+        _logger.info("--- action_generate")
+
+
+    def action_export(self):
+        _logger.info("--- action_export")
+
+
+class report_detail(models.Model):
+    _name = 'aag.report_detail'
+    _description = 'payroll detail'
+
+    header_id = fields.Many2one(comodel_name="aag.report_header")
+
+    idno = fields.Integer("IDNO")
+    wage = fields.Integer("Wage")
+    transport = fields.Integer("Transport")
+
