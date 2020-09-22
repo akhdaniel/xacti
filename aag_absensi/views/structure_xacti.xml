@@ -5,7 +5,7 @@
             <field name="name">x_Pot. Gaji Pokok</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">D_BASIC</field>
-            <field name="sequence">300</field>
+            <field name="sequence">501</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=(contract.wage/30)*inputs.INPUT_ABS_06.amount + inputs.INPUT_DEDUC_01.amount</field>
         </record>
@@ -13,7 +13,7 @@
             <field name="name">x_TPK</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
             <field name="code">I_TPK</field>
-            <field name="sequence">80</field>
+            <field name="sequence">20</field>
             <field name="amount_select">code</field>
     <!--        <field name="amount_python_compute">result=contract.x_tpk</field> -->
             <field name="amount_python_compute"><![CDATA[
@@ -45,7 +45,7 @@ result = tpk
             <field name="name">x_Pot. Transport</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">D_TRANSPORT</field>
-            <field name="sequence">310</field>
+            <field name="sequence">502</field>
             <field name="amount_select">code</field>
 <!--            <field name="amount_python_compute">result=(contract.x_trans/21)*(inputs.INPUT_ABS_06.amount+inputs.INPUT_ABS_05.amount) + inputs.INPUT_DEDUC_05.amount</field> -->
             <field name="amount_python_compute"><![CDATA[

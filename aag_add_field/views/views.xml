@@ -42,6 +42,7 @@
                 <field name="x_direct"/>
                 <field name="x_spmi"/>
                 <field name="x_spmi_med"/>
+                <field name="x_coop"/>
                 <field name="x_nokop"/>
                 <field name="x_nobpjskes"/>
                 <field name="x_bpjskesadd"/>

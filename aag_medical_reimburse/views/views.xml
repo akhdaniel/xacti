@@ -8,10 +8,22 @@
       <field name="arch" type="xml">
         <tree>
           <field name="idno"/>
-          <field name="amount"/>
-          <field name="status"/>
+          <field name="trndat"/>
+          <field name="cata"/>
+          <field name="medcod"/>
+          <field name="patien"/>
+          <field name="dr"/>
+          <field name="apotik"/>
+          <field name="medamt"/>
+          <field name="remark"/>
+          <field name="paydat"/>
           <field name="month"/>
           <field name="year"/>
+          <field name="status"/>
+          <field name="flag1"/>
+          <field name="flag2"/>
+          <field name="flag3"/>
+          <field name="flag4"/>
         </tree>
       </field>
     </record>

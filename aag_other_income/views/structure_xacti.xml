@@ -7,14 +7,14 @@
             <field name="code">I_BASIC</field>
             <field name="sequence">15</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.x_other + inputs.INPUT_INCOME_01.amount</field>
+            <field name="amount_python_compute">result = inputs.INPUT_INCOME_01.amount</field>
         </record>
 
         <record id="rule_income_lain_lain" model="hr.salary.rule">
             <field name="name">x_Income Lain Lain</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
             <field name="code">I_OTHER</field>
-            <field name="sequence">96</field>
+            <field name="sequence">230</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = contract.x_other + inputs.INPUT_INCOME_08.amount</field>
         </record>
