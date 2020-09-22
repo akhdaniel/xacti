@@ -30,18 +30,31 @@
               type="object"
             />
           </header>
+
           <group>
-            <field name="name"/>
-            <field name="month"/>
-            <field name="year"/>
+            <group>
+              <field name="name"/>
+              <field name="month"/>
+              <field name="year"/>
+            </group>
+
+            <group>
+              <field name="export_file"/>
+              <field name="export_filename"/>
+            </group>
           </group>
+          
+
           <notebook>
             <page name="detail" string="Detail">
               <field name="detail_ids">
                 <tree>
-                  <field name="idno"/>
-                  <field name="wage"/>
-                  <field name="transport"/>
+                  <field name="IDNO"/>
+                  <field name="BASIC"/>
+                  <field name="I_TRANSPORT"/>
+                  <field name="D_TRANSPORT"/>
+                  <field name="D_PPH21"/>
+                  <field name="NET"/>
                 </tree>
               </field>
             </page>
