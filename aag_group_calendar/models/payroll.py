@@ -23,7 +23,7 @@ class hr_payslip(models.Model):
 
         amount = 0        
         input_twd_01 = 'INPUT_TWD'
-        amount = self.get_input_code_twd(input_twd_01)
+        amount = self.get_input_code_twd(input_twd_01, contracts, date_from, date_to)
         res.append({
             'name': 'Total Working Day',
             'code': input_twd_01,
@@ -33,15 +33,15 @@ class hr_payslip(models.Model):
 
         return res
 
-    def get_input_code_twd(self, input_code):
+    def get_input_code_twd(self, input_code, contracts, date_from, date_to):
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, input_code))
+        cr.execute(sql, (contracts.id, input_code))
 
         sql = """select x_twd_1st+x_twd_2nd from aag_group_calendar_aag_group_calendar where x_wrkgrp=%s and month=%s and year=%s"""
-        month = self.date_to.month 
-        year = self.date_to.year 
-        cr.execute(sql, (self.employee_id.x_wrkgrp, month, year))
+        month = date_to.month 
+        year = date_to.year 
+        cr.execute(sql, (contracts.employee_id.x_wrkgrp, month, year))
         result = cr.fetchone()
         if result:
             amount = result[0]   

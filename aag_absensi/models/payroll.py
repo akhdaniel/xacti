@@ -25,12 +25,12 @@ class hr_payslip(models.Model):
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_01'))
+        cr.execute(sql, (contracts.id, 'INPUT_ABS_01'))
 
         sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, 1))
+        month = date_from.month 
+        year = date_from.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, 1))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -39,19 +39,19 @@ class hr_payslip(models.Model):
             'name': 'Absensi 01-Cuti Libur',
             'code': 'INPUT_ABS_01',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 #=======================================
 # HITUNG CUTI LIBUR (HALF DAY)
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_11'))
+        cr.execute(sql, (contracts.id, 'INPUT_ABS_11'))
 
         sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, 11))
+        month = date_from.month 
+        year = date_from.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, 11))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -60,19 +60,19 @@ class hr_payslip(models.Model):
             'name': 'Absensi 11-Cuti Setengah Hari',
             'code': 'INPUT_ABS_11',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 #=======================================
 # HITUNG SAKIT (05) 
 #=======================================        
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_05'))
+        cr.execute(sql, (contracts.id, 'INPUT_ABS_05'))
 
         sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, 5))
+        month = date_from.month 
+        year = date_from.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, 5))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -81,19 +81,19 @@ class hr_payslip(models.Model):
             'name': 'Absensi 05-Sakit',
             'code': 'INPUT_ABS_05',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 #=======================================
 # HITUNG ABSENT (06)
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_06'))
+        cr.execute(sql, (contracts.id, 'INPUT_ABS_06'))
 
         sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, 6))
+        month = date_from.month 
+        year = date_from.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, 6))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -102,7 +102,7 @@ class hr_payslip(models.Model):
             'name': 'Absensi 06-Absent',
             'code': 'INPUT_ABS_06',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 
 #=======================================
@@ -110,12 +110,12 @@ class hr_payslip(models.Model):
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_07'))
+        cr.execute(sql, (contracts.id, 'INPUT_ABS_07'))
 
         sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, 7))
+        month = date_from.month 
+        year = date_from.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, 7))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -124,19 +124,19 @@ class hr_payslip(models.Model):
             'name': 'Absensi 07-Cuti Hamil',
             'code': 'INPUT_ABS_07',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 #=======================================
 # HITUNG CUTI MELAHIRKAN (08)
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_ABS_08'))
+        cr.execute(sql, (contracts.id, 'INPUT_ABS_08'))
 
         sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, 8))
+        month = date_from.month 
+        year = date_from.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, 8))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -145,7 +145,7 @@ class hr_payslip(models.Model):
             'name': 'Absensi 08-Cuti Melahirkan',
             'code': 'INPUT_ABS_08',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 #=============================
 

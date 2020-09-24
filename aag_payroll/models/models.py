@@ -18,7 +18,7 @@ class hr_payslip(models.Model):
     @api.model
     def get_worked_day_lines(self, contracts, date_from, date_to):
         res = super(hr_payslip, self).get_worked_day_lines(contracts, date_from, date_to)
-        _logger.info('------ res = %s', res )
+        _logger.info('------ contract = %s', contracts )
         """
         [  { 'name':'Normal Working Days paid at 100%',
              'code':'WORK100',
@@ -28,7 +28,7 @@ class hr_payslip(models.Model):
         ]
         """
 
-        presence = self.get_presence()
+        presence = self.get_presence(contracts, date_from, date_to)
         absences = self.get_absences(res,presence)
 
         res.append({
@@ -51,7 +51,7 @@ class hr_payslip(models.Model):
         return res 
         
 
-    def get_presence(self):
+    def get_presence(self,contracts, date_from, date_to):
         """cari jumlah kehadiran employee self.employee_id"""
 
         sql = """
@@ -62,7 +62,8 @@ class hr_payslip(models.Model):
         """
 
         cr = self.env.cr 
-        cr.execute(sql, (self.employee_id.id, self.date_from, self.date_to ))
+        _logger.info('---payslip %s', self)
+        cr.execute(sql, (contracts.employee_id.id, date_from, date_to ))
         res = cr.fetchone()
 
         return res[0]

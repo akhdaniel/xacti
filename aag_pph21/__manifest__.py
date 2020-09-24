@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'hr', 'hr_contract', 'hr_payroll_community'],
+    'depends': ['base', 'hr', 'hr_contract', 'hr_payroll_community','aag_add_field'],
 
     # always loaded
     'data': [
