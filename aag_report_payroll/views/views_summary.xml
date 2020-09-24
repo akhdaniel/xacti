@@ -1,0 +1,82 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_report_summary_header_list">
+      <field name="name">aag_report_summary_header_list</field>
+      <field name="model">aag.report_summary_header</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="month"/>
+          <field name="year"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="aag_report_summary_header_form">
+      <field name="name">aag_report_summary_header_form</field>
+      <field name="model">aag.report_summary_header</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="action_generate"
+              string="Generate Report"
+              class="primary"
+              type="object"
+            />
+            <button name="action_export"
+              string="Export XLS"
+              type="object"
+            />
+          </header>
+
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="month"/>
+              <field name="year"/>
+            </group>
+
+            <group>
+              <field name="export_file"/>
+              <field name="export_filename"/>
+            </group>
+          </group>
+          
+
+          <notebook>
+            <page name="detail" string="Detail">
+              <field name="detail_ids">
+                <tree>
+                  <field name="DEPT"/>
+                  <field name="BASIC"/>
+                  <field name="I_TRANSPORT"/>
+                  <field name="D_TRANSPORT"/>
+                  <field name="D_PPH21"/>
+                  <field name="NET"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_report_payroll.action_summary_window">
+      <field name="name">aag_report_heder window</field>
+      <field name="res_model">aag.report_summary_header</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- actions -->
+    <menuitem name="Report Summary Payroll" id="aag_report_payroll.menu_report_summary" 
+      parent="aag_report_payroll.menu_1"
+      action="aag_report_payroll.action_summary_window"/>
+    
+  </data>
+</odoo>

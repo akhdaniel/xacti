@@ -1,3 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_aag_report_header,access_aag_report_header,model_aag_report_header,base.group_user,1,1,1,1
 access_aag_report_detail,access_aag_report_detail,model_aag_report_detail,base.group_user,1,1,1,1
+
+access_aag_report_summery_header,access_aag_report_summery_header,model_aag_report_summary_header,base.group_user,1,1,1,1
+access_aag_report_summary_detail,access_aag_report_summary_detail,model_aag_report_summary_detail,base.group_user,1,1,1,1
