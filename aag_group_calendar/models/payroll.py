@@ -23,7 +23,7 @@ class hr_payslip(models.Model):
 
         amount = 0        
         input_twd_01 = 'INPUT_TWD'
-        amount = self.get_input_code(input_twd_01)
+        amount = self.get_input_code_twd(input_twd_01)
         res.append({
             'name': 'Total Working Day',
             'code': input_twd_01,
@@ -33,7 +33,7 @@ class hr_payslip(models.Model):
 
         return res
 
-    def get_input_code(self, input_code):
+    def get_input_code_twd(self, input_code):
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
         cr.execute(sql, (self.contract_id.id, input_code))

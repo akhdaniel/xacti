@@ -20,7 +20,7 @@ class hr_payslip(models.Model):
         res = super(hr_payslip, self).get_inputs(contracts, date_from, date_to)
         
         input_abs_01 = 'INPUT_ABS_01'
-        amount = self.get_input_code(input_abs_01,1')
+        amount = self.get_input_code(input_abs_01,1)
         res.append({
             'name': 'Input Abs 01',
             'code': input_abs_01,
@@ -29,7 +29,7 @@ class hr_payslip(models.Model):
         })     
 
         input_abs_05 = 'INPUT_ABS_05'
-        amount = self.get_input_code(input_abs_05,5')
+        amount = self.get_input_code(input_abs_05,5)
         res.append({
             'name': 'Input Abs 05',
             'code': input_abs_05,
