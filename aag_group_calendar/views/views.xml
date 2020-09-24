@@ -1,0 +1,94 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="aag_group_calendar.list">
+
+      <field name="name">aag_group_calendar list</field>
+      <field name="model">aag_group_calendar.aag_group_calendar</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="month"/>
+          <field name="year"/>
+          <field name="x_wrkgrp"/>
+          <field name="x_prev_str"/>
+          <field name="x_prev_end"/>
+          <field name="x_curr_str"/>
+          <field name="x_curr_end"/>
+          <field name="x_twd_1st"/>
+          <field name="x_twd_2nd"/>
+          <field name="x_hol01"/>
+          <field name="x_hol02"/>
+          <field name="x_hol03"/>
+          <field name="x_hol04"/>
+          <field name="x_hol05"/>
+          <field name="x_hol06"/>
+          <field name="x_hol07"/>
+          <field name="x_hol08"/>
+          <field name="x_hol09"/>
+          <field name="x_hol10"/>
+          <field name="x_hol11"/>
+          <field name="x_hol12"/>
+          <field name="x_hol13"/>
+          <field name="x_hol14"/>
+          <field name="x_hol15"/>
+          <field name="x_hol16"/>
+          <field name="x_hol17"/>
+          <field name="x_hol18"/>
+          <field name="x_hol19"/>
+          <field name="x_hol20"/>
+          <field name="x_hol21"/>
+          <field name="x_hol22"/>
+          <field name="x_hol23"/>
+          <field name="x_hol24"/>
+          <field name="x_hol25"/>
+          <field name="x_hol26"/>
+          <field name="x_hol27"/>
+          <field name="x_hol28"/>
+          <field name="x_hol29"/>
+          <field name="x_hol30"/>
+          <field name="x_hol31"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_group_calendar.action_window">
+      <field name="name">aag_group_calendar window</field>
+      <field name="res_model">aag_group_calendar.aag_group_calendar</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_group_calendar.action_server">
+      <field name="name">aag_group_calendar server</field>
+      <field name="model_id" ref="model_aag_group_calendar_aag_group_calendar"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_group_calendar" id="aag_group_calendar.menu_root"/>
+-->
+    <!-- menu categories -->
+    <menuitem name="Group Calendar" id="aag_group_calendar.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    <!-- actions -->
+    <menuitem name="Group Calendar" id="aag_group_calendar.menu_1_list" parent="aag_group_calendar.menu_1"
+              action="aag_group_calendar.action_window"/>
+    
+<!-- <menuitem name="Server to list" id="aag_group_calendar" parent="aag_group_calendar.menu_2"
+              action="aag_group_calendar.action_server"/> -->
+
+  </data>
+</odoo>

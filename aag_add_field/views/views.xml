@@ -39,6 +39,7 @@
                 <field name="x_empsts"/>
                 <field name="x_allcd"/>
                 <field name="x_class"/>
+                <field name="x_wrkgrp"/>
                 <field name="x_direct"/>
                 <field name="x_spmi"/>
                 <field name="x_spmi_med"/>
