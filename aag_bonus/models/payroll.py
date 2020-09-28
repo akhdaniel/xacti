@@ -26,8 +26,8 @@ class hr_payslip(models.Model):
         cr.execute(sql, (contracts.id, 'INPUT_BONUS'))
 
         sql = """select amount from aag_bonus_aag_bonus where idno=%s and month=%s and year=%s"""
-        month = date_from.month 
-        year = date_from.year 
+        month = date_to.month 
+        year = date_to.year 
         cr.execute(sql, (contracts.employee_id.x_idno, month, year))
         result = cr.fetchone()
         if result:

@@ -23,12 +23,12 @@ class hr_payslip(models.Model):
         
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_BPJSKES_EMP'))
+        cr.execute(sql, (contracts.id, 'INPUT_BPJSKES_EMP'))
 
         sql = """select amount_dtk from aag_bpjs_kesehatan_aag_bpjs_kesehatan where idno=%s and month=%s and year=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year 
-        cr.execute(sql, (self.employee_id.x_idno, month, year))
+        month = date_to.month 
+        year = date_to.year 
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -37,19 +37,19 @@ class hr_payslip(models.Model):
             'name': 'BPJS-Kes DTK',
             'code': 'INPUT_BPJSKES_EMP',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 
         amount = 0
         
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_BPJSKES_COM'))
+        cr.execute(sql, (contracts.id, 'INPUT_BPJSKES_COM'))
 
         sql = """select amount_dtp from aag_bpjs_kesehatan_aag_bpjs_kesehatan where idno=%s and month=%s and year=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year 
-        cr.execute(sql, (self.employee_id.x_idno, month, year))
+        month = date_to.month 
+        year = date_to.year 
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -58,7 +58,7 @@ class hr_payslip(models.Model):
             'name': 'BPJS-Kes DTP',
             'code': 'INPUT_BPJSKES_COM',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 
         return res         

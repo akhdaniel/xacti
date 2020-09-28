@@ -41,6 +41,7 @@ class payslip(models.Model):
             selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
 
+
         pph_all = self.pot_pph 
 
         # cari selisih medical
@@ -109,8 +110,11 @@ class payslip(models.Model):
         setattr(self, komponen, pph_all - self.pot_pph)
 
 
-    def _calculate_pph(self, medical=True, overtime=True, thr=True, bonus=True):
+    def _calculate_pph(self, medical=True, overtime=True, thr=True, bonus=True ):
+    #    _logger.info("--- awal bruto = %s", self.bruto)
         _logger.info("--- awal bruto = %s", self.bruto)
+    
+    #    _logger.info("--- new tunj_pph = %s", self.tunj_pph)
         _logger.info("--- new tunj_pph = %s", self.tunj_pph)
 
 
@@ -307,20 +311,16 @@ class payslip(models.Model):
                 else:
                     pph21 += (range.maximum-range.minimum+1)*range.rate/100
                     sisa_pkp = sisa_pkp-(range.maximum-range.minimum+1)
-                    range = self.contract_id.company_id.pkp_ids[3]
+                    range = contracts.company_id.pkp_ids[3]
                     pph21 += sisa_pkp*range.rate/100
         else:
             pph21 = self.pkp*range.rate/100        
         return pph21
 
-    # def cari_akumulasi(self, medical=True, overtime=True, thr=True, bonus=True):
     def cari_akumulasi(self, medical=True, overtime=True, thr=True, bonus=True):
-    
         cr = self.env.cr
         sql = "select * from aag_pph_accumulation_aag_pph_accumulation where idno=%s"
-        # cr.execute(sql, (self.employee_id.x_idno,))
-        cr.execute(sql, (self.contract_id.employee_id.x_idno,))
-
+        cr.execute(sql, (self.employee_id.x_idno,))
         akumulasi = cr.dictfetchone()
 
         if not medical:

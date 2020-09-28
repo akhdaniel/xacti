@@ -24,7 +24,7 @@
           </field>
       </field>
     </record>
-  
+
     <record model="ir.ui.view" id="employee_IDNO">
       <field name="name">employee_IDNO</field>
       <field name="model">hr.employee</field>

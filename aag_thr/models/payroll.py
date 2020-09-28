@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 from datetime import date, datetime, time, timedelta
 
 from dateutil.relativedelta import relativedelta
@@ -23,11 +24,11 @@ class hr_payslip(models.Model):
         
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_THR'))
+        cr.execute(sql, (contracts.id, 'INPUT_THR'))
 
         sql = """select amount from aag_thr_aag_thr where idno=%s and month=%s and year=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year 
+        month = date_to.month 
+        year = date_to.year 
         cr.execute(sql, (self.employee_id.x_idno, month, year))
         result = cr.fetchone()
         if result:
@@ -37,7 +38,7 @@ class hr_payslip(models.Model):
             'name': 'T H R',
             'code': 'INPUT_THR',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 
-        return res         
+        return res       

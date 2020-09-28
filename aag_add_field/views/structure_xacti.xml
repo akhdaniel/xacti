@@ -59,7 +59,7 @@ result = performance
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
 transport = contract.x_trans 
-if employee.x_class == "WK": transport=contract.x_trans * 21
+if employee.x_class == "WK": transport=contract.x_trans * inputs.INPUT_TWD.amount
 result = transport
 ]]>
 </field>

@@ -23,12 +23,12 @@ class hr_payslip(models.Model):
         
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_KOP'))
+        cr.execute(sql, (contracts.id, 'INPUT_KOP'))
 
         sql = """select amount from aag_koperasi_aag_koperasi where idno=%s and month=%s and year=%s"""
-        month = self.date_to.month 
-        year = self.date_to.year 
-        cr.execute(sql, (self.employee_id.x_idno, month, year))
+        month = date_to.month 
+        year = date_to.year 
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -37,7 +37,7 @@ class hr_payslip(models.Model):
             'name': 'Potongan Koperasi',
             'code': 'INPUT_KOP',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 
         return res         

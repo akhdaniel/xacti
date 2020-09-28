@@ -41,6 +41,7 @@ class payslip(models.Model):
             selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
 
+
         pph_all = self.pot_pph 
 
         # cari selisih medical
@@ -109,11 +110,10 @@ class payslip(models.Model):
         setattr(self, komponen, pph_all - self.pot_pph)
 
 
-    def _calculate_pph(self, medical=True, overtime=True, thr=True, bonus=True):
+    def _calculate_pph(self, medical=True, overtime=True, thr=True, bonus=True ):
         _logger.info("--- awal bruto = %s", self.bruto)
         _logger.info("--- new tunj_pph = %s", self.tunj_pph)
-
-
+    
 # ==== GET DATA FROM PAYSLIP TO FIND CUURENT MONTH ACTUAL INCOME/DEDUCTION ==== 
  # ==== INIT. INCOME RULE'S CODE ==== 
     # == REGULAR INCOME
@@ -313,14 +313,10 @@ class payslip(models.Model):
             pph21 = self.pkp*range.rate/100        
         return pph21
 
-    # def cari_akumulasi(self, medical=True, overtime=True, thr=True, bonus=True):
     def cari_akumulasi(self, medical=True, overtime=True, thr=True, bonus=True):
-    
         cr = self.env.cr
         sql = "select * from aag_pph_accumulation_aag_pph_accumulation where idno=%s"
-        # cr.execute(sql, (self.employee_id.x_idno,))
-        cr.execute(sql, (self.contract_id.employee_id.x_idno,))
-
+        cr.execute(sql, (self.employee_id.x_idno,))
         akumulasi = cr.dictfetchone()
 
         if not medical:

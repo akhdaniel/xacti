@@ -25,12 +25,12 @@ class hr_payslip(models.Model):
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_DEDUC_01'))
+        cr.execute(sql, (contracts.id, 'INPUT_DEDUC_01'))
 
         sql = """select sum(amount) from aag_other_deduction_aag_other_deduction where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, '01'))
+        month = date_to.month 
+        year = date_to.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, '01'))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -39,19 +39,19 @@ class hr_payslip(models.Model):
             'name': 'Other Deduction 01-Gaji Pokok',
             'code': 'INPUT_DEDUC_01',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 #=======================================
 # HITUNG DEDUCTION 05-TRANSPORT
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_DEDUC_05'))
+        cr.execute(sql, (contracts.id, 'INPUT_DEDUC_05'))
 
         sql = """select sum(amount) from aag_other_deduction_aag_other_deduction where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, '05'))
+        month = date_to.month 
+        year = date_to.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, '05'))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -60,19 +60,19 @@ class hr_payslip(models.Model):
             'name': 'Other Deduction 05-Transport',
             'code': 'INPUT_DEDUC_05',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 #=======================================
 # HITUNG DEDUCTION 08-LAIN LAIN
 #=======================================
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_DEDUC_08'))
+        cr.execute(sql, (contracts.id, 'INPUT_DEDUC_08'))
 
         sql = """select sum(amount) from aag_other_deduction_aag_other_deduction where idno=%s and month=%s and year=%s and code=%s"""
-        month = self.date_from.month 
-        year = self.date_from.year
-        cr.execute(sql, (self.employee_id.x_idno, month, year, '08'))
+        month = date_to.month 
+        year = date_to.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, '08'))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -81,7 +81,7 @@ class hr_payslip(models.Model):
             'name': 'Other Deduction 08-Lain Lain',
             'code': 'INPUT_DEDUC_08',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 
         return res         

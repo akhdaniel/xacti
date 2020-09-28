@@ -23,12 +23,12 @@ class hr_payslip(models.Model):
         
         cr = self.env.cr 
         sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (self.contract_id.id, 'INPUT_MEDICAL'))
+        cr.execute(sql, (contracts.id, 'INPUT_MEDICAL'))
 
         sql = """select sum(medamt) from aag_medical_reimburse_aag_medical_reimburse where idno=%s and month=%s and year=%s and medcod <>%s"""
-        month = self.date_to.month 
-        year = self.date_to.year 
-        cr.execute(sql, (self.employee_id.x_idno, month, year,'C'))
+        month = date_to.month 
+        year = date_to.year 
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year,'C'))
         result = cr.fetchone()
         if result:
             amount = result[0]
@@ -37,7 +37,7 @@ class hr_payslip(models.Model):
             'name': 'Medical Reimburse',
             'code': 'INPUT_MEDICAL',
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })
 
         return res         

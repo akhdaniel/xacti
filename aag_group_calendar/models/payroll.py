@@ -16,19 +16,18 @@ class hr_payslip(models.Model):
     _inherit = 'hr.payslip'
 
     @api.model
-#    def get_inputs(self, contracts, date_from, date_to):
     def get_inputs(self, contracts, date_from, date_to):
 
         res = super(hr_payslip, self).get_inputs(contracts, date_from, date_to)
 
         amount = 0        
-        input_twd_01 = 'INPUT_TWD'
-        amount = self.get_input_code_twd(input_twd_01, contracts, date_from, date_to)
+        input_twd = 'INPUT_TWD'
+        amount = self.get_input_code_twd(input_twd, contracts, date_from, date_to)
         res.append({
             'name': 'Total Working Day',
-            'code': input_twd_01,
+            'code': input_twd,
             'amount': amount,
-            'contract_id': self.contract_id.id 
+            'contract_id': contracts.id 
         })     
 
         return res
