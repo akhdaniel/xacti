@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 
 
 
-class payslip(models.Model):
+class hr_payslip(models.Model):
     _inherit = 'hr.payslip'
     ptkp = fields.Integer("PTKP", related="employee_id.ptkp_id.nominal")
     bruto = fields.Integer("Bruto", )
@@ -27,46 +27,49 @@ class payslip(models.Model):
     pph21reg = fields.Integer("PPh21 Regular")
     
     def compute_sheet(self):
-        res = super(payslip, self).compute_sheet() 
-        _logger.info("--- compute sheet --- %s", self.line_ids )
-
-        # dengan medical, overtime
-        self._calculate_pph(medical=True, overtime=True, thr=True, bonus=True)
-        i=0
-        selisih = round(self.pot_pph - self.tunj_pph)
-        while selisih != 0:
-            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
-            self.tunj_pph = self.pot_pph
-            self._calculate_pph(medical=True, overtime=True, thr=True, bonus=True) 
-            selisih = round(self.pot_pph - self.tunj_pph)
-            i+=1
-
-        pph_all = self.pot_pph 
-
-        # cari selisih medical
-        self.cari_selisih('pph21med', pph_all)
-    
-        # cari selisih overtime
-        self.cari_selisih('pph21ovt', pph_all)
-    
-        # cari selisih THR
-        self.cari_selisih('pph21thr', pph_all)
-    
-        # cari selisih bonus 
-        self.cari_selisih('pph21bon', pph_all)
-    
-        irr_acc = self.find_irr_acc()        
-        self.pph21ovt = self.pph21ovt - (irr_acc['x_pph_accovt'] if irr_acc else 0)
-        self.pph21med = self.pph21med - (irr_acc['x_pph_accmed'] if irr_acc else 0)
-        self.pph21thr = self.pph21thr - (irr_acc['x_pph_accthr'] if irr_acc else 0)
-        self.pph21bon = self.pph21bon - (irr_acc['x_pph_accbon'] if irr_acc else 0)
-
-        self.pot_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
-        self.tunj_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
-
-        self.pph21irr = self.pph21ovt + self.pph21med + self.pph21thr + self.pph21bon
-        self.pph21reg = self.pot_pph - self.pph21irr
+        
+        res = super(hr_payslip, self).compute_sheet() 
+        for payslip in self:
                 
+            _logger.info("--- compute sheet --- %s", payslip.line_ids )
+
+            # dengan medical, overtime
+            payslip._calculate_pph(medical=True, overtime=True, thr=True, bonus=True)
+            i=0
+            selisih = round(payslip.pot_pph - payslip.tunj_pph)
+            while selisih != 0:
+                _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+                payslip.tunj_pph = payslip.pot_pph
+                payslip._calculate_pph(medical=True, overtime=True, thr=True, bonus=True) 
+                selisih = round(payslip.pot_pph - payslip.tunj_pph)
+                i+=1
+
+            pph_all = payslip.pot_pph 
+
+            # cari selisih medical
+            payslip.cari_selisih('pph21med', pph_all)
+        
+            # cari selisih overtime
+            payslip.cari_selisih('pph21ovt', pph_all)
+        
+            # cari selisih THR
+            payslip.cari_selisih('pph21thr', pph_all)
+        
+            # cari selisih bonus 
+            payslip.cari_selisih('pph21bon', pph_all)
+        
+            irr_acc = payslip.find_irr_acc()        
+            payslip.pph21ovt = payslip.pph21ovt - (irr_acc['x_pph_accovt'] if irr_acc else 0)
+            payslip.pph21med = payslip.pph21med - (irr_acc['x_pph_accmed'] if irr_acc else 0)
+            payslip.pph21thr = payslip.pph21thr - (irr_acc['x_pph_accthr'] if irr_acc else 0)
+            payslip.pph21bon = payslip.pph21bon - (irr_acc['x_pph_accbon'] if irr_acc else 0)
+
+            payslip.pot_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
+            payslip.tunj_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
+
+            payslip.pph21irr = payslip.pph21ovt + payslip.pph21med + payslip.pph21thr + payslip.pph21bon
+            payslip.pph21reg = payslip.pot_pph - payslip.pph21irr
+                    
         return res 
 
     def cari_selisih(self, komponen, pph_all):
@@ -110,13 +113,13 @@ class payslip(models.Model):
 
 
     def _calculate_pph(self, medical=True, overtime=True, thr=True, bonus=True):
-        _logger.info("--- awal bruto = %s", self.bruto)
-        _logger.info("--- new tunj_pph = %s", self.tunj_pph)
+    #        _logger.info("--- awal bruto = %s", self.bruto)
+    #        _logger.info("--- new tunj_pph = %s", self.tunj_pph)
 
 
-# ==== GET DATA FROM PAYSLIP TO FIND CUURENT MONTH ACTUAL INCOME/DEDUCTION ==== 
- # ==== INIT. INCOME RULE'S CODE ==== 
-    # == REGULAR INCOME
+    # ==== GET DATA FROM PAYSLIP TO FIND CUURENT MONTH ACTUAL INCOME/DEDUCTION ==== 
+    # ==== INIT. INCOME RULE'S CODE ==== 
+        # == REGULAR INCOME
         BASIC=0
         I_BASIC=0
         I_TPK=0
@@ -139,7 +142,7 @@ class payslip(models.Model):
         I_THR=0
         I_BONUS=0
 
- # ==== INIT. DEDUCTION RULE'S CODE ==== 
+# ==== INIT. DEDUCTION RULE'S CODE ==== 
     # == REGULAR INCOME
         D_BASIC=0
     #    D_TPK=0
@@ -286,7 +289,7 @@ class payslip(models.Model):
         
         self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan, 0)
         # bisa minus, kalau minus -> pot_pph=0.. min(pot_pph, 0 )
-        # self.pot_pph = max(self.pot_pph, 0)
+            # rec.pot_pph = max(rec.pot_pph, 0)
     
     def get_pph21_setahun(self):
         sisa_pkp = self.pkp 

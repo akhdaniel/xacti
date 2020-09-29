@@ -4,16 +4,49 @@
 
     <record model="ir.ui.view" id="aag_koperasi.list">
       <field name="name">aag_koperasi list</field>
-      <field name="model">aag_koperasi.aag_koperasi</field>
+      <field name="model">aag_koperasi.aag_koperasi_header</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="idno"/>
-          <field name="amount"/>
-          <field name="remark"/>
           <field name="month"/>
           <field name="year"/>
-          <field name="status"/>
+          <field name="state"/>
         </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="aag_koperasi.form">
+      <field name="name">aag_koperasi form</field>
+      <field name="model">aag_koperasi.aag_koperasi_header</field>
+      <field name="arch" type="xml">
+        <form>
+        <header>
+          <button type='object' name='button_confirm' string='Confirm' states='draft'/>
+          <button type='object' name='button_verification' string='Verification' states='open'/>
+          <button type='object' name='button_cancel' string='Cancel' states='open,done'/>
+          <field name='state' widget='statusbar' />
+        </header>
+          <group>
+            <field name="month"/>
+            <field name="year"/>
+          </group>
+          <notebook>
+            <page string='Data Detail'>
+            <field name='detail_ids'>
+              <tree>
+                <field name='idno'/>
+                <field name='amount'/>
+                <field name='basic'/>
+                <field name='trans'/>
+                <field name='remark'/>
+                <field name='month'/>
+                <field name='year'/>
+                <field name='status'/>
+              </tree>
+            </field>
+            </page>
+          </notebook>
+
+        </form>
       </field>
     </record>
 
@@ -22,7 +55,7 @@
 
     <record model="ir.actions.act_window" id="aag_koperasi.action_window">
       <field name="name">aag_koperasi window</field>
-      <field name="res_model">aag_koperasi.aag_koperasi</field>
+      <field name="res_model">aag_koperasi.aag_koperasi_header</field>
       <field name="view_mode">tree,form</field>
     </record>
 
