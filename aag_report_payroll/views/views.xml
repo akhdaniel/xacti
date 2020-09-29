@@ -51,9 +51,17 @@
                 <tree>
                   <field name="IDNO"/>
                   <field name="BASIC"/>
+                  <field name="I_THR"/>
+                  <field name="I_BONUS"/>
+                  <field name="I_TPK"/>
+                  <field name="I_OCCUP"/>
+                  <field name="I_FAMILY"/>
+                  <field name="I_FUNCTIONAL"/>
+                  <field name="I_PERFORM"/>
+                  <field name="I_MEDIC"/>
                   <field name="I_TRANSPORT"/>
-                  <field name="D_TRANSPORT"/>
                   <field name="D_PPH21"/>
+                  <field name="D_TRANSPORT"/>
                   <field name="NET"/>
                 </tree>
               </field>
