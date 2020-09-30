@@ -83,7 +83,7 @@ result = transport
             <field name="amount_python_compute"><![CDATA[
 transport = contract.x_trans 
 if employee.x_class == "WK": transport=contract.x_trans * 21
-result = contract.wage + contract.x_occup + transport + contract.x_family + contract.x_presence
+result = contract.wage + contract.x_occup + transport + contract.x_family + contract.x_presence + contract.x_functional
 ]]>
 </field>
         </record>
@@ -123,7 +123,7 @@ result = contract.wage + contract.x_occup + transport + contract.x_family + cont
 dph_pensiun = 0
 transport = contract.x_trans 
 if employee.x_class == "WK": transport=contract.x_trans * 21
-dph_pensiun = contract.wage + contract.x_occup + transport + contract.x_family + contract.x_presence + contract.x_perform
+dph_pensiun = contract.wage + contract.x_occup + transport + contract.x_family + contract.x_presence + contract.x_functional
 if dph_pensiun > contract.company_id.x_max_bpjspen: dph_pensiun = contract.company_id.x_max_bpjspen
 result = dph_pensiun
 ]]>

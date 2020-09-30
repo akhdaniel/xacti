@@ -50,7 +50,7 @@ result = tpk
 <!--            <field name="amount_python_compute">result=(contract.x_trans/21)*(inputs.INPUT_ABS_06.amount+inputs.INPUT_ABS_05.amount) + inputs.INPUT_DEDUC_05.amount</field> -->
             <field name="amount_python_compute"><![CDATA[
 pot_transport = 0
-count_abs = inputs.INPUT_ABS_06.amount + inputs.INPUT_ABS_05.amount
+count_abs = inputs.INPUT_ABS_05.amount + inputs.INPUT_ABS_06.amount +inputs.INPUT_ABS_07.amount + inputs.INPUT_ABS_08.amount
 if employee.x_class == 'WK': pot_transport = contract.x_trans * count_abs + inputs.INPUT_DEDUC_05.amount
 else: pot_transport = (contract.x_trans/21) * count_abs + inputs.INPUT_DEDUC_05.amount
 result = pot_transport
