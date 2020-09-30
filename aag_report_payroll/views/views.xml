@@ -57,9 +57,15 @@
                   <field name="I_OCCUP"/>
                   <field name="I_FAMILY"/>
                   <field name="I_FUNCTIONAL"/>
-                  <field name="I_PERFORM"/>
-                  <field name="I_MEDIC"/>
+                  <field name="I_MEDICAL"/>
                   <field name="I_TRANSPORT"/>
+                  <field name="I_PERFORM"/>
+                  <field name="I_MEAL"/>
+                  <field name="I_SHIFT"/>
+                  <field name="I_LEAVE"/>
+                  <field name="I_OTHER"/>
+                  <field name="I_OVERTIME"/>
+
                   <field name="D_PPH21"/>
                   <field name="D_TRANSPORT"/>
                   <field name="NET"/>

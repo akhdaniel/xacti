@@ -1,5 +1,9 @@
 <odoo>
     <data>
+        <record id="category_iqnore" model="hr.salary.rule.category">
+            <field name="name">x_ignore</field>
+            <field name="code">IGN</field>
+        </record>
 
         <record id="rule_income_gaji_pokok" model="hr.salary.rule">
             <field name="name">x_Income Gaji Pokok</field>
@@ -30,10 +34,27 @@
             <field name="name">x_Tunj. Shift</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
             <field name="code">I_SHIFT</field>
-            <field name="sequence">80</field>
+            <field name="sequence">81</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = inputs.INPUT_INCOME_10.amount</field>
         </record>
+        <record id="rule_pengganti_cuti" model="hr.salary.rule">
+            <field name="name">x_Pengganti Cuti</field>
+            <field name="category_id" ref="category_iqnore"/>
+            <field name="code">I_LEAVE</field>
+            <field name="sequence">82</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = 0</field>
+        </record>
+        <record id="rule_uang_lembur" model="hr.salary.rule">
+            <field name="name">x_Uang Lembur</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="code">I_OVERTIME</field>
+            <field name="sequence">83</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = 0</field>
+        </record>
+
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
             <field name="name">x_Karyawan Tetap NS</field>
             <field name="parent_id" ref="hr_payroll_community.structure_base"/>
@@ -43,6 +64,8 @@
              (4,ref('rule_income_lain_lain')),
              (4,ref('rule_uang_makan')),
              (4,ref('rule_tunj_shift')),
+             (4,ref('rule_pengganti_cuti')),
+             (4,ref('rule_uang_lembur')),
              ]"/>
         </record>
 
