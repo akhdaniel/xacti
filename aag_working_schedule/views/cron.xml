@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <!-- scheduler : process import -->
+        <record model="ir.cron" id="cron_update_contract">
+            <field name="name">Update Working Schedule in Contract</field>
+            <field name="active">True</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="aag_working_schedule.model_work_schedule_work_schedule"/>
+            <field name="code">model.cron_update_contract()</field>
+            <field name="state">code</field>
+        </record>    
+           
+    </data>
+</odoo>

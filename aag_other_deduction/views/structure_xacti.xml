@@ -4,10 +4,19 @@
         <record id="rule_pot_lain_lain" model="hr.salary.rule">
             <field name="name">x_Pot. Lain Lain</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
-            <field name="code">POT_LAIN2</field>
+            <field name="code">D_OTHER</field>
             <field name="sequence">630</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result=inputs.INPUT_DEDUC_08.amount</field>
+        </record>
+
+        <record id="rule_pot_medical" model="hr.salary.rule">
+            <field name="name">x_Pot. Medical</field>
+            <field name="category_id" ref="hr_payroll_community.DED"/>
+            <field name="code">D_MEDICAL</field>
+            <field name="sequence">631</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_DEDUC_04.amount</field>
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
@@ -16,6 +25,7 @@
             <field name="code">KTNS</field>
             <field name="rule_ids" eval="[
              (4,ref('rule_pot_lain_lain')),
+             (4,ref('rule_pot_medical')),
              ]"/>
         </record>
 

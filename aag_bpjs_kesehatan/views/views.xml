@@ -1,21 +1,51 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-
     <record model="ir.ui.view" id="aag_bpjs_kesehatan.list">
       <field name="name">aag_bpjs_kesehatan list</field>
-      <field name="model">aag_bpjs_kesehatan.aag_bpjs_kesehatan</field>
+      <field name="model">aag_bpjs_kesehatan.aag_bpjs_kesehatan_header</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="idno"/>
-          <field name="amount_dtk"/>
-          <field name="amount_dtp"/>
-          <field name="code"/>
-          <field name="remark"/>
           <field name="month"/>
           <field name="year"/>
-          <field name="status"/>
+          <field name="state"/>
         </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="aag_bpjs_kesehatan.form">
+      <field name="name">aag_bpjs_kesehatan form</field>
+      <field name="model">aag_bpjs_kesehatan.aag_bpjs_kesehatan_header</field>
+      <field name="arch" type="xml">
+        <form>
+        <header>
+          <button type='object' name='button_confirm' string='Confirm' states='draft'/>
+          <button type='object' name='button_verification' string='Verification' states='open'/>
+          <button type='object' name='button_cancel' string='Cancel' states='open,done'/>
+          <field name='state' widget='statusbar' />
+        </header>
+          <group>
+            <field name="month"/>
+            <field name="year"/>
+          </group>
+          <notebook>
+            <page string='Data Detail'>
+            <field name='detail_ids'>
+              <tree>
+                <field name="idno"/>
+                <field name="amount_dtk"/>
+                <field name="amount_dtp"/>
+                <field name="code"/>
+                <field name="remark"/>
+                <field name="month"/>
+                <field name="year"/>
+                <field name="status"/>
+              </tree>
+            </field>
+            </page>
+          </notebook>
+
+        </form>
       </field>
     </record>
 
@@ -24,7 +54,7 @@
 
     <record model="ir.actions.act_window" id="aag_bpjs_kesehatan.action_window">
       <field name="name">aag_bpjs_kesehatan window</field>
-      <field name="res_model">aag_bpjs_kesehatan.aag_bpjs_kesehatan</field>
+      <field name="res_model">aag_bpjs_kesehatan.aag_bpjs_kesehatan_header</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -51,14 +81,15 @@
 -->
     <!-- menu categories -->
 
-    <menuitem name="BPJS" id="aag_bpjs_kesehatan.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    <menuitem name="BPJS Kes." id="aag_bpjs_kesehatan.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
 
     <!-- actions -->
 
-    <menuitem name="BPJS-Kesehatan" id="aag_bpjs_kesehatan.menu_1_list" parent="aag_bpjs_kesehatan.menu_1"
+    <menuitem name="Potongan BPJS Kesehatan" id="aag_bpjs_kesehatan.menu_1_list" parent="aag_bpjs_kesehatan.menu_1"
               action="aag_bpjs_kesehatan.action_window"/>
     <!-- <menuitem name="Server to list" id="aag_bpjs_kesehatan" parent="aag_bpjs_kesehatan.menu_2"
               action="aag_bpjs_kesehatan.action_server"/> -->
+
 
   </data>
 </odoo>

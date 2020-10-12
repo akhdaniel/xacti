@@ -1,0 +1,91 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="work_schedule_list">
+      <field name="name">work_schedule list</field>
+      <field name="model">work_schedule.work_schedule</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="x_year"/>
+          <field name="x_month"/>
+          <field name="x_wrkgrp"/>
+          <field name="x_day01"/>
+          <field name="x_day02"/>
+          <field name="x_day03"/>
+          <field name="x_day04"/>
+          <field name="x_day05"/>
+          <field name="x_day06"/>
+          <field name="x_day07"/>
+          <field name="x_day08"/>
+          <field name="x_day09"/>
+          <field name="x_day10"/>
+          <field name="x_day11"/>
+          <field name="x_day12"/>
+          <field name="x_day13"/>
+          <field name="x_day14"/>
+          <field name="x_day15"/>
+          <field name="x_day16"/>
+          <field name="x_day17"/>
+          <field name="x_day18"/>
+          <field name="x_day19"/>
+          <field name="x_day20"/>
+          <field name="x_day21"/>
+          <field name="x_day22"/>
+          <field name="x_day23"/>
+          <field name="x_day24"/>
+          <field name="x_day25"/>
+          <field name="x_day26"/>
+          <field name="x_day27"/>
+          <field name="x_day28"/>
+          <field name="x_day29"/>
+          <field name="x_day30"/>
+          <field name="x_day31"/>
+          <field name="x_lasrot"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="work_schedule_action_window">
+      <field name="name">work_schedule window</field>
+      <field name="res_model">work_schedule.work_schedule</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="work_schedule.action_server">
+      <field name="name">aag_work_schedule server</field>
+      <field name="model_id" ref="model_work_schedule_work_schedule"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="work_schedule" id="work_schedule.menu_root"/>
+-->
+    <!-- menu categories -->
+
+    <menuitem name="Work Schedule" id="work_schedule_menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Work Schedule" id="work_schedule_menu_1_list" parent="work_schedule_menu_1"
+              action="work_schedule_action_window"/>
+    <!-- <menuitem name="Server to list" id="work_schedule" parent="work_schedule.menu_2"
+              action="work_schedule.action_server"/> -->
+
+  </data>
+</odoo>

@@ -8,13 +8,18 @@ class employee(models.Model):
     _inherit = 'hr.employee'
     x_idno = fields.Integer(string='Employee IDNO')
     x_empsts = fields.Char(string='Employee Status')
-    x_allcd = fields.Char(string='Grade Code')
     x_wrkgrp = fields.Char(string='Working Group')
+    x_dept = fields.Integer(string='Dept Code')
+    x_sect = fields.Integer(string='Section Code')
+    x_sbsec = fields.Integer(string='Sub-Section Code')
+    x_line = fields.Char(string='Line')
+    x_side = fields.Char(string='Side')
+    x_post = fields.Char(string='Post')
+    x_allcd = fields.Char(string='Grade Code')
     x_class = fields.Char(string='Class Code')
     x_direct = fields.Boolean(string='Direct Employee')
     x_spmi = fields.Boolean(string='Union Member')
     x_spmi_med = fields.Integer(string='Med. Donation Code')
-#   x_spmimed = fields.Integer(string='Med. Donation Code')
     x_coop = fields.Boolean(string='Coop. Member')
     x_nokop = fields.Char(string='Cooperation ID')
     x_nobpjskes = fields.Char(string='BPJS-Kes ID')
@@ -22,6 +27,10 @@ class employee(models.Model):
     x_nobpjstk = fields.Char(string='BPJS-TK ID')
     x_nobpjspen = fields.Char(string='BPJS Pension ID')
     x_npwp = fields.Char(string='Tax ID / NPWP')
+    x_accno = fields.Char(string='Bank Account#')
+    x_accname = fields.Char(string='Bank Account Name')
+
+    x_salprc = fields.Boolean(string='Salary Process')
 
     idno = fields.Integer(string='IDNO')
 

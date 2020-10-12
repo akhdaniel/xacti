@@ -37,10 +37,16 @@
               <group>
                 <field name="x_idno"/>
                 <field name="x_empsts"/>
+                <field name="x_wrkgrp"/>
+                <field name="x_dept"/>
+                <field name="x_sect"/>
+                <field name="x_sbsec"/>
+                <field name="x_line"/>
+                <field name="x_side"/>
+                <field name="x_post"/>
+                <field name="x_direct"/>
                 <field name="x_allcd"/>
                 <field name="x_class"/>
-                <field name="x_wrkgrp"/>
-                <field name="x_direct"/>
                 <field name="x_spmi"/>
                 <field name="x_spmi_med"/>
                 <field name="x_coop"/>
@@ -50,6 +56,9 @@
                 <field name="x_nobpjstk"/>
                 <field name="x_nobpjspen"/>
                 <field name="x_npwp"/>
+                <field name="x_accno"/>
+                <field name="x_accname"/>
+                <field name="x_salprc"/>
               </group>
             </page>
           </notebook>

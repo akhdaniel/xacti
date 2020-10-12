@@ -42,6 +42,28 @@ class hr_payslip(models.Model):
             'contract_id': contracts.id 
         })
 #=======================================
+# HITUNG DEDUCTION 04-MEDICAL
+#=======================================
+        cr = self.env.cr 
+        sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
+        cr.execute(sql, (contracts.id, 'INPUT_DEDUC_04'))
+
+        sql = """select sum(amount) from aag_other_deduction_aag_other_deduction where idno=%s and month=%s and year=%s and code=%s"""
+        month = date_to.month 
+        year = date_to.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, '04'))
+        result = cr.fetchone()
+        if result:
+            amount = result[0]
+
+        res.append({
+            'name': 'Other Deduction 04-Medical',
+            'code': 'INPUT_DEDUC_04',
+            'amount': amount,
+            'contract_id': contracts.id 
+        })
+
+#=======================================
 # HITUNG DEDUCTION 05-TRANSPORT
 #=======================================
         cr = self.env.cr 
@@ -62,6 +84,7 @@ class hr_payslip(models.Model):
             'amount': amount,
             'contract_id': contracts.id 
         })
+
 #=======================================
 # HITUNG DEDUCTION 08-LAIN LAIN
 #=======================================

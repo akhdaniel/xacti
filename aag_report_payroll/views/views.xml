@@ -51,6 +51,7 @@
                 <tree>
                   <field name="IDNO"/>
                   <field name="BASIC"/>
+                  <field name="I_BASIC"/>
                   <field name="I_THR"/>
                   <field name="I_BONUS"/>
                   <field name="I_TPK"/>
@@ -65,9 +66,24 @@
                   <field name="I_LEAVE"/>
                   <field name="I_OTHER"/>
                   <field name="I_OVERTIME"/>
-
-                  <field name="D_PPH21"/>
+                  <field name="I_RSGALLW"/>
+                  <field name="I_DONATION"/>
+                  <field name="I_PRVROUND"/>
+                  <field name="D_LOAN"/>
+                  <field name="D_SPMI"/>
+                  <field name="D_KOPERASI"/>
+                  <field name="D_BASIC"/>
                   <field name="D_TRANSPORT"/>
+                  <field name="D_OTHER"/>
+                  <field name="D_MEDICAL"/>
+                  <field name="D_JHTEMP"/>
+                  <field name="D_BPJSKES_EMP"/>
+                  <field name="D_PENEMP"/>
+                  <field name="D_CURRND"/>
+                  <field name="C_PPH21"/>
+                  <field name="C_JHTCOM"/>
+                  <field name="C_BPJSKES_COM"/>
+                  <field name="C_PENCOM"/>
                   <field name="NET"/>
                 </tree>
               </field>
