@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aag_payslip_print_aag_payslip_print,aag_payslip_print.aag_payslip_print,model_aag_payslip_print_aag_payslip_print,base.group_user,1,1,1,1

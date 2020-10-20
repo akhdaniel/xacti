@@ -1,0 +1,214 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="aag_payslip_print.list">
+      <field name="name">aag_payslip_print list</field>
+      <field name="model">aag_payslip_print.aag_payslip_print</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+        <report 
+            id="action_report_payslip2" 
+            model="hr.payslip" 
+            string="Payslip2"
+            report_type="qweb-pdf"
+            name="aag_payslip_print.report_payslip2"
+            file="aag_payslip_print.report_payslip2"
+            print_report_name="'Payslip - %s' % (object.employee_id.name)"
+        />
+<template id="aag_payslip_print.report_payslip2">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Salary Slip-2</h2>
+                    <p t-field="o.name"/>
+
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><span t-field="o.employee_id"/></td>
+                            <td><strong>Designation</strong></td>
+                            <td><span t-field="o.employee_id.job_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Address</strong></td>
+                            <td colspan="3">
+                                <div t-field="o.employee_id.address_home_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email</strong></td>
+                            <td><span t-field="o.employee_id.work_email"/></td>
+                            <td><strong>Identification No</strong></td>
+                            <td><span t-field="o.employee_id.identification_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reference</strong></td>
+                            <td><span t-field="o.number"/></td>
+                            <td><strong>Bank Account</strong></td>
+                            <td><span t-field="o.employee_id.bank_account_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date From</strong></td>
+                            <td><span t-field="o.date_from"/></td>
+                            <td><strong>Date To</strong></td>
+                            <td><span t-field="o.date_to"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Quantity/rate</th>
+                                <th>Amount</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                <td><span t-field="line.code"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td><span t-field="line.quantity"/></td>
+                                <td><span t-esc="line.amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                <td><span t-esc="line.total"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-right"><strong>Authorized signature</strong></p>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+<template id="hr_payroll_community.report_payslip">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Salary Slip</h2>
+                    <p t-field="o.name"/>
+
+                    <table class="table table-sm table-bordered">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><span t-field="o.employee_id"/></td>
+                            <td><strong>Designation</strong></td>
+                            <td><span t-field="o.employee_id.job_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Address</strong></td>
+                            <td colspan="3">
+                                <div t-field="o.employee_id.address_home_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email</strong></td>
+                            <td><span t-field="o.employee_id.work_email"/></td>
+                            <td><strong>Identification No</strong></td>
+                            <td><span t-field="o.employee_id.identification_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reference</strong></td>
+                            <td><span t-field="o.number"/></td>
+                            <td><strong>Bank Account</strong></td>
+                            <td><span t-field="o.employee_id.bank_account_id"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Date From</strong></td>
+                            <td><span t-field="o.date_from"/></td>
+                            <td><strong>Date To</strong></td>
+                            <td><span t-field="o.date_to"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Quantity/rate</th>
+                                <th>Amount</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                <td><span t-field="line.code"/></td>
+                                <td><span t-field="line.name"/></td>
+                                <td><span t-field="line.quantity"/></td>
+                                <td><span t-esc="line.amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                <td><span t-esc="line.total"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="text-right"><strong>Authorized signature</strong></p>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+    
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="aag_payslip_print.action_window">
+      <field name="name">aag_payslip_print window</field>
+      <field name="res_model">aag_payslip_print.aag_payslip_print</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_payslip_print.action_server">
+      <field name="name">aag_payslip_print server</field>
+      <field name="model_id" ref="model_aag_payslip_print_aag_payslip_print"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_payslip_print" id="aag_payslip_print.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="aag_payslip_print.menu_1" parent="aag_payslip_print.menu_root"/>
+    <menuitem name="Menu 2" id="aag_payslip_print.menu_2" parent="aag_payslip_print.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="aag_payslip_print.menu_1_list" parent="aag_payslip_print.menu_1"
+              action="aag_payslip_print.action_window"/>
+    <menuitem name="Server to list" id="aag_payslip_print" parent="aag_payslip_print.menu_2"
+              action="aag_payslip_print.action_server"/>
+-->
+  </data>
+</odoo>

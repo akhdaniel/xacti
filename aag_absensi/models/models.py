@@ -14,3 +14,4 @@ class aag_absensi(models.Model):
     code = fields.Integer('Code')
     remark = fields.Char('Remark')
     status = fields.Boolean('Status')
+

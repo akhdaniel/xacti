@@ -2,17 +2,18 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="aag_dept_master.list">
-      <field name="name">aag_dept_master list</field>
-      <field name="model">aag_dept_master.aag_dept_master</field>
+    <record model="ir.ui.view" id="aag_dept_group_list">
+      <field name="name">aag_dept_group list</field>
+      <field name="model">aag_dept_group.aag_dept_group</field>
       <field name="arch" type="xml">
         <tree>
           <field name="x_dept"/>
-          <field name="x_sect"/>
-          <field name="x_sbsec"/>
-          <field name="x_desc"/>
-          <field name="x_group"/>
-          <field name="x_direct"/>
+          <field name="x_sdesc"/>
+          <field name="x_ldesc"/>
+          <field name="x_group1"/>
+          <field name="x_group2"/>
+          <field name="x_group3"/>
+          <field name="x_group4"/>
         </tree>
       </field>
     </record>
@@ -20,18 +21,18 @@
 
     <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="aag_dept_master.action_window">
-      <field name="name">aag_dept_master window</field>
-      <field name="res_model">aag_dept_master.aag_dept_master</field>
+    <record model="ir.actions.act_window" id="aag_dept_group_action_window">
+      <field name="name">aag_dept_group window</field>
+      <field name="res_model">aag_dept_group.aag_dept_group</field>
       <field name="view_mode">tree,form</field>
     </record>
 
 
     <!-- server action to the one above -->
 <!--
-    <record model="ir.actions.server" id="aag_dept_master.action_server">
-      <field name="name">aag_dept_master server</field>
-      <field name="model_id" ref="model_aag_dept_master_aag_dept_master"/>
+    <record model="ir.actions.server" id="aag_dept_group.action_server">
+      <field name="name">aag_dept_group server</field>
+      <field name="model_id" ref="model_aag_dept_group_aag_dept_group"/>
       <field name="state">code</field>
       <field name="code">
         action = {
@@ -45,18 +46,19 @@
 
     <!-- Top menu item -->
 <!--
-    <menuitem name="aag_dept_master" id="aag_dept_master.menu_root"/>
+    <menuitem name="aag_dept_group" id="aag_dept_group.menu_root"/>
 -->
     <!-- menu categories -->
 
-    <menuitem name="Dept. Master" id="aag_dept_master.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
-
+<!--    <menuitem name="Dept. Master" id="aag_dept_group.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+-->
     <!-- actions -->
 
-    <menuitem name="Dept. Master" id="aag_dept_master.menu_1_list" parent="aag_dept_master.menu_1"
-              action="aag_dept_master.action_window"/>
-    <!-- <menuitem name="Server to list" id="aag_dept_master" parent="aag_dept_master.menu_2"
-              action="aag_dept_master.action_server"/> -->
+    <menuitem name="Dept. Master Group" id="aag_dept_group_menu_1_list"
+              parent="aag_dept_master.menu_1"
+              action="aag_dept_group_action_window"/>
+    <!-- <menuitem name="Server to list" id="aag_dept_group" parent="aag_dept_group.menu_2"
+              action="aag_dept_group.action_server"/> -->
 
   </data>
 </odoo>

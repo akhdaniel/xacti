@@ -1,30 +1,61 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-
     <record model="ir.ui.view" id="aag_medical_reimburse.list">
       <field name="name">aag_medical_reimburse list</field>
-      <field name="model">aag_medical_reimburse.aag_medical_reimburse</field>
+      <field name="model">aag_medical_reimburse.aag_medical_reimburse_header</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="idno"/>
-          <field name="trndat"/>
-          <field name="cata"/>
-          <field name="medcod"/>
-          <field name="patien"/>
-          <field name="dr"/>
-          <field name="apotik"/>
-          <field name="medamt"/>
-          <field name="remark"/>
-          <field name="paydat"/>
           <field name="month"/>
           <field name="year"/>
-          <field name="status"/>
-          <field name="flag1"/>
-          <field name="flag2"/>
-          <field name="flag3"/>
-          <field name="flag4"/>
+          <field name="state"/>
         </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="aag_medical_reimburse.form">
+      <field name="name">aag_medical_reimburse form</field>
+      <field name="model">aag_medical_reimburse.aag_medical_reimburse_header</field>
+      <field name="arch" type="xml">
+        <form>
+        <header>
+          <button type='object' name='button_confirm' string='Confirm' states='draft'/>
+          <button type='object' name='button_verification' string='Verification' states='open'/>
+          <button type='object' name='button_cancel' string='Cancel' states='open,done'/>
+          <field name='state' widget='statusbar' />
+        </header>
+          <group>
+            <field name="month"/>
+            <field name="year"/>
+          </group>
+          <notebook>
+            <page string='Data Detail'>
+            <field name='detail_ids'>
+              <tree>
+                <field name="idno"/>
+                <field name="trndat"/>
+                <field name="medamt"/>
+                <field name="cata"/>
+                <field name="medcod"/>
+                <field name="patien"/>
+                <field name="dr"/>
+                <field name="apotik"/>
+                <field name="remark"/>
+                <field name="paydat"/>
+                <field name="month"/>
+                <field name="year"/>
+                <field name="status"/>
+<!--            <field name="flag1"/>
+                <field name="flag2"/>
+                <field name="flag3"/>
+                <field name="flag4"/> -->
+
+              </tree>
+            </field>
+            </page>
+          </notebook>
+
+        </form>
       </field>
     </record>
 
@@ -33,7 +64,7 @@
 
     <record model="ir.actions.act_window" id="aag_medical_reimburse.action_window">
       <field name="name">aag_medical_reimburse window</field>
-      <field name="res_model">aag_medical_reimburse.aag_medical_reimburse</field>
+      <field name="res_model">aag_medical_reimburse.aag_medical_reimburse_header</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -64,10 +95,29 @@
 
     <!-- actions -->
 
-    <menuitem name="Medical Reimburse" id="aag_medical_reimburse.menu_1_list" parent="aag_medical_reimburse.menu_1"
+    <menuitem name="Medical Reimburse" id="aag_medical_reimburse.menu_1_list" 
+              parent="aag_medical_reimburse.menu_1"
               action="aag_medical_reimburse.action_window"/>
+
     <!-- <menuitem name="Server to list" id="aag_medical_reimburse" parent="aag_medical_reimburse.menu_2"
               action="aag_medical_reimburse.action_server"/> -->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_dept_master" id="aag_dept_master.menu_root"/>
+-->
+    <!-- menu categories -->
+
+    <menuitem name="Dept. Master" id="aag_dept_master.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Dept. Master Detail" id="aag_dept_master.menu_1_list" 
+              parent="aag_dept_master.menu_1"
+              action="aag_dept_master.action_window"/>
+    <!-- <menuitem name="Server to list" id="aag_dept_master" parent="aag_dept_master.menu_2"
+              action="aag_dept_master.action_server"/> -->
+
 
   </data>
 </odoo>

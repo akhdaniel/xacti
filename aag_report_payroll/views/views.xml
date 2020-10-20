@@ -50,6 +50,11 @@
               <field name="detail_ids">
                 <tree>
                   <field name="IDNO"/>
+                  <field name="NAME"/>
+                  <field name="DEPT"/>
+                  <field name="SECT"/>
+                  <field name="SBSEC"/>
+                  <field name="DESC"/>
                   <field name="BASIC"/>
                   <field name="I_BASIC"/>
                   <field name="I_THR"/>

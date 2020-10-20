@@ -53,7 +53,8 @@
 
     <!-- actions -->
 
-    <menuitem name="Dept. Master" id="aag_dept_master.menu_1_list" parent="aag_dept_master.menu_1"
+    <menuitem name="Dept. Master Detail" id="aag_dept_master.menu_1_list" 
+              parent="aag_dept_master.menu_1"
               action="aag_dept_master.action_window"/>
     <!-- <menuitem name="Server to list" id="aag_dept_master" parent="aag_dept_master.menu_2"
               action="aag_dept_master.action_server"/> -->

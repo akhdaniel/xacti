@@ -28,7 +28,7 @@ class hr_payslip(models.Model):
     
     def compute_sheet(self):
         
-        res = super(hr_payslip, self).compute_sheet() 
+#        res = super(hr_payslip, self).compute_sheet() 
         for payslip in self:
                 
             _logger.info("--- compute sheet --- %s", payslip.line_ids )
@@ -38,7 +38,7 @@ class hr_payslip(models.Model):
             i=0
             selisih = round(payslip.pot_pph - payslip.tunj_pph)
             while selisih != 0:
-                _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+            #    _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
                 payslip.tunj_pph = payslip.pot_pph
                 payslip._calculate_pph(medical=True, overtime=True, thr=True, bonus=True) 
                 selisih = round(payslip.pot_pph - payslip.tunj_pph)
@@ -69,7 +69,8 @@ class hr_payslip(models.Model):
 
             payslip.pph21irr = payslip.pph21ovt + payslip.pph21med + payslip.pph21thr + payslip.pph21bon
             payslip.pph21reg = payslip.pot_pph - payslip.pph21irr
-                    
+
+        res = super(hr_payslip, self).compute_sheet()                     
         return res 
 
     def cari_selisih(self, komponen, pph_all):
@@ -103,7 +104,7 @@ class hr_payslip(models.Model):
         i=0
         selisih = round(self.pot_pph - self.tunj_pph)
         while selisih != 0:
-            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+            # _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
             self.tunj_pph = self.pot_pph
             self._calculate_pph(medical=medical, overtime=overtime, thr=thr, bonus=bonus)
             selisih = round(self.pot_pph - self.tunj_pph)
@@ -272,7 +273,7 @@ class hr_payslip(models.Model):
         bulan_berjalan = self.date_to.month 
         self.bruto = ( total_reg_income_accum * 12 )/bulan_berjalan + total_irr_income_accum
 
-        _logger.info("--- new bruto = %s", self.bruto)
+        # _logger.info("--- new bruto = %s", self.bruto)
         self.env.cr.commit()
 
         self.bjab = min(0.05 * self.bruto , 6000000)	
