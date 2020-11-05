@@ -3,7 +3,7 @@
 from odoo import models, fields, api
 import logging
 _logger = logging.getLogger(__name__)
-
+import time
 
 class aag_work_schedule(models.Model):
     _name = 'work_schedule.work_schedule'
@@ -47,3 +47,17 @@ class aag_work_schedule(models.Model):
 
     def cron_update_contract(self):
         _logger.info('Jalankan Cron Update Kontrak')
+
+        field_day = 'x_day_%s'  % time.strftime("%d")
+        year = time.strftime("%Y")
+        month = time.strftime("%m")
+
+        sql = """
+        update hr_contract con set resource_calendar_id = (
+            select id from resource_calendar where name = emp.group_name || '-' || (select """+field_day+""" from working where year=%s and month=%s)
+        ) 
+        from hr_employee emp
+        where emp.id = con.employee_id
+        """
+
+        self.cr.execute(sql, (year, month))
