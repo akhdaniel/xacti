@@ -11,6 +11,7 @@
           <field name="allow"/>
           <field name="ytdamt"/>
           <field name="curamt"/>
+          <field name="active"/>
           <field name="spouse"/>
           <field name="child1"/>
           <field name="child2"/>

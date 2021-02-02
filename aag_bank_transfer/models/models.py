@@ -87,7 +87,7 @@ class export_text_header(models.Model):
         row = 1
         for line in self.detail_ids:
             if not line.ACCNAME:
-                raise UserError('Accc Name Not Found IDNO=%s' %line.IDNO)
+                raise UserError('Acc. Name Not Found IDNO=%s' %line.IDNO)
             file_data.write((line.IDNO).rjust(7,'0').ljust(20).encode())
             file_data.write((line.ACCNAME).ljust(40).encode())
             file_data.write((line.BRANCH).ljust(105).encode())
@@ -96,8 +96,10 @@ class export_text_header(models.Model):
             file_data.write((line.CURR1).encode())
             file_data.write('{:.2f}'.format(line.AMOUNT).rjust(18,'0').encode())
             file_data.write((line.CURR2).encode())
-            file_data.write((line.REMARK).ljust(445).encode())
-            file_data.write('X\n'.encode())
+            file_data.write((line.REMARK).ljust(444).encode())
+        # Write CR (Pindah Baris(Enter))
+            file_data.write(' \n'.encode())
+
             row += 1
 
 

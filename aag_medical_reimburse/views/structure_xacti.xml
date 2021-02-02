@@ -1,5 +1,9 @@
 <odoo>
     <data>
+        <record id="category_ignore" model="hr.salary.rule.category">
+            <field name="name">x_Ignore</field>
+            <field name="code">IGN</field>
+        </record>    
 
         <record id="rule_medical_reimbursement" model="hr.salary.rule">
             <field name="name">x_Medical Reimbursement</field>
@@ -7,7 +11,34 @@
             <field name="code">I_MEDICAL</field>
             <field name="sequence">89</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=inputs.INPUT_MEDICAL.amount</field>
+            <field name="amount_python_compute">result=inputs.INPUT_MEDICAL.amount+inputs.INPUT_INCOME_04.amount- inputs.INPUT_DEDUC_04.amount</field>
+        </record>
+
+        <record id="rule_prev_medical_balance" model="hr.salary.rule">
+            <field name="name">x_Prev Medical Balance</field>
+            <field name="category_id" ref="category_ignore"/>
+            <field name="code">I_PREV_MEDICAL_BAL</field>
+            <field name="sequence">2008</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result= inputs.INPUT_MED_ALLOW.amount - inputs.INPUT_MED_PRVYTD.amount</field>
+        </record>
+
+        <record id="rule_medical_usage" model="hr.salary.rule">
+            <field name="name">x_Medical Usage</field>
+            <field name="category_id" ref="category_ignore"/>
+            <field name="code">I_MEDICAL_USE</field>
+            <field name="sequence">2009</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.INPUT_MED_ALWUSG.amount</field>
+        </record>
+
+        <record id="rule_medical_balance" model="hr.salary.rule">
+            <field name="name">x_Medical Balance</field>
+            <field name="category_id" ref="category_ignore"/>
+            <field name="code">I_MED_ALW_BAL</field>
+            <field name="sequence">2010</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_MED_ALLOW.amount - inputs.INPUT_MED_PRVYTD.amount - inputs.INPUT_MED_ALWUSG.amount</field>
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
@@ -15,7 +46,10 @@
             <field name="parent_id" ref="hr_payroll_community.structure_base"/>
             <field name="code">KTNS</field>
             <field name="rule_ids" eval="[
-             (4,ref('rule_medical_reimbursement'))
+             (4,ref('rule_medical_reimbursement')),
+             (4,ref('rule_prev_medical_balance')),
+             (4,ref('rule_medical_usage')),
+             (4,ref('rule_medical_balance'))
              ]"/>
         </record>
 

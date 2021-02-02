@@ -14,6 +14,15 @@
             <field name="amount_python_compute">result = inputs.INPUT_INCOME_01.amount</field>
         </record>
 
+        <!-- <record id="rule_income_transport" model="hr.salary.rule">
+            <field name="name">x_Income Transport</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="code">I_ADD_TRANSPORT</field>
+            <field name="sequence">229</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.INPUT_INCOME_05.amount</field>
+        </record> -->
+
         <record id="rule_income_lain_lain" model="hr.salary.rule">
             <field name="name">x_Income Lain Lain</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
@@ -46,13 +55,43 @@
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = 0</field>
         </record>
+
         <record id="rule_uang_lembur" model="hr.salary.rule">
             <field name="name">x_Uang Lembur</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
             <field name="code">I_OVERTIME</field>
             <field name="sequence">83</field>
             <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.INPUT_INCOME_07.amount</field>
+        </record>
+
+        <record id="rule_medical_balance" model="hr.salary.rule">
+            <field name="name">x_Medical Balance</field>
+            <field name="category_id" ref="category_iqnore"/>
+            <field name="code">I_MED_BALANCE</field>
+            <field name="sequence">94</field>
+            <field name="amount_select">code</field>
+            <!-- <field name="amount_python_compute">result = inputs.INPUT_MED_ALLOW.amount - inputs.INPUT_MED_YTD.amount - inputs.INPUT_MEDICAL.amount</field> -->
             <field name="amount_python_compute">result = 0</field>
+        
+        </record>
+
+        <record id="rule_pph_dtp" model="hr.salary.rule">
+            <field name="name">x_PPh DTP</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="code">I_PPH_DTP</field>
+            <field name="sequence">95</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.INPUT_PPH_DTP.amount</field>
+        </record>
+
+        <record id="rule_leave_balance" model="hr.salary.rule">
+            <field name="name">x_Leave Balance</field>
+            <field name="category_id" ref="category_iqnore"/>
+            <field name="code">I_LEAVE_BAL</field>
+            <field name="sequence">95</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.INPUT_LEAVE_PRVBAL.amount - inputs.INPUT_ABS_01.amount - (inputs.INPUT_ABS_11.amount)/2</field>
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
@@ -66,6 +105,8 @@
              (4,ref('rule_tunj_shift')),
              (4,ref('rule_pengganti_cuti')),
              (4,ref('rule_uang_lembur')),
+             (4,ref('rule_pph_dtp')),
+             (4,ref('rule_leave_balance')),
              ]"/>
         </record>
 

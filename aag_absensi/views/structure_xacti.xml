@@ -1,14 +1,20 @@
 <odoo>
     <data>
 
+        <record id="category_ignore" model="hr.salary.rule.category">
+            <field name="name">x_Ignore</field>
+            <field name="code">IGN</field>
+        </record>  
+
         <record id="rule_pot_gaji_pokok" model="hr.salary.rule">
             <field name="name">x_Pot. Gaji Pokok</field>
             <field name="category_id" ref="hr_payroll_community.DED"/>
             <field name="code">D_BASIC</field>
             <field name="sequence">501</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result=(contract.wage/30)*inputs.INPUT_ABS_06.amount + inputs.INPUT_DEDUC_01.amount</field>
+            <field name="amount_python_compute">result=round((contract.wage/30)*inputs.INPUT_ABS_06.amount + inputs.INPUT_DEDUC_01.amount,0)</field>
         </record>
+
         <record id="rule_tpk" model="hr.salary.rule">
             <field name="name">x_TPK</field>
             <field name="category_id" ref="hr_payroll_community.ALW"/>
@@ -18,7 +24,7 @@
     <!--        <field name="amount_python_compute">result=contract.x_tpk</field> -->
             <field name="amount_python_compute"><![CDATA[
 tpk = 0
-if employee.x_class == 'WK':
+if employee.x_class == 'WK' and employee.x_empsts == 'P':
     tpk = contract.company_id.x_stdtpk
     count = inputs.INPUT_ABS_05.amount + inputs.INPUT_ABS_06.amount 
     if employee.gender == 'Male': 
@@ -53,9 +59,37 @@ pot_transport = 0
 count_abs = inputs.INPUT_ABS_05.amount + inputs.INPUT_ABS_06.amount +inputs.INPUT_ABS_07.amount + inputs.INPUT_ABS_08.amount
 if employee.x_class == 'WK': pot_transport = contract.x_trans * count_abs + inputs.INPUT_DEDUC_05.amount
 else: pot_transport = (contract.x_trans/21) * count_abs + inputs.INPUT_DEDUC_05.amount
-result = pot_transport
+result = round(pot_transport,0)
 ]]>
 </field>
+        </record>
+
+        <record id="rule_prev_leave_balance" model="hr.salary.rule">
+            <field name="name">x_Prev Leave Balance</field>
+            <field name="category_id" ref="category_ignore"/>
+            <field name="code">I_PREV_LEAVE_BAL</field>
+            <field name="sequence">2016</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_LEAVE_PRVBAL.amount</field>
+        </record>
+
+        <record id="rule_leave_usage" model="hr.salary.rule">
+            <field name="name">x_Leave Usage</field>
+            <field name="category_id" ref="category_ignore"/>
+            <field name="code">I_LEAVE_USE</field>
+            <field name="sequence">2018</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs.INPUT_ABS_01.amount + (inputs.INPUT_ABS_11.amount)/2 + inputs.INPUT_ABS_18.amount</field>
+        </record>
+
+        <record id="rule_leave_balance" model="hr.salary.rule">
+            <field name="name">x_Leave Balance</field>
+            <field name="category_id" ref="category_ignore"/>
+            <field name="code">I_LEAVE_BAL</field>
+            <field name="sequence">2020</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_LEAVE_PRVBAL.amount - inputs.INPUT_ABS_01.amount - (inputs.INPUT_ABS_11.amount)/2 - inputs.INPUT_ABS_18.amount</field>
+            <!-- <field name="amount_python_compute">result=inputs.INPUT_LEAVE_PRVBAL.amount - inputs.INPUT_LEAVE_USE.amount</field> -->
         </record>
 
         <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
@@ -66,6 +100,9 @@ result = pot_transport
              (4,ref('rule_pot_gaji_pokok')),
              (4,ref('rule_tpk')),
              (4,ref('rule_pot_transport')),
+             (4,ref('rule_prev_leave_balance')),
+             (4,ref('rule_leave_usage')),
+             (4,ref('rule_leave_balance')),
              ]"/>
         </record>
 

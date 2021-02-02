@@ -31,6 +31,16 @@ class hr_payslip(models.Model):
         })     
 
         amount = 0        
+        input_income_04 = 'INPUT_INCOME_04'
+        amount = self.get_income_code(input_income_04,'04', contracts, date_from, date_to)
+        res.append({
+            'name': 'Other Income 04-Medical',
+            'code': input_income_04,
+            'amount': amount,
+            'contract_id': contracts.id 
+        })     
+
+        amount = 0        
         input_income_05 = 'INPUT_INCOME_05'
         amount = self.get_income_code(input_income_05,'05', contracts, date_from, date_to)
         res.append({
@@ -38,6 +48,16 @@ class hr_payslip(models.Model):
             'code': input_income_05,
             'amount': amount,
             'contract_id': contracts.id
+        })
+
+        amount = 0        
+        input_income_07 = 'INPUT_INCOME_07'
+        amount = self.get_income_code(input_income_07,'07', contracts, date_from, date_to)
+        res.append({
+            'name': 'Other Income 07-Lembur',
+            'code': input_income_07,
+            'amount': amount,
+            'contract_id': contracts.id 
         })
 
         amount = 0        
@@ -69,6 +89,47 @@ class hr_payslip(models.Model):
             'amount': amount,
             'contract_id': contracts.id 
         })
+
+#        amount = 0        
+#        input_income_91 = 'INPUT_MED_ALLOW'
+#        amount = self.get_income_code(input_income_91,'91', contracts, date_from, date_to)
+#        res.append({
+#            'name': 'Medical Allowance 91',
+#            'code': input_income_91,
+#            'amount': amount,
+#            'contract_id': contracts.id 
+#        })
+
+#        amount = 0        
+#        input_income_92 = 'INPUT_MED_PRVYTD'
+#        amount = self.get_income_code(input_income_92,'92', contracts, date_from, date_to)
+#        res.append({
+#            'name': 'Medical Prev YTD Reimburse 92',
+#            'code': input_income_92,
+#            'amount': amount,
+#            'contract_id': contracts.id 
+#        })
+
+        amount = 0        
+        input_income_95 = 'INPUT_PPH_DTP'
+        amount = self.get_income_code(input_income_95,'95', contracts, date_from, date_to)
+        res.append({
+            'name': 'PPh21 DTP 95',
+            'code': input_income_95,
+            'amount': amount,
+            'contract_id': contracts.id 
+        })
+
+        # amount = 0        
+        # input_income_97 = 'INPUT_LEAVE_PRVBAL'
+        # amount = self.get_income_code(input_income_97,'97', contracts, date_from, date_to)
+        # res.append({
+        #     'name': 'Leave Prev Balance',
+        #     'code': input_income_97,
+        #     'amount': amount,
+        #     'contract_id': contracts.id 
+        # })
+
 
         return res
 

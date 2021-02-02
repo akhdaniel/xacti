@@ -21,23 +21,22 @@ class hr_payslip(models.Model):
 
         amount = 0
         
-        cr = self.env.cr 
-        sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
-        cr.execute(sql, (contracts.id, 'INPUT_ACCGRS'))
+        # cr = self.env.cr 
+        # sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
+        # cr.execute(sql, (contracts.id, 'INPUT_PPHDTP'))
 
-        sql = """select x_accgrs from aag_pph_accumulation_aag_pph_accumulation where idno=%s and x_accmm=%s"""
-        month = date_to.month 
-        year = date_to.year 
-        cr.execute(sql, (contracts.employee_id.x_idno, month))
-        result = cr.fetchone()
-        if result:
-            amount = result[0]
+        # sql = """select x_pph_dtp from aag_pph_accumulation_aag_pph_accumulation where idno=%s and x_accmm=%s and x_accyy=%s"""
+        # year = date_to.year 
+        # cr.execute(sql, (contracts.employee_id.x_idno, 8, year))
+        # result = cr.fetchone()
+        # if result:
+        #     amount = result[0]
 
-        res.append({
-            'name': 'Other Income',
-            'code': 'INPUT_ACCGRS',
-            'amount': amount,
-            'contract_id': contracts.id 
-        })
+        # res.append({
+        #     'name': 'PPh21 DTP',
+        #     'code': 'INPUT_PPHDTP',
+        #     'amount': amount,
+        #     'contract_id': contracts.id 
+        # })
 
         return res         

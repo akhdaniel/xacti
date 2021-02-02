@@ -1,0 +1,105 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_leave_master_list">
+      <field name="name">aag_leave_master list</field>
+      <field name="model">aag_leave_master.aag_leave_master</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="x_idno"/>
+          <field name="x_begper"/>
+          <field name="x_endper"/>
+          <field name="x_beg"/>
+          <field name="x_use"/>
+          <field name="x_end"/>
+
+          <field name="x_code01"/>
+          <field name="x_code02"/>
+          <field name="x_code03"/>
+          <field name="x_code04"/>
+          <field name="x_code05"/>
+          <field name="x_code06"/>
+          <field name="x_code07"/>
+          <field name="x_code08"/>
+          <field name="x_code11"/>
+          <field name="x_code17"/>
+          <field name="x_code18"/>
+          <field name="x_code21"/>
+          <field name="x_code25"/>
+          <field name="x_code35"/>
+          <field name="x_code46"/>
+          <field name="x_code56"/>
+          <field name="x_code66"/>
+
+          <field name="x_ycode01"/>
+          <field name="x_ycode02"/>
+          <field name="x_ycode03"/>
+          <field name="x_ycode04"/>
+          <field name="x_ycode05"/>
+          <field name="x_ycode06"/>
+          <field name="x_ycode07"/>
+          <field name="x_ycode08"/>
+          <field name="x_ycode11"/>
+          <field name="x_ycode17"/>
+          <field name="x_ycode18"/>
+          <field name="x_ycode21"/>
+          <field name="x_ycode25"/>
+          <field name="x_ycode35"/>
+          <field name="x_ycode46"/>
+          <field name="x_ycode56"/>
+          <field name="x_ycode66"/>
+
+          <field name="x_prev_beg"/>
+          <field name="x_prev_use"/>
+          <field name="x_prev_end"/>
+          <field name="x_prev_ovr"/>
+
+          <field name="status"/>
+
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_absensi.leave_master_window">
+      <field name="name">Leave Master Window</field>
+      <field name="res_model">aag_leave_master.aag_leave_master</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_leave_master.action_server">
+      <field name="name">aag_leave_master server</field>
+      <field name="model_id" ref="model_aag_leave_master_aag_leave_master"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_leave_master" id="aag_leave_master.menu_root"/>
+-->
+    <!-- menu categories -->
+    <!-- actions -->
+
+    <menuitem name="Leave Master" id="aag_leave_master_menu_1_list" 
+      parent="aag_absensi.menu_1"
+      action="aag_absensi.leave_master_window"/>
+    
+    <!-- <menuitem name="Server to list" id="aag_leave_master" parent="aag_leave_master.menu_2"
+              action="aag_leave_master.action_server"/> -->
+
+  </data>
+</odoo>

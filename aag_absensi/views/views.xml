@@ -22,7 +22,7 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="aag_absensi.action_window">
-      <field name="name">aag_absensi window</field>
+      <field name="name">Absent Transaction Window</field>
       <field name="res_model">aag_absensi.aag_absensi</field>
       <field name="view_mode">tree,form</field>
     </record>
@@ -54,8 +54,9 @@
 
     <!-- actions -->
 
-    <menuitem name="Absenteeism" id="aag_absensi.menu_1_list" parent="aag_absensi.menu_1"
-              action="aag_absensi.action_window"/>
+    <menuitem name="Absent Transaction" id="aag_absensi.menu_1_list" 
+      parent="aag_absensi.menu_1"
+      action="aag_absensi.action_window"/>
     <!-- <menuitem name="Server to list" id="aag_absensi" parent="aag_absensi.menu_2"
               action="aag_absensi.action_server"/> -->
 

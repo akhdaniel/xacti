@@ -1,0 +1,116 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_report_emp_active_01_header_list">
+      <field name="name">aag_report_emp_active_01_header_list</field>
+      <field name="model">aag.report_emp_active_01_header</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="month"/>
+          <field name="year"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="aag_report_emp_active_01_header_form">
+      <field name="name">aag_report_emp_active_01_header_form</field>
+      <field name="model">aag.report_emp_active_01_header</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="action_generate"
+              string="Generate Report"
+              class="primary"
+              type="object"
+            />
+            <button name="action_export"
+              string="Export To Excel File"
+              type="object"
+            />
+          </header>
+
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="day"/>
+              <field name="month"/>
+              <field name="year"/>
+            </group>
+
+            <group>
+              <field name="export_file"/>
+              <field name="export_filename"/>
+            </group>
+          </group>
+          
+
+          <notebook>
+            <page name="detail" string="Detail">
+              <field name="detail_ids">
+                <tree>
+                  <field name="IDNO"/>
+                  <field name="NAME"/>
+                  <field name="GENDER"/>
+                  <field name="DATBIR"/>
+                  <field name="PLACE"/>
+                  <field name="MARSTS"/>
+                  <field name="EDUC"/>
+                  <field name="DEPT"/>
+                  <field name="SECT"/>
+                  <field name="SBSEC"/>
+                  <field name="DESC"/>
+                  <field name="ALLCD"/>
+                  <field name="WRKGRP"/>
+                  <field name="ADDRESS"/>
+                  <field name="EMPSTS"/>
+                  <field name="DATENT"/>
+                  <field name="STSCNT"/>
+                  <field name="STRDAT"/>
+                  <field name="ENDDAT"/>
+                  <field name="TERDAT"/>
+                  <field name="POSIT"/>
+                  <field name="DIRECT"/>
+                  <field name="PHONE"/>
+                  <field name="CLASS"/>
+                  <field name="DATBIR"/>
+                  <field name="RELIGION"/>
+                  <field name="SPMI"/>
+                  <field name="KTPNO"/>
+                  <field name="BPJSTK_ID"/>
+                  <field name="BPJSKES_ID"/>
+                  <field name="NPWP"/>
+                  <field name="ACC_NUMBER"/>
+                  <field name="DESC"/>
+                  <field name="ACC_NAME"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <!-- <record model="ir.actions.act_window" id="aag_report_payroll.action_summary_window">
+      <field name="name">aag_report_header window</field>
+      <field name="res_model">aag.report_emp_active_01_header</field>
+      <field name="view_mode">tree,form</field>
+    </record> -->
+
+    <record model="ir.actions.act_window" id="aag_report_payroll.action_summary_window">
+      <field name="name">Active Employee Header Window</field>
+      <field name="res_model">aag.report_emp_active_01_header</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- actions -->
+    <menuitem name="Report Active Employee-01" id="aag_report_payroll.menu_report_emp_active_01" 
+      parent="aag_report_payroll.menu_1"
+      action="aag_report_payroll.action_summary_window"/>
+    
+  </data>
+</odoo>

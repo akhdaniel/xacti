@@ -67,11 +67,10 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="aag_report_payroll.action_summary_window">
-      <field name="name">aag_report_heder window</field>
+      <field name="name">aag_report_header window</field>
       <field name="res_model">aag.report_summary_header</field>
       <field name="view_mode">tree,form</field>
     </record>
-
 
     <!-- actions -->
     <menuitem name="Report Summary Payroll" id="aag_report_payroll.menu_report_summary" 

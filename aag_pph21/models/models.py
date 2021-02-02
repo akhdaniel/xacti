@@ -27,3 +27,13 @@ class company(models.Model):
 
     _inherit = 'res.company'
     pkp_ids = fields.One2many(string='Rate Penghasilan Kena Pajak', comodel_name='aag_master_pkp', inverse_name='company_id')
+
+# class aag_salary_ytd(models.Model):
+#     _name = 'aag_salary_ytd'
+#     _description = 'aag_salary_ytd'
+
+#     m_idno = fields.Integer('IDNO')
+#     m_basic = fields.Integer("Basic Salary Add", )
+#     m_tpk = fields.Integer("TPK", )
+#     m_occup = fields.Integer("Grade Allw", )
+#     m_functional = fields.Integer("Functional Allw", )

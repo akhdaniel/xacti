@@ -8,6 +8,8 @@
       <field name="arch" type="xml">
         <tree>
           <field name="idno"/>
+          <field name="x_accyy"/>
+          <field name="x_accmm"/>
           <field name="x_accgrs"/>
           <field name="x_accovt"/>
           <field name="x_accmed"/>
@@ -20,6 +22,9 @@
           <field name="x_pph_accmed"/>
           <field name="x_pph_accthr"/>
           <field name="x_pph_accbon"/>
+          <field name="x_pph_nondtp"/>
+          <field name="x_pph_dtp"/>
+          <field name="x_pph_total"/>
         </tree>
       </field>
     </record>

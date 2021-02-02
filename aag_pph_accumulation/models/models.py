@@ -8,6 +8,7 @@ class aag_pph_accumulation(models.Model):
     _description = 'aag_pph_accumulation.aag_pph_accumulation'
 
     idno = fields.Integer('IDNO')
+    x_accyy= fields.Integer('Year')
     x_accmm= fields.Integer('Month')
     x_accgrs= fields.Integer('Gross')
     x_accovt= fields.Integer('Overtime')
@@ -21,3 +22,6 @@ class aag_pph_accumulation(models.Model):
     x_pph_accmed= fields.Integer('PPh Medical')
     x_pph_accthr= fields.Integer('PPh THR')
     x_pph_accbon= fields.Integer('PPh Bonus')
+    x_pph_nondtp= fields.Integer('Prev PPh Non-DTP')
+    x_pph_dtp= fields.Integer('Prev PPh DTP')
+    x_pph_total= fields.Integer('Prev PPh Total')

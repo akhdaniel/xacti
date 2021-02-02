@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Add you code here -->
+        <!-- hr.payslip inherit form view -->
+        <record id="hr_payslip_inherit" model="ir.ui.view">
+            <field name="name">hr.payslip.inherit.view.form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll_community.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <notebook position = 'inside'>
+                    <page name="pph21" string="PPH21">
+                        <group>
+                            <field name="ptkp" />
+                            <field name="bruto" />
+                            <field name="bjab" />
+                            <field name="netto" />
+                            <field name="pkp" />
+                            <field name="pph21_thn" />
+                            <field name="pph21_paid" />
+                            <field name="tunj_pph" />
+                            <field name="pot_pph" />
+                            <field name="pph21med" />
+                            <field name="pph21ovt" />
+                            <field name="pph21thr" />
+                            <field name="pph21bon" />
+                            <field name="pph21irr" />
+                            <field name="pph21reg" />
+
+                        </group>                        
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</odoo>

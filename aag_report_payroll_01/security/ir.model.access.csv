@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aag_report_01_header,access_aag_report_01_header,model_aag_report_01_header,base.group_user,1,1,1,1
+access_aag_report_01_detail,access_aag_report_01_detail,model_aag_report_01_detail,base.group_user,1,1,1,1

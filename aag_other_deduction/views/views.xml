@@ -53,8 +53,8 @@
 <!--    <menuitem name="Other Deduction" id="aag_other_deduction.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/> -->
     <menuitem name="Other Deduction" 
               id="aag_other_deduction.menu_1" 
-              parent="hr_payroll_community.menu_hr_payroll_community_root"/>
-
+              parent="hr_payroll_community.menu_hr_payroll_community_root"/> 
+ 
     <!-- actions -->
 
     <menuitem name="Other Deduction" 

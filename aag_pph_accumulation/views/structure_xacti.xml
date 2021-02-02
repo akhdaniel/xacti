@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+
+        <record id="rule_pph_dtp" model="hr.salary.rule">
+            <field name="name">x_PPh DTP</field>
+            <field name="category_id" ref="hr_payroll_community.ALW"/>
+            <field name="code">I_PPHDTP</field>
+            <field name="sequence">289</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=inputs.INPUT_PPHDTP.amount</field>
+        </record>
+
+        <record id="aag_add_field.structurexacti_karyawan_tetap_ns" model="hr.payroll.structure">
+            <field name="name">x_Karyawan Tetap NS</field>
+            <field name="parent_id" ref="hr_payroll_community.structure_base"/>
+            <field name="code">KTNS</field>
+            <field name="rule_ids" eval="[
+             (4,ref('rule_pph_dtp'))
+             ]"/>
+        </record>
+
+    </data>
+</odoo>

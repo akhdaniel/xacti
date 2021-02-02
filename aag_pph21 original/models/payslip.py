@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 
 
 
-class payslip(models.Model):
+class hr_payslip(models.Model):
     _inherit = 'hr.payslip'
     ptkp = fields.Integer("PTKP", related="employee_id.ptkp_id.nominal")
     bruto = fields.Integer("Bruto", )
@@ -26,50 +26,55 @@ class payslip(models.Model):
     pph21irr = fields.Integer("PPh21 Irregular")
     pph21reg = fields.Integer("PPh21 Regular")
     
-    def compute_sheet(self, contracts):
-        res = super(payslip, self).compute_sheet() 
-        _logger.info("--- compute sheet --- %s", self.line_ids )
+    def compute_sheet(self):
+        
+        res = super(hr_payslip, self).compute_sheet() 
 
-        # dengan medical, overtime
-        self._calculate_pph(contracts, medical=True, overtime=True, thr=True, bonus=True)
-        i=0
-        selisih = round(self.pot_pph - self.tunj_pph)
-        while selisih != 0:
-            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
-            self.tunj_pph = self.pot_pph
-            self._calculate_pph(contracts, medical=True, overtime=True, thr=True, bonus=True) 
-            selisih = round(self.pot_pph - self.tunj_pph)
-            i+=1
-
-        pph_all = self.pot_pph 
-
-        # cari selisih medical
-        self._cari_selisih(contracts, 'pph21med', pph_all)
-    
-        # cari selisih overtime
-        self._cari_selisih(contracts, 'pph21ovt', pph_all)
-    
-        # cari selisih THR
-        self._cari_selisih(contracts, 'pph21thr', pph_all)
-    
-        # cari selisih bonus 
-        self._cari_selisih(contracts, 'pph21bon', pph_all)
-    
-        irr_acc = self._find_irr_acc(contracts)        
-        self.pph21ovt = self.pph21ovt - (irr_acc['x_pph_accovt'] if irr_acc else 0)
-        self.pph21med = self.pph21med - (irr_acc['x_pph_accmed'] if irr_acc else 0)
-        self.pph21thr = self.pph21thr - (irr_acc['x_pph_accthr'] if irr_acc else 0)
-        self.pph21bon = self.pph21bon - (irr_acc['x_pph_accbon'] if irr_acc else 0)
-
-        self.pot_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
-        self.tunj_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
-
-        self.pph21irr = self.pph21ovt + self.pph21med + self.pph21thr + self.pph21bon
-        self.pph21reg = self.pot_pph - self.pph21irr
+        for payslip in self:
                 
+            _logger.info("--- compute sheet --- %s", payslip.line_ids )
+
+            # dengan medical, overtime
+            payslip._calculate_pph(medical=True, overtime=True, thr=True, bonus=True)
+            i=0
+            selisih = round(payslip.pot_pph - payslip.tunj_pph)
+            while selisih != 0:
+            #    _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+                payslip.tunj_pph = payslip.pot_pph
+                payslip._calculate_pph(medical=True, overtime=True, thr=True, bonus=True) 
+                selisih = round(payslip.pot_pph - payslip.tunj_pph)
+                i+=1
+
+            pph_all = payslip.pot_pph 
+
+            # cari selisih medical
+            payslip.cari_selisih('pph21med', pph_all)
+        
+            # cari selisih overtime
+            payslip.cari_selisih('pph21ovt', pph_all)
+        
+            # cari selisih THR
+            payslip.cari_selisih('pph21thr', pph_all)
+        
+            # cari selisih bonus 
+            payslip.cari_selisih('pph21bon', pph_all)
+        
+            irr_acc = payslip.find_irr_acc()        
+            payslip.pph21ovt = payslip.pph21ovt - (irr_acc['x_pph_accovt'] if irr_acc else 0)
+            payslip.pph21med = payslip.pph21med - (irr_acc['x_pph_accmed'] if irr_acc else 0)
+            payslip.pph21thr = payslip.pph21thr - (irr_acc['x_pph_accthr'] if irr_acc else 0)
+            payslip.pph21bon = payslip.pph21bon - (irr_acc['x_pph_accbon'] if irr_acc else 0)
+
+            payslip.pot_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
+            payslip.tunj_pph = pph_all - (irr_acc['x_pph_accgrs']+irr_acc['x_pph_accovt']+irr_acc['x_pph_accmed']+irr_acc['x_pph_accthr']+irr_acc['x_pph_accbon'] if irr_acc else 0)
+
+            payslip.pph21irr = payslip.pph21ovt + payslip.pph21med + payslip.pph21thr + payslip.pph21bon
+            payslip.pph21reg = payslip.pot_pph - payslip.pph21irr
+
+    #    res = super(hr_payslip, self).compute_sheet()                     
         return res 
 
-    def _cari_selisih(self, contracts, komponen, pph_all):
+    def cari_selisih(self, komponen, pph_all):
 
         if komponen == 'pph21med':
             medical = False
@@ -95,31 +100,28 @@ class payslip(models.Model):
 
         # tanpa medical, overtime
         
-        self._calculate_pph(contracts, medical=medical, overtime=overtime, thr=thr, bonus=bonus)
+        self._calculate_pph(medical=medical, overtime=overtime, thr=thr, bonus=bonus)
         
         i=0
         selisih = round(self.pot_pph - self.tunj_pph)
         while selisih != 0:
-            _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
+            # _logger.info("--- iterasi %s, selisih1=%s", i, selisih)
             self.tunj_pph = self.pot_pph
-            self._calculate_pph(contracts, medical=medical, overtime=overtime, thr=thr, bonus=bonus)
+            self._calculate_pph(medical=medical, overtime=overtime, thr=thr, bonus=bonus)
             selisih = round(self.pot_pph - self.tunj_pph)
             i+=1
         # self.pph21med = self.pph21med  - self.pot_pph
         setattr(self, komponen, pph_all - self.pot_pph)
 
 
-    def _calculate_pph(self, contracts, medical=True, overtime=True, thr=True, bonus=True ):
-    #    _logger.info("--- awal bruto = %s", self.bruto)
-        _logger.info("--- awal bruto = %s", self.bruto)
-    
-    #    _logger.info("--- new tunj_pph = %s", self.tunj_pph)
-        _logger.info("--- new tunj_pph = %s", self.tunj_pph)
+    def _calculate_pph(self, medical=True, overtime=True, thr=True, bonus=True):
+    #        _logger.info("--- awal bruto = %s", self.bruto)
+    #        _logger.info("--- new tunj_pph = %s", self.tunj_pph)
 
 
-# ==== GET DATA FROM PAYSLIP TO FIND CUURENT MONTH ACTUAL INCOME/DEDUCTION ==== 
- # ==== INIT. INCOME RULE'S CODE ==== 
-    # == REGULAR INCOME
+    # ==== GET DATA FROM PAYSLIP TO FIND CUURENT MONTH ACTUAL INCOME/DEDUCTION ==== 
+    # ==== INIT. INCOME RULE'S CODE ==== 
+        # == REGULAR INCOME
         BASIC=0
         I_BASIC=0
         I_TPK=0
@@ -142,7 +144,7 @@ class payslip(models.Model):
         I_THR=0
         I_BONUS=0
 
- # ==== INIT. DEDUCTION RULE'S CODE ==== 
+# ==== INIT. DEDUCTION RULE'S CODE ==== 
     # == REGULAR INCOME
         D_BASIC=0
     #    D_TPK=0
@@ -252,7 +254,7 @@ class payslip(models.Model):
         # I_BONUS=0
 
 
-        akumulasi = self.cari_akumulasi(contracts, medical=medical, overtime=overtime, thr=thr, bonus=bonus )
+        akumulasi = self.cari_akumulasi(medical=medical, overtime=overtime, thr=thr, bonus=bonus )
         
         # curr_reg_income = self.contract_id.wage + self.contract_id.x_trans + self.contract_id.x_occup + self.contract_id.x_family + self.contract_id.x_functional + self.contract_id.x_perform + self.tunj_pph + TJHTCOM + TACCCOM + TDTHCOM + TBPJSKES_DTP
         curr_reg_income = net_basic+I_TPK+net_transport+I_PRESENCE+I_OCCUP+I_FAMILY+I_FUNCTIONAL+I_PERFORM+net_other+I_SHIFT+self.tunj_pph+I_JHTCOM+I_ACCCOM+I_DTHCOM+I_BPJSKES_COM
@@ -272,7 +274,7 @@ class payslip(models.Model):
         bulan_berjalan = self.date_to.month 
         self.bruto = ( total_reg_income_accum * 12 )/bulan_berjalan + total_irr_income_accum
 
-        _logger.info("--- new bruto = %s", self.bruto)
+        # _logger.info("--- new bruto = %s", self.bruto)
         self.env.cr.commit()
 
         self.bjab = min(0.05 * self.bruto , 6000000)	
@@ -289,40 +291,40 @@ class payslip(models.Model):
         
         self.pot_pph = round(self.pph21_thn/12 * bulan_berjalan, 0)
         # bisa minus, kalau minus -> pot_pph=0.. min(pot_pph, 0 )
-        # self.pot_pph = max(self.pot_pph, 0)
+            # rec.pot_pph = max(rec.pot_pph, 0)
     
-    def get_pph21_setahun(self, contracts):
+    def get_pph21_setahun(self):
         sisa_pkp = self.pkp 
         pph21 = 0 
-        range = contracts.company_id.pkp_ids[0]
+        range = self.contract_id.company_id.pkp_ids[0]
         if self.pkp > range.maximum:
             pph21 += range.maximum * range.rate / 100 
             sisa_pkp = self.pkp - range.maximum
-            range = contracts.company_id.pkp_ids[1]
+            range = self.contract_id.company_id.pkp_ids[1]
             if sisa_pkp <= (range.maximum-range.minimum+1):
                 pph21 += sisa_pkp*range.rate/100 
             else:
                 pph21 += (range.maximum-range.minimum+1) * range.rate / 100
                 sisa_pkp = sisa_pkp-(range.maximum-range.minimum+1)
-                range = contracts.company_id.pkp_ids[2]
+                range = self.contract_id.company_id.pkp_ids[2]
                 if sisa_pkp <= (range.maximum-range.minimum+1):
                     pph21 += sisa_pkp*range.rate/100
                 else:
                     pph21 += (range.maximum-range.minimum+1)*range.rate/100
                     sisa_pkp = sisa_pkp-(range.maximum-range.minimum+1)
-                    range = contracts.company_id.pkp_ids[3]
+                    range = self.contract_id.company_id.pkp_ids[3]
                     pph21 += sisa_pkp*range.rate/100
         else:
             pph21 = self.pkp*range.rate/100        
         return pph21
 
     # def cari_akumulasi(self, medical=True, overtime=True, thr=True, bonus=True):
-    def cari_akumulasi(self, contracts, medical=True, overtime=True, thr=True, bonus=True):
+    def cari_akumulasi(self, medical=True, overtime=True, thr=True, bonus=True):
     
         cr = self.env.cr
         sql = "select * from aag_pph_accumulation_aag_pph_accumulation where idno=%s"
         # cr.execute(sql, (self.employee_id.x_idno,))
-        cr.execute(sql, (contracts.employee_id.x_idno,))
+        cr.execute(sql, (self.contract_id.employee_id.x_idno,))
 
         akumulasi = cr.dictfetchone()
 
@@ -340,10 +342,10 @@ class payslip(models.Model):
 
         return akumulasi
 
-    def _find_irr_acc(self, contracts):
+    def find_irr_acc(self):
         cr = self.env.cr
         sql = "select * from aag_pph_accumulation_aag_pph_accumulation where idno=%s"
-        cr.execute(sql, (contracts.employee_id.x_idno,))
+        cr.execute(sql, (self.employee_id.x_idno,))
         irr_acc = cr.dictfetchone()
 
         return irr_acc    

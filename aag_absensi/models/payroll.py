@@ -147,6 +147,47 @@ class hr_payslip(models.Model):
             'amount': amount,
             'contract_id': contracts.id 
         })
+
+#=======================================
+# HITUNG CUTI BERSAMA (18)
+#=======================================
+        cr = self.env.cr 
+        sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
+        cr.execute(sql, (contracts.id, 'INPUT_ABS_08'))
+
+        sql = """select count(*) from aag_absensi_aag_absensi where idno=%s and month=%s and year=%s and code=%s"""
+        month = date_from.month 
+        year = date_from.year
+        cr.execute(sql, (contracts.employee_id.x_idno, month, year, 18))
+        result = cr.fetchone()
+        if result:
+            amount = result[0]
+
+        res.append({
+            'name': 'Absensi 18-Cuti Bersama',
+            'code': 'INPUT_ABS_18',
+            'amount': amount,
+            'contract_id': contracts.id 
+        })
+#=======================================
+# HITUNG SISA CUTI BULAN LALU ()
+#=======================================
+        cr = self.env.cr 
+        sql = "delete from hr_payslip_input where contract_id=%s and code=%s"
+        cr.execute(sql, (contracts.id, 'INPUT_LEAVE_PRVBAL'))
+
+        sql = """select x_end from aag_leave_master_aag_leave_master where x_idno=%s and status=%s"""
+        cr.execute(sql, (contracts.employee_id.x_idno, 'True'))
+        result = cr.fetchone()
+        if result:
+            amount = result[0]
+
+        res.append({
+            'name': 'Sisa Cuti Bulan Lalu',
+            'code': 'INPUT_LEAVE_PRVBAL',
+            'amount': amount,
+            'contract_id': contracts.id 
+        })
 #=============================
 
         return res         

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "aag_report_payroll",
+    'name': "aag_report_salary",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -27,6 +27,9 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/views_summary.xml',
+        'views/views_spmi.xml',
+        'views/views_emp_active_01.xml',
+        'views/views_emp_active_02.xml',
         'views/templates.xml',
     ],
     # only loaded in demonstration mode

@@ -1,0 +1,76 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="pxi_import.list">
+      <field name="name">pxi_import list</field>
+      <field name="model">pxi_import.pxi_import</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="x_idno"/>
+          <field name="remark1"/>
+          <field name="remark2"/>
+          <field name="remark3"/>
+          <field name="remark4"/>
+          <field name="remark5"/>
+          <field name="amount1"/>
+          <field name="amount2"/>
+          <field name="amount3"/>
+          <field name="amount4"/>
+          <field name="amount5"/>
+          <field name="desimal1"/>
+          <field name="desimal2"/>
+          <field name="desimal3"/>
+          <field name="desimal4"/>
+          <field name="desimal5"/>
+          <field name="status1"/>
+          <field name="status2"/>
+          <field name="status3"/>
+
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="pxi_import.action_window">
+      <field name="name">pxi_import window</field>
+      <field name="res_model">pxi_import.pxi_import</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="pxi_import.action_server">
+      <field name="name">pxi_import server</field>
+      <field name="model_id" ref="model_pxi_import_pxi_import"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="pxi_import" id="pxi_import.menu_root"/>
+-->
+    <!-- menu categories -->
+
+    <menuitem name="PXI IMPORT" id="pxi_import.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="PXI IMPORT" id="pxi_import.menu_1_list" parent="pxi_import.menu_1"
+              action="pxi_import.action_window"/>
+    <!-- <menuitem name="Server to list" id="pxi_import" parent="pxi_import.menu_1"
+              action="pxi_import.action_server"/> -->
+
+  </data>
+</odoo>

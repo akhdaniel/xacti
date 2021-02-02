@@ -48,16 +48,18 @@ class aag_work_schedule(models.Model):
     def cron_update_contract(self):
         _logger.info('Jalankan Cron Update Kontrak')
 
-        field_day = 'x_day_%s'  % time.strftime("%d")
+        field_day = 'x_day%02s'  % time.strftime("%d")
+        _logger.info('field_day=%s', field_day)
+
         year = time.strftime("%Y")
         month = time.strftime("%m")
-
+        month = 10
         sql = """
         update hr_contract con set resource_calendar_id = (
-            select id from resource_calendar where name = emp.group_name || '-' || (select """+field_day+""" from working where year=%s and month=%s)
+            select id from resource_calendar where name = emp.x_wrkgrp || '-' || (select """+field_day+""" from work_schedule_work_schedule where x_year=%s and x_month=%s and x_wrkgrp=emp.x_wrkgrp)
         ) 
         from hr_employee emp
-        where emp.id = con.employee_id
+        where emp.id = con.employee_id and emp.x_wrkgrp='A0' and emp.x_empsts <> 'T'
         """
 
-        self.cr.execute(sql, (year, month))
+        self.env.cr.execute(sql, (year, month))

@@ -51,6 +51,8 @@
                 <tree>
                   <field name="IDNO"/>
                   <field name="NAME"/>
+                  <field name="EMPSTS"/>
+                  <field name="DIRECT"/>
                   <field name="DEPT"/>
                   <field name="SECT"/>
                   <field name="SBSEC"/>
@@ -74,6 +76,7 @@
                   <field name="I_RSGALLW"/>
                   <field name="I_DONATION"/>
                   <field name="I_PRVROUND"/>
+                  <field name="I_PPH_DTP"/>
                   <field name="D_LOAN"/>
                   <field name="D_SPMI"/>
                   <field name="D_KOPERASI"/>
@@ -87,6 +90,8 @@
                   <field name="D_CURRND"/>
                   <field name="C_PPH21"/>
                   <field name="C_JHTCOM"/>
+                  <field name="C_ACCCOM"/>
+                  <field name="C_DTHCOM"/>
                   <field name="C_BPJSKES_COM"/>
                   <field name="C_PENCOM"/>
                   <field name="NET"/>
@@ -102,7 +107,7 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="aag_report_payroll.action_window">
-      <field name="name">aag_report_heder window</field>
+      <field name="name">Salary Detail Report Header window</field>
       <field name="res_model">aag.report_header</field>
       <field name="view_mode">tree,form</field>
     </record>

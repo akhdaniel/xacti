@@ -34,6 +34,8 @@ class report_header(models.Model):
                 header_id,
                 "IDNO",
                 "NAME",
+                "EMPSTS",
+                "DIRECT",
                 "DEPT",
                 "SECT",
                 "SBSEC",
@@ -57,6 +59,7 @@ class report_header(models.Model):
                 "I_RSGALLW",
                 "I_DONATION",
                 "I_PRVROUND",
+                "I_PPH_DTP",
                 "D_LOAN",
                 "D_SPMI",
                 "D_KOPERASI",
@@ -70,50 +73,63 @@ class report_header(models.Model):
                 "D_CURRND",
                 "C_PPH21",
                 "C_JHTCOM",
+                "C_ACCCOM",
+                "C_DTHCOM",
                 "C_BPJSKES_COM",
                 "C_PENCOM",
-                "NET"
+                "NET",
+                "MED_BALANCE",
+                "LEAVE_BALANCE",
+                "GROUP_1",
+                "GROUP_2",
+                "GROUP_3",
+                "GROUP_4",
+                "x_male",
+                "x_female",
+                "ALLCD",
+                "POSIT"
+
             ) 
             SELECT 
                 %s,
-                emp.x_idno, emp.name, emp.x_dept as DEPT, emp.x_sect as SECT, emp.x_sbsec as SBSEC, dept.x_desc as DESC,
- 
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='BASIC'),0) as BASIC,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_BASIC'),0) as I_BASIC,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_THR'),0) as I_THR,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_BONUS'),0) as I_BONUS,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_TPK'),0) as I_TPK,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_OCCUP'),0) as I_OCCUP,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_FAMILY'),0) as I_FAMILY,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_FUNCTIONAL'),0) as I_FUNCTIONAL,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_MEDICAL'),0) as I_MEDICAL,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_TRANSPORT'),0) as I_TRANSPORT,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_PERFORM'),0) as I_PERFORM,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_MEAL'),0) as I_MEAL,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_SHIFT'),0) as I_SHIFT,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_LEAVE'),0) as I_LEAVE,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_OTHER'),0) as I_OTHER,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_OVERTIME'),0) as I_OVERTIME,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_LEAVE'),0) as I_IRSGALLW,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_LEAVE'),0) as I_DONATION,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_LEAVE'),0) as I_PRVROUND,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_LEAVE'),0) as D_LOAN,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_SPMI'),0) as D_SPMI,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_KOPERASI'),0) as D_KOPERASI,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_BASIC'),0) as D_BASIC,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_TRANSPORT'),0) as D_TRANSPORT,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_OTHER'),0) as D_OTHER,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_MEDICAL'),0) as D_MEDICAL,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_JHTEMP'),0) as D_JHTEMP,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_BPJSKES_EMP'),0) as D_BPJSKES_EMP,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_PENEMP'),0) as D_PENEMP,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='I_LEAVE'),0) as D_CURRND,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_PPH21'),0) as C_PPH21,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_JHTCOM'),0) as C_JHTCOM,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_BPJSKES_COM'),0) as C_BPJSKES_COM,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='D_PENCOM'),0) as C_PENCOM,
-                coalesce((select coalesce(amount,0) from hr_payslip_line where slip_id=ps.id and code='NET'),0) as NET
-
+                emp.x_idno, emp.name, emp.x_empsts as EMPSTS, emp.x_direct as DIRECT,
+                emp.x_dept as DEPT, emp.x_sect as SECT, emp.x_sbsec as SBSEC, dept.x_desc as DESC,
+                ps.basic as BASIC, ps.i_basic as I_BASIC,
+                ps.i_thr as I_THR, ps.i_bonus as I_BONUS,
+                ps.i_tpk as I_TPK, ps.i_occup as I_OCCUP,
+                ps.i_family as I_FAMILY, ps.i_functional as I_FUNCTIONAL,
+                ps.i_medical as I_MEDICAL, ps.i_transport as I_TRANSPORT,
+                ps.i_perform as I_PERFORM, ps.i_meal as I_MEAL,
+                ps.i_shift as I_SHIFT, ps.i_leave as I_LEAVE,
+                ps.i_other as I_OTHER, ps.i_overtime as I_OVERTIME,
+                0 as I_IRSGALLW, 0 as I_DONATION, 0 as I_PRVROUND,
+                ps.i_pphdtp as I_PPHDTP, ps.d_loan as D_LOAN,
+                ps.d_spmi as D_SPMI, ps.d_koperasi as D_KOPERASI,
+                ps.d_basic as D_BASIC, ps.d_transport as D_TRANSPORT,
+                ps.d_other as D_OTHER, ps.d_medical as D_MEDICAL,
+                ps.d_jhtemp as D_JHTEMP, ps.d_bpjs_emp as D_BPJSKES_EMP,
+                ps.d_penemp as D_PENEMP, 0 as D_CURRND,
+                ps.tunj_pph as C_PPH21, 
+                ps.i_jhtcom as C_JHTCOM, ps.i_acccom as C_ACCCOM, ps.i_dthcom as C_DTHCOM, ps.i_bpjs_com as C_BPJSKES_COM, ps.i_pencom as C_PENCOM,   
+                ps.net as NET, 
+                ps.curr_med_bal as MED_BALANCCE, ps.curr_leave_bal as LEAVE_BALANCCE,
+                grp.x_group1 as GROUP_1,
+                grp.x_group2 as GROUP_2,
+                grp.x_group3 as GROUP_3,
+                grp.x_group4 as GROUP_4,  
+                case 
+                    when emp.gender='male' then 1
+                    else 0
+                end as x_male,
+                case 
+                    when emp.gender='female' then 1
+                    else 0
+                end as x_female,
+                case 
+                    when emp.x_allcd isnull then '  '
+                    else emp.x_allcd
+                end as ALLCD,
+                job.name as POSIT
             from 
                 hr_payslip ps 
             join 
@@ -121,8 +137,11 @@ class report_header(models.Model):
             join 
                 aag_dept_master_aag_dept_master dept on dept.x_dept = emp.x_dept
                 and dept.x_sect = emp.x_sect
-                and dept.x_sbsec = emp.x_sbsec
-
+               and dept.x_sbsec = emp.x_sbsec
+            join 
+                aag_dept_group_aag_dept_group grp on emp.x_dept = grp.x_dept
+            join 
+                hr_job job on emp.job_id = job.id                
             where
                 date_part('month', ps.date_to) = %s
                 and date_part('year', ps.date_to) = %s
@@ -137,95 +156,189 @@ class report_header(models.Model):
         workbook = xlsxwriter.Workbook(file_data)
         worksheet = workbook.add_worksheet()
         bold = workbook.add_format({'bold': True})
+        font12 = workbook.add_format({'bold': True, 'font_size': 12})
+        font14 = workbook.add_format({'bold': True, 'font_size': 14})
         numeric = workbook.add_format({'num_format': '#,##0'})
+        numeric2 = workbook.add_format({'num_format': '#,##0.00'})
+
+        # SET COLUMN WIDTH
+        worksheet.set_column('B:B', 8)  # Column  B width set to 10.
+        worksheet.set_column('C:C', 30)  # Columns C width set to 30.
+        worksheet.set_column('D:D', 6)  
+        worksheet.set_column('E:E', 6)  
+        worksheet.set_column('F:F', 6)  
+        worksheet.set_column('G:G', 35)  
+        worksheet.set_column('H:H', 12)  
+        worksheet.set_column('I:I', 9)  
+        worksheet.set_column('J:J', 9)  
+        worksheet.set_column('K:K', 9)  
+        worksheet.set_column('L:L', 9)  
+        worksheet.set_column('M:M', 12)  
+        worksheet.set_column('N:N', 12)  
+        worksheet.set_column('O:O', 14)  
+        worksheet.set_column('P:P', 12)  
+        worksheet.set_column('Q:Q', 14)  
+        worksheet.set_column('R:R', 12)  
+        worksheet.set_column('S:S', 8)  
+        worksheet.set_column('T:T', 8)  
+        worksheet.set_column('U:U', 8)  
+        worksheet.set_column('V:V', 8)  
+        worksheet.set_column('W:W', 12)  
+        worksheet.set_column('X:X', 12)  
+        worksheet.set_column('Y:Y', 12)  
+        worksheet.set_column('Z:Z', 12)  
+        worksheet.set_column('AA:AA', 12)  
+        worksheet.set_column('AB:AB', 10)  
+        worksheet.set_column('AC:AC', 10)  
+        worksheet.set_column('AD:AD', 12)  
+        worksheet.set_column('AE:AE', 12)  
+        worksheet.set_column('AF:AF', 14)  
+        worksheet.set_column('AG:AG', 12)  
+        worksheet.set_column('AH:AH', 12)  
+        worksheet.set_column('AI:AI', 12)  
+        worksheet.set_column('AJ:AJ', 16)  
+        worksheet.set_column('AK:AK', 12)  
+        worksheet.set_column('AL:AL', 12)  
+        worksheet.set_column('AM:AM', 12)  
+        worksheet.set_column('AN:AN', 12)  
+        worksheet.set_column('AO:AO', 12)  
+        worksheet.set_column('AP:AP', 12)  
+        worksheet.set_column('AQ:AQ', 16)  
+        worksheet.set_column('AR:AR', 12)  
+        worksheet.set_column('AS:AS', 12)  
+        worksheet.set_column('AT:AT', 8)  
+        worksheet.set_column('AU:AU', 7)  
+        worksheet.set_column('AV:AV', 15)  
+        worksheet.set_column('AW:AW', 15)  
+        worksheet.set_column('AX:AX', 25)  
+        worksheet.set_column('AY:AY', 18)  
+        worksheet.set_column('AZ:AZ', 25)  
+        worksheet.set_column('BA:BA', 10)  
+        worksheet.set_column('BB:BB', 10)  
+        worksheet.set_column('BC:BC', 10)  
+        worksheet.set_column('BD:BD', 10)  
+        worksheet.set_column('BE:BE', 20)  
 
         # write header
-        worksheet.write("A1", "IDNO", bold)
-        worksheet.write("B1", "NAME", bold)
-        worksheet.write("C1", "DEPT", bold)
-        worksheet.write("D1", "SECT", bold)
-        worksheet.write("E1", "SBSEC", bold)
-        worksheet.write("F1", "DESC", bold)
-        worksheet.write("G1", "I_BASIC", bold)
-        worksheet.write("H1", "I_THR", bold)
-        worksheet.write("I1", "I_BONUS", bold)
-        worksheet.write("J1", "I_TPK", bold)
-        worksheet.write("K1", "I_OCCUP", bold)
-        worksheet.write("L1", "I_FAMILY", bold)
-        worksheet.write("M1", "I_FUNCTIONAL", bold)
-        worksheet.write("N1", "I_MEDICAL", bold)
-        worksheet.write("O1", "I_TRANSPORT", bold)
-        worksheet.write("P1", "I_PERFORM", bold)
-        worksheet.write("Q1", "I_MEAL", bold)
-        worksheet.write("R1", "I_SHIFT", bold)
-        worksheet.write("S1", "I_LEAVE", bold)
-        worksheet.write("T1", "I_OTHER", bold)
-        worksheet.write("U1", "I_OVERTIME", bold)
-        worksheet.write("V1", "I_RSGALLW", bold)
-        worksheet.write("W1", "I_DONATION", bold)
-        worksheet.write("X1", "I_PRVROUND", bold)
-        worksheet.write("Y1", "D_LOAN", bold)
-        worksheet.write("Z1", "D_SPMI", bold)
-        worksheet.write("AA1", "D_KOPERASI", bold)
-        worksheet.write("AB1", "D_BASIC", bold)
-        worksheet.write("AC1", "D_TRANSPORT", bold)
-        worksheet.write("AD1","D_OTHER", bold) 
-        worksheet.write("AE1", "D_MEDICAL", bold)
-        worksheet.write("AF1", "D_JHTEMP", bold)
-        worksheet.write("AG1", "D_BPJSKES_EMP", bold)
-        worksheet.write("AH1", "D_PENEMP", bold)
-        worksheet.write("AI1", "D_CURRND", bold)
-        worksheet.write("AJ1", "C_PPH21", bold)
-        worksheet.write("AK1", "C_JHTCOM", bold)
-        worksheet.write("AL1", "C_BPJSKES_COM", bold)
-        worksheet.write("AM1", "C_PENCOM", bold)
-        worksheet.write("AN1", "NET", bold)
+        worksheet.write("B2", "PT. XACTI INDONESIA", font14)
+        worksheet.write("B3", "Monthly Salary Detail Report", font12)
+
+        worksheet.write("B5", "IDNO", bold)
+        worksheet.write("C5", "NAME", bold)
+        worksheet.write("D5", "DEPT", bold)
+        worksheet.write("E5", "SECT", bold)
+        worksheet.write("F5", "SBSEC", bold)
+        worksheet.write("G5", "DESC", bold)
+        worksheet.write("H5", "BASIC", bold)
+        worksheet.write("I5", "I-BASIC", bold)
+        worksheet.write("J5", "I-THR", bold)
+        worksheet.write("K5", "I-BONUS", bold)
+        worksheet.write("L5", "I-TPK", bold)
+        worksheet.write("M5", "I-OCCUP", bold)
+        worksheet.write("N5", "I-FAMILY", bold)
+        worksheet.write("O5", "I-FUNCTIONAL", bold)
+        worksheet.write("P5", "I-MEDICAL", bold)
+        worksheet.write("Q5", "I-TRANSPORT", bold)
+        worksheet.write("R5", "I-PERFORM", bold)
+        worksheet.write("S5", "I-MEAL", bold)
+        worksheet.write("T5", "I-SHIFT", bold)
+        worksheet.write("U5", "I-LEAVE", bold)
+        worksheet.write("V5", "I-OTHER", bold)
+        worksheet.write("W5", "I-OVERTIME", bold)
+        worksheet.write("X5", "I-RSGALLW", bold)
+        worksheet.write("Y5", "I-DONATION", bold)
+        worksheet.write("Z5", "I-PRVROUND", bold)
+        worksheet.write("AA5", "I-PPH_DTP", bold)
+        worksheet.write("AB5", "D-LOAN", bold)
+        worksheet.write("AC5", "D-SPMI", bold)
+        worksheet.write("AD5", "D-KOPERASI", bold)
+        worksheet.write("AE5", "D-BASIC", bold)
+        worksheet.write("AF5", "D-TRANSPORT", bold)
+        worksheet.write("AG5", "D-OTHER", bold) 
+        worksheet.write("AH5", "D-MEDICAL", bold)
+        worksheet.write("AI5", "D-JHTEMP", bold)
+        worksheet.write("AJ5", "D-BPJSKES_EMP", bold)
+        worksheet.write("AK5", "D-PENEMP", bold)
+        worksheet.write("AL5", "D-CURRND", bold)
+        worksheet.write("AM5", "C-PPH21", bold)
+        worksheet.write("AN5", "C-JHTCOM", bold)
+        worksheet.write("AO5", "C-ACCCOM", bold)
+        worksheet.write("AP5", "C-DTHCOM", bold)
+        worksheet.write("AQ5", "C-BPJSKES_COM", bold)
+        worksheet.write("AR5", "C-PENCOM", bold)
+        worksheet.write("AS5", "NET", bold)
+        worksheet.write("AT5", "EMPSTS", bold)
+        worksheet.write("AU5", "DIRECT", bold)
+        worksheet.write("AV5", "MED. BALANCE", bold)
+        worksheet.write("AW5", "LEAVE BALANCE", bold)
+        worksheet.write("AX5", "DEPT. GROUP-1", bold)
+        worksheet.write("AY5", "DEPT. GROUP-2", bold)
+        worksheet.write("AZ5", "DEPT. GROUP-3", bold)
+        worksheet.write("BA5", "DEPT. GROUP-4", bold)
+        worksheet.write("BB5", "MALE", bold)
+        worksheet.write("BC5", "FEMALE", bold)
+        worksheet.write("BD5", "GRADE", bold)
+        worksheet.write("BE5", "POSITION", bold)
 
         # write data 
-        row = 1
+        row = 5
         for line in self.detail_ids:
-            worksheet.write(row, 0, line.IDNO)
-            worksheet.write(row, 1, line.NAME)
-            worksheet.write(row, 2, line.DEPT)
-            worksheet.write(row, 3, line.SECT)
-            worksheet.write(row, 4, line.SBSEC)
-            worksheet.write(row, 5, line.DESC)
-            worksheet.write(row, 6, line.BASIC, numeric)
-            worksheet.write(row, 7, line.I_BASIC, numeric)
-            worksheet.write(row, 8, line.I_THR, numeric)
-            worksheet.write(row, 9, line.I_BONUS, numeric)
-            worksheet.write(row, 10, line.I_TPK, numeric)
-            worksheet.write(row, 11, line.I_OCCUP, numeric)
-            worksheet.write(row, 12, line.I_FAMILY, numeric)
-            worksheet.write(row, 13, line.I_FUNCTIONAL, numeric)
-            worksheet.write(row, 14, line.I_MEDICAL, numeric) 
-            worksheet.write(row, 15, line.I_TRANSPORT, numeric)
-            worksheet.write(row, 16, line.I_PERFORM, numeric)
-            worksheet.write(row, 17, line.I_MEAL, numeric)
-            worksheet.write(row, 18, line.I_SHIFT, numeric)
-            worksheet.write(row, 19, line.I_LEAVE, numeric)
-            worksheet.write(row, 20, line.I_OTHER, numeric)
-            worksheet.write(row, 21, line.I_OVERTIME, numeric)
-            worksheet.write(row, 22, line.I_RSGALLW, numeric)
-            worksheet.write(row, 23, line.I_DONATION, numeric)
-            worksheet.write(row, 24, line.I_PRVROUND, numeric)
-            worksheet.write(row, 25, line.D_LOAN, numeric)
-            worksheet.write(row, 26, line.D_SPMI, numeric)
-            worksheet.write(row, 27, line.D_KOPERASI, numeric)
-            worksheet.write(row, 28, line.D_BASIC, numeric)
-            worksheet.write(row, 29, line.D_TRANSPORT, numeric)
-            worksheet.write(row, 30, line.D_OTHER, numeric)
-            worksheet.write(row, 31, line.D_MEDICAL, numeric)
-            worksheet.write(row, 32, line.D_JHTEMP, numeric)
-            worksheet.write(row, 33, line.D_BPJSKES_EMP, numeric)
-            worksheet.write(row, 34, line.D_PENEMP, numeric)
-            worksheet.write(row, 35, line.D_CURRND, numeric)
-            worksheet.write(row, 36, line.C_PPH21, numeric)
-            worksheet.write(row, 37, line.C_JHTCOM, numeric)
-            worksheet.write(row, 38, line.C_BPJSKES_COM, numeric)
-            worksheet.write(row, 39, line.C_PENCOM, numeric)
-            worksheet.write(row, 40, line.NET, numeric)
-
+            worksheet.write(row, 1, line.IDNO)
+            worksheet.write(row, 2, line.NAME)
+            worksheet.write(row, 3, line.DEPT)
+            worksheet.write(row, 4, line.SECT)
+            worksheet.write(row, 5, line.SBSEC)
+            worksheet.write(row, 6, line.DESC)
+            worksheet.write(row, 7, line.BASIC, numeric)
+            worksheet.write(row, 8, line.I_BASIC, numeric)
+            worksheet.write(row, 9, line.I_THR, numeric)
+            worksheet.write(row, 10, line.I_BONUS, numeric)
+            worksheet.write(row, 11, line.I_TPK, numeric)
+            worksheet.write(row, 12, line.I_OCCUP, numeric)
+            worksheet.write(row, 13, line.I_FAMILY, numeric)
+            worksheet.write(row, 14, line.I_FUNCTIONAL, numeric)
+            worksheet.write(row, 15, line.I_MEDICAL, numeric) 
+            worksheet.write(row, 16, line.I_TRANSPORT, numeric)
+            worksheet.write(row, 17, line.I_PERFORM, numeric)
+            worksheet.write(row, 18, line.I_MEAL, numeric)
+            worksheet.write(row, 19, line.I_SHIFT, numeric)
+            worksheet.write(row, 20, line.I_LEAVE, numeric)
+            worksheet.write(row, 21, line.I_OTHER, numeric)
+            worksheet.write(row, 22, line.I_OVERTIME, numeric)
+            worksheet.write(row, 23, line.I_RSGALLW, numeric)
+            worksheet.write(row, 24, line.I_DONATION, numeric)
+            worksheet.write(row, 25, line.I_PRVROUND, numeric)
+            worksheet.write(row, 26, line.I_PPH_DTP, numeric)
+            worksheet.write(row, 27, line.D_LOAN, numeric)
+            worksheet.write(row, 28, line.D_SPMI, numeric)
+            worksheet.write(row, 29, line.D_KOPERASI, numeric)
+            worksheet.write(row, 30, line.D_BASIC, numeric)
+            worksheet.write(row, 31, line.D_TRANSPORT, numeric)
+            worksheet.write(row, 32, line.D_OTHER, numeric)
+            worksheet.write(row, 33, line.D_MEDICAL, numeric)
+            worksheet.write(row, 34, line.D_JHTEMP, numeric)
+            worksheet.write(row, 35, line.D_BPJSKES_EMP, numeric)
+            worksheet.write(row, 36, line.D_PENEMP, numeric)
+            worksheet.write(row, 37, line.D_CURRND, numeric)
+            worksheet.write(row, 38, line.C_PPH21, numeric)
+            worksheet.write(row, 39, line.C_JHTCOM, numeric)
+            worksheet.write(row, 40, line.C_ACCCOM, numeric)
+            worksheet.write(row, 41, line.C_DTHCOM, numeric)
+            worksheet.write(row, 42, line.C_BPJSKES_COM, numeric)
+            worksheet.write(row, 43, line.C_PENCOM, numeric)
+            worksheet.write(row, 44, line.NET, numeric)
+            worksheet.write(row, 45, line.EMPSTS)
+            worksheet.write(row, 46, line.DIRECT)
+            worksheet.write(row, 47, line.MED_BALANCE, numeric)
+            worksheet.write(row, 48, line.LEAVE_BALANCE, numeric2)
+            worksheet.write(row, 49, line.GROUP_1)
+            worksheet.write(row, 50, line.GROUP_2)
+            worksheet.write(row, 51, line.GROUP_3)
+            worksheet.write(row, 52, line.GROUP_4)
+            worksheet.write(row, 53, line.x_male)
+            worksheet.write(row, 54, line.x_female)
+            worksheet.write(row, 55, line.ALLCD)
+            worksheet.write(row, 56, line.POSIT)
             row += 1
 
         workbook.close()
@@ -245,6 +358,8 @@ class report_detail(models.Model):
 
     IDNO            = fields.Integer("IDNO")
     NAME            = fields.Char("NAME")
+    EMPSTS          = fields.Char("EMPSTS")
+    DIRECT          = fields.Char("DIRECT")
     DEPT            = fields.Integer("DEPT")
     SECT            = fields.Integer("SECT")
     SBSEC           = fields.Integer("SBSEC")
@@ -268,6 +383,7 @@ class report_detail(models.Model):
     I_RSGALLW       = fields.Integer("I_RESIGN-ALW.")
     I_DONATION      = fields.Integer("I_DONATION")
     I_PRVROUND      = fields.Integer("I_PRVROUND")
+    I_PPH_DTP       = fields.Integer("I_PPH_DTP")
     D_LOAN          = fields.Integer("D_LOAN")
     D_SPMI          = fields.Integer("D_SPMI")
     D_KOPERASI      = fields.Integer("D_KOPERASI")
@@ -281,8 +397,20 @@ class report_detail(models.Model):
     D_CURRND        = fields.Integer("D_CURRND")
     C_PPH21         = fields.Integer("C_PPH21")
     C_JHTCOM        = fields.Integer("C_JHT 3.7%")
+    C_ACCCOM        = fields.Integer("C_JKK 0.89%")
+    C_DTHCOM        = fields.Integer("C_JKM 0.3%")
     C_BPJSKES_COM   = fields.Integer("C_BPJS-KES 4%")
     C_PENCOM        = fields.Integer("C_PENSION 2%")
     NET             = fields.Integer("NET")
+    MED_BALANCE     = fields.Float("MED BALANCE")
+    LEAVE_BALANCE   = fields.Float("LEAVE BALANCE")
+    GROUP_1         = fields.Char("GROUP-1")
+    GROUP_2         = fields.Char("GROUP-2")
+    GROUP_3         = fields.Char("GROUP-3")
+    GROUP_4         = fields.Char("GROUP-4")
+    x_male          = fields.Integer("Male")
+    x_female        = fields.Integer("Female")
+    ALLCD           = fields.Char("Grade")
+    POSIT           = fields.Char("Position")
 
 

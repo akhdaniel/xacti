@@ -1,0 +1,159 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_report_salary_01_header_list">
+      <field name="name">aag_report_salary_01_header_list</field>
+      <field name="model">aag.report_salary_01_header</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="month"/>
+          <field name="year"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="aag_report_salary_01_header_form">
+      <field name="name">aag_report_salary_01_header_form</field>
+      <field name="model">aag.report_salary_01_header</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="action_generate"
+              string="Generate Report"
+              class="primary"
+              type="object"
+            />
+            <button name="action_export"
+              string="Export XLS"
+              type="object"
+            />
+          </header>
+
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="month"/>
+              <field name="year"/>
+            </group>
+
+            <group>
+              <field name="export_file"/>
+              <field name="export_filename"/>
+            </group>
+          </group>
+          
+
+          <notebook>
+            <page name="detail" string="Detail">
+              <field name="detail_ids">
+                <tree>
+                  <field name="IDNO"/>
+                  <field name="NAME"/>
+                  <field name="EMPSTS"/>
+                  <field name="DIRECT"/>
+                  <field name="DEPT"/>
+                  <field name="SECT"/>
+                  <field name="SBSEC"/>
+                  <field name="DESC"/>
+                  <field name="BASIC"/>
+                  <field name="I_BASIC"/>
+                  <field name="I_THR"/>
+                  <field name="I_BONUS"/>
+                  <field name="I_TPK"/>
+                  <field name="I_OCCUP"/>
+                  <field name="I_FAMILY"/>
+                  <field name="I_FUNCTIONAL"/>
+                  <field name="I_MEDICAL"/>
+                  <field name="I_TRANSPORT"/>
+                  <field name="I_PERFORM"/>
+                  <field name="I_MEAL"/>
+                  <field name="I_SHIFT"/>
+                  <field name="I_LEAVE"/>
+                  <field name="I_OTHER"/>
+                  <field name="I_OVERTIME"/>
+                  <field name="I_RSGALLW"/>
+                  <field name="I_DONATION"/>
+                  <field name="I_PRVROUND"/>
+                  <field name="I_PPH_DTP"/>
+                  <field name="D_LOAN"/>
+                  <field name="D_SPMI"/>
+                  <field name="D_KOPERASI"/>
+                  <field name="D_BASIC"/>
+                  <field name="D_TRANSPORT"/>
+                  <field name="D_OTHER"/>
+                  <field name="D_MEDICAL"/>
+                  <field name="D_JHTEMP"/>
+                  <field name="D_BPJSKES_EMP"/>
+                  <field name="D_PENEMP"/>
+                  <field name="D_CURRND"/>
+                  <field name="C_PPH21"/>
+                  <field name="C_JHTCOM"/>
+                  <field name="C_ACCCOM"/>
+                  <field name="C_DTHCOM"/>
+                  <field name="C_BPJSKES_COM"/>
+                  <field name="C_PENCOM"/>
+                  <field name="NET"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_report_salary_01_payroll.action_window">
+      <field name="name">Salary Detail Report Header window</field>
+      <field name="res_model">aag.report_salary_01_header</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_report_salary_01_payroll.action_server">
+      <field name="name">aag_report_salary_01_payroll server</field>
+      <field name="model_id" ref="model_aag_report_salary_01_payroll_aag_report_salary_01_payroll"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_report_payroll" id="aag_report_payroll.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="aag_report_payroll.menu_1" parent="aag_report_payroll.menu_root"/>
+    <menuitem name="Menu 2" id="aag_report_payroll.menu_2" parent="aag_report_payroll.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="aag_report_payroll.menu_1_list" parent="aag_report_payroll.menu_1"
+              action="aag_report_payroll.action_window"/>
+    <menuitem name="Server to list" id="aag_report_payroll" parent="aag_report_payroll.menu_2"
+              action="aag_report_payroll.action_server"/>
+-->
+
+    <!-- menu categories -->
+    <menuitem name="Salary Report" id="aag_report_salary_01_payroll.menu_1" 
+      parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    
+    <!-- actions -->
+    <menuitem name="Monthly Salary Detail Report" id="aag_report_salary_01_payroll.menu_report_salary_01_detail" 
+      parent="aag_report_payroll.menu_1"
+      action="aag_report_salary_01_payroll.action_window"/>
+    
+  </data>
+</odoo>

@@ -58,9 +58,12 @@ result = performance
             <field name="sequence">70</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute"><![CDATA[
-transport = contract.x_trans 
-if employee.x_class == "WK": transport=contract.x_trans * inputs.INPUT_TWD.amount
-result = transport
+transport = contract.x_trans
+if employee.x_class == "WK":
+    transport = contract.x_trans * inputs.INPUT_TWD.amount
+    if employee.x_empsts == "C" or employee.x_allcd == "FB" or employee.x_allcd == "EB":
+        transport = contract.x_trans * 21 
+result = transport + inputs.INPUT_INCOME_05.amount
 ]]>
 </field>
         </record>
@@ -101,7 +104,13 @@ result = contract.wage + contract.x_occup + transport + contract.x_family + cont
             <field name="code">I_ACCCOM</field>
             <field name="sequence">110</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result= round((STD_BPTK * 0.0089)/100, 0)</field>
+            <!-- <field name="amount_python_compute">result= round((STD_BPTK * 0.0089)/100, 0)</field> -->
+            <field name="amount_python_compute"><![CDATA[
+acc_com = round(STD_BPTK * 0.0089, 0)
+if employee.x_empsts == "P": acc_com = round((STD_BPTK * 0.0089)/100, 0)
+result = acc_com
+]]>
+</field>
         
         </record>
         <record id="rule_tunj_dth_com" model="hr.salary.rule">
@@ -110,7 +119,14 @@ result = contract.wage + contract.x_occup + transport + contract.x_family + cont
             <field name="code">I_DTHCOM</field>
             <field name="sequence">120</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = round((STD_BPTK * 0.003)/100, 0)</field>
+            <!-- <field name="amount_python_compute">result = round((STD_BPTK * 0.003)/100, 0)</field> -->
+            <field name="amount_python_compute"><![CDATA[
+dth_com = round(STD_BPTK * 0.003, 0)
+if employee.x_empsts == "P": dth_com = round((STD_BPTK * 0.003)/100, 0)
+result = dth_com
+]]>
+</field>
+
         </record>
         <record id="rule_std_bpjspen" model="hr.salary.rule">
             <field name="name">x_Standard BPJS-Pensiun</field>

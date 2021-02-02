@@ -62,6 +62,7 @@ class aag_medical_master(models.Model):
     allow = fields.Integer('Allowance')
     ytdamt = fields.Integer('YTD Reimbursement')
     curamt = fields.Integer('Last Reimbursement')
+    active = fields.Boolean('Active')
     spouse = fields.Char('Spouse Name')
     child1 = fields.Char('Child Name-1')
     child2 = fields.Char('Child Name-2')
