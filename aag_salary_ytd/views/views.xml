@@ -1,0 +1,134 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_salary_ytd.list">
+      <field name="name">aag_salary_ytd list</field>
+      <field name="model">aag_salary_ytd.aag_salary_ytd</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="idno"/>          
+          <field name="m_year"/>        
+          <field name="m_curmm"/>       
+          <field name="m_basic"/>       
+          <field name="m_tpk"/>         
+          <field name="m_occup"/>       
+          <field name="m_functional"/>  
+          <field name="m_family"/>      
+          <field name="m_perform"/>     
+          <field name="m_transport"/>   
+          <field name="m_presence"/>    
+          <field name="m_other"/>       
+          <field name="m_meal"/>        
+          <field name="m_shift"/>       
+          <field name="m_leave"/>       
+          <field name="m_medical"/>     
+          <field name="m_pph21"/>       
+          <field name="m_overtime"/>    
+          <field name="m_acccom"/>      
+          <field name="m_dthcom"/>      
+          <field name="m_bpjs_com"/>    
+          <field name="m_bonus"/>       
+          <field name="m_thr"/>         
+          <field name="m_jhtemp"/>      
+          <field name="m_penemp"/>      
+          <field name="m_jhtcom"/>      
+          <field name="m_pencom"/>      
+          <field name="m_bpjs_emp"/>    
+          <field name="m_spmicos"/>     
+          <field name="m_spmimed"/>     
+          <field name="m_spmi"/>        
+          <field name="m_koperasi"/>    
+          <field name="m_loan"/>        
+          <field name="m_net"/>         
+          <field name="m_reg_income"/>  
+          <field name="m_irr_income"/>  
+          <field name="m_empl_pension"/>
+          <field name="m_pphdtp"/> 
+
+          <field name="y_year"/>        
+          <field name="y_strmm"/>       
+          <field name="y_endmm"/>       
+          <field name="y_basic"/>       
+          <field name="y_tpk"/>         
+          <field name="y_occup"/>       
+          <field name="y_functional"/>  
+          <field name="y_family"/>      
+          <field name="y_perform"/>     
+          <field name="y_transport"/>   
+          <field name="y_presence"/>    
+          <field name="y_other"/>       
+          <field name="y_meal"/>        
+          <field name="y_shift"/>       
+          <field name="y_leave"/>       
+          <field name="y_medical"/>     
+          <field name="y_pph21"/>       
+          <field name="y_overtime"/>    
+          <field name="y_acccom"/>      
+          <field name="y_dthcom"/>      
+          <field name="y_bpjs_com"/>    
+          <field name="y_bonus"/>       
+          <field name="y_thr"/>         
+          <field name="y_jhtemp"/>      
+          <field name="y_penemp"/>      
+          <field name="y_jhtcom"/>      
+          <field name="y_pencom"/>      
+          <field name="y_bpjs_emp"/>    
+          <field name="y_spmicos"/>     
+          <field name="y_spmimed"/>     
+          <field name="y_spmi"/>        
+          <field name="y_koperasi"/>    
+          <field name="y_loan"/>        
+          <field name="y_net"/>         
+          <field name="y_reg_income"/>  
+          <field name="y_irr_income"/>  
+          <field name="y_empl_pension"/>
+          <field name="y_pphdtp"/>              
+
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_salary_ytd.action_window">
+      <field name="name">aag_salary_ytd window</field>
+      <field name="res_model">aag_salary_ytd.aag_salary_ytd</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_pph_accumulation.action_server">
+      <field name="name">aag_pph_accumulation server</field>
+      <field name="model_id" ref="model_aag_pph_accumulation_aag_pph_accumulation"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_pph_accumulation" id="aag_pph_accumulation.menu_root"/>
+-->
+    <!-- menu categories -->
+
+    <menuitem name="Salary YTD" id="aag_salary_ytd.menu_1" parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+
+    <!-- actions -->
+
+    <menuitem name="Salary YTD" id="aag_salary_ytd.menu_1_list" parent="aag_salary_ytd.menu_1"
+              action="aag_salary_ytd.action_window"/>
+    <!-- <menuitem name="Server to list" id="aag_pph_accumulation" parent="aag_pph_accumulation.menu_2"
+              action="aag_pph_accumulation.action_server"/> -->
+
+  </data>
+</odoo>

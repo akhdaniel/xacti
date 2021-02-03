@@ -1,0 +1,138 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="aag_pph21_header_list">
+      <field name="name">aag_pph21_header_list</field>
+      <field name="model">aag.pph21_header</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="month"/>
+          <field name="year"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="aag_pph21_header_form">
+      <field name="name">aag_pph21_header_form</field>
+      <field name="model">aag.pph21_header</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="action_generate"
+              string="Generate Report"
+              class="primary"
+              type="object"
+            />
+            <button name="action_export"
+              string="Export XLS"
+              type="object"
+            />
+          </header>
+
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="month"/>
+              <field name="year"/>
+            </group>
+
+            <group>
+              <field name="export_file"/>
+              <field name="export_filename"/>
+            </group>
+          </group>
+          
+
+          <notebook>
+            <page name="detail" string="Detail">
+              <field name="detail_ids">
+                <tree>
+                  <field name="idno"/>
+                  <field name="b01gji"/>
+                  <field name="b02tpp"/>
+                  <field name="b03tll"/>
+                  <field name="b04hnr"/>
+                  <field name="b05pre"/>
+                  <field name="b06nat"/>
+                  <field name="b07bns"/>
+                  <field name="b08bru"/>
+                  <field name="b09jab"/>
+                  <field name="b10tht"/>
+                  <field name="b11jpe"/>
+                  <field name="b12net"/>
+                  <field name="b13nes"/>
+                  <field name="b14npp"/>
+                  <field name="b15ptk"/>
+                  <field name="b16pkp"/>
+                  <field name="b17pph"/>
+                  <field name="b18pps"/>
+                  <field name="b19hut"/>
+                  <field name="b20lns"/>
+                  <field name="cispin"/>
+                  <field name="cinpwp"/>
+                  <field name="cinama"/>
+                  <field name="citgbp"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="aag_pph21_tahunan.action_window">
+      <field name="name">PPh21 Tahunan Detail Report Header window</field>
+      <field name="res_model">aag.pph21_header</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="aag_pph21_payroll.action_server">
+      <field name="name">aag_pph21_payroll server</field>
+      <field name="model_id" ref="model_aag_pph21_payroll_aag_pph21_payroll"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="aag_pph21_payroll" id="aag_pph21_payroll.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="aag_pph21_payroll.menu_1" parent="aag_pph21_payroll.menu_root"/>
+    <menuitem name="Menu 2" id="aag_pph21_payroll.menu_2" parent="aag_pph21_payroll.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="aag_pph21_payroll.menu_1_list" parent="aag_pph21_payroll.menu_1"
+              action="aag_pph21_payroll.action_window"/>
+    <menuitem name="Server to list" id="aag_pph21_payroll" parent="aag_pph21_payroll.menu_2"
+              action="aag_pph21_payroll.action_server"/>
+-->
+
+    <!-- menu categories -->
+    <menuitem name="Report PPh21" id="aag_pph21.menu_1" 
+      parent="hr_payroll_community.menu_hr_payroll_community_root"/>
+    
+    <!-- actions -->
+    <menuitem name="Report Detail PPh21" id="aag_pph21.menu_pph21_detail" 
+      parent="aag_pph21.menu_1"
+      action="aag_pph21_tahunan.action_window"/>
+    
+  </data>
+</odoo>
