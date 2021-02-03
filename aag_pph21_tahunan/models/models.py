@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-
 import logging
 _logger = logging.getLogger(__name__)
 import xlsxwriter
@@ -23,84 +22,164 @@ class report_header(models.Model):
 
     detail_ids = fields.One2many(comodel_name="aag.pph21_detail", inverse_name="header_id")
 
+    def init(self):
+        _logger.info("creating aag_hitung_pph")
+        self.env.cr.execute("""CREATE OR REPLACE FUNCTION public.aag_hitung_pph(
+                v_header_id integer, v_company_id integer)
+                RETURNS void
+                LANGUAGE 'plpgsql'
+
+                COST 100
+                VOLATILE 
+
+            AS $BODY$
+            DECLARE
+                v_detail record;
+                v_sisa_pkp numeric;
+                v_pph21 numeric;
+                v_range record;
+
+            BEGIN
+                delete from aag_pph21_detail where header_id = v_header_id;
+                INSERT INTO aag_pph21_detail (
+                    header_id,
+                    "idno", 
+                    "b01gji",
+                    "b02tpp",
+                    "b03tll",
+                    "b04hnr",
+                    "b05pre",
+                    "b06nat",
+                    "b07bns",
+                    "b08bru",
+                    "b09jab",
+                    "b10tht",
+                    "b11jpe",
+                    "b12net",
+                    "b13nes",
+                    "b14npp",
+                    "b15ptk",
+                    "b16pkp",
+                    "b17pph",
+                    "b18pps",
+                    "b19hut",
+                    "b20lns",
+                    "cispin",
+                    "cinpwp",
+                    "cinama",
+                    "citgbp"
+                ) 
+                SELECT 
+                    v_header_id,
+                    emp.x_idno,
+                    ytd.y_basic+ytd.y_tpk+ytd.y_occup+ytd.y_functional+ytd.y_family+ytd.y_perform+ytd.y_transport+ytd.y_presence+ytd.y_other+ytd.y_meal+ytd.y_shift+ytd.y_leave+ytd.y_medical,
+                    0,
+                    ytd.y_overtime,
+                    0,
+                    ytd.y_acccom+ytd.y_dthcom+ytd.y_bpjs_com,
+                    0,
+                    ytd.y_bonus+ytd.y_thr,
+                    0,
+                    0,
+                    ytd.y_jhtemp+ytd.y_penemp,
+                    0,
+                    0,
+                    0,
+                    0,
+                    ptkp.nominal,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                from 
+                    aag_salary_ytd_aag_salary_ytd ytd 
+                join 
+                    hr_employee emp on ytd.idno = emp.x_idno
+                join 
+                    aag_master_ptkp ptkp on ptkp.id = emp.ptkp_id;
+
+                UPDATE aag_pph21_detail
+                set b08bru = b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns,
+                b09jab = LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000),
+                b11jpe = LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht, 
+                b12net = (b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)- (LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht), 
+                b14npp = (b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)- (LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht), 
+                b16pkp = ((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)- (LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht))-b15ptk 
+                where header_id = v_header_id;
+
+                -- Hitung PPh21 dari PKP 
+                for v_detail in select * from aag_pph21_detail where header_id=v_header_id
+                loop 
+                    v_sisa_pkp=v_detail.b16pkp;
+                    v_pph21=0;
+                    select * from aag_master_pkp limit 1 offset 0 into v_range;
+                    if v_detail.b16pkp <= v_range.maximum then
+                        UPDATE aag_pph21_detail set b17pph = v_detail.b16pkp * v_range.rate / 100 where id = v_detail.id;
+                    else
+                        v_pph21 = v_pph21 + v_range.maximum * v_range.rate / 100;
+                        v_sisa_pkp = v_detail.b16pkp - v_range.maximum;
+                        select * from aag_master_pkp limit 1 offset 1 into v_range;
+                        if v_sisa_pkp <= (v_range.maximum-v_range.minimum+1) then
+                            v_pph21 = v_pph21 + v_sisa_pkp * v_range.rate / 100; 
+                        else
+                            v_pph21 = v_pph21 + (v_range.maximum-v_range.minimum+1) * v_range.rate / 100;
+                            v_sisa_pkp = v_sisa_pkp-(v_range.maximum-v_range.minimum+1);
+                            select * from aag_master_pkp limit 1 offset 2 into v_range;
+                            if v_sisa_pkp <= (v_range.maximum-v_range.minimum+1) then
+                                v_pph21 = v_pph21 + v_sisa_pkp*v_range.rate/100;
+                            else
+                                v_pph21 = v_pph21 + (v_range.maximum-v_range.minimum+1)*v_range.rate/100;
+                                v_sisa_pkp = v_sisa_pkp-(v_range.maximum-v_range.minimum+1);
+                                select * from aag_master_pkp limit 1 offset 3 into v_range;
+                                v_pph21 = v_pph21 + v_sisa_pkp*v_range.rate/100;
+                            end if;
+                        end if; 
+                        UPDATE aag_pph21_detail set b17pph = v_pph21 where id = v_detail.id;
+
+                    end if;  -- end level-1
+
+                end loop;
+
+            END;
+            $BODY$;
+
+        """)
+
     def action_generate(self):
         cr = self.env.cr
+        company_id=self.env['res.company']._company_default_get('hr.employee').id
+        sql = "select aag_hitung_pph(%s,%s)"
+        cr.execute(sql, (self.id,company_id))
 
-        sql = "delete from aag_pph21_detail where header_id=%s"
-        cr.execute(sql, (self.id,))
-
-        sql = """
-            INSERT INTO aag_pph21_detail (
-                header_id,
-                "idno", 
-                "b01gji",
-                "b02tpp",
-                "b03tll",
-                "b04hnr",
-                "b05pre",
-                "b06nat",
-                "b07bns",
-                "b08bru",
-                "b09jab",
-                "b10tht",
-                "b11jpe",
-                "b12net",
-                "b13nes",
-                "b14npp",
-                "b15ptk",
-                "b16pkp",
-                "b17pph",
-                "b18pps",
-                "b19hut",
-                "b20lns",
-                "cispin",
-                "cinpwp",
-                "cinama",
-                "citgbp"
-            ) 
-            SELECT 
-                %s,
-                emp.x_idno,
-                ytd.y_basic+ytd.y_tpk+ytd.y_occup+ytd.y_functional+ytd.y_family+ytd.y_perform+ytd.y_transport+ytd.y_presence+ytd.y_other+ytd.y_meal+ytd.y_shift+ytd.y_leave+ytd.y_medical,
-                NULL,
-                ytd.y_overtime,
-                NULL,
-                ytd.y_acccom+ytd.y_dthcom+ytd.y_bpjs_com,
-                NULL,
-                ytd.y_bonus+ytd.y_thr,
-                NULL,
-                NULL,
-                ytd.y_jhtemp+ytd.y_penemp,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL,
-                NULL
-            from 
-                aag_salary_ytd_aag_salary_ytd ytd 
-            join 
-                hr_employee emp on ytd.idno = emp.x_idno
-        """
-        cr.execute(sql, (self.id,))
-
-        sql = """ 
-            UPDATE aag_pph21_detail 
-            set b08bru = b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns
-            where header_id=%s
-        """
-        cr.execute(sql, (self.id,))
-
-        # _logger.info("--- done action_generate")
-
+    def get_pph21_setahun(self):
+        sisa_pkp = self.pkp 
+        pph21 = 0 
+        range = self.contract_id.company_id.pkp_ids[0]
+        if self.pkp > range.maximum:
+            pph21 += range.maximum * range.rate / 100 
+            sisa_pkp = self.pkp - range.maximum
+            range = self.contract_id.company_id.pkp_ids[1]
+            if sisa_pkp <= (range.maximum-range.minimum+1):
+                pph21 += sisa_pkp*range.rate/100 
+            else:
+                pph21 += (range.maximum-range.minimum+1) * range.rate / 100
+                sisa_pkp = sisa_pkp-(range.maximum-range.minimum+1)
+                range = self.contract_id.company_id.pkp_ids[2]
+                if sisa_pkp <= (range.maximum-range.minimum+1):
+                    pph21 += sisa_pkp*range.rate/100
+                else:
+                    pph21 += (range.maximum-range.minimum+1)*range.rate/100
+                    sisa_pkp = sisa_pkp-(range.maximum-range.minimum+1)
+                    range = self.contract_id.company_id.pkp_ids[3]
+                    pph21 += sisa_pkp*range.rate/100
+        else:
+            pph21 = self.pkp*range.rate/100        
+        return pph21
 
     def action_export(self):
         file_data = BytesIO()
