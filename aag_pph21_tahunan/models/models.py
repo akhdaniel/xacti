@@ -2,6 +2,8 @@
 
 from odoo import models, fields, api
 import logging
+import odoo.tools
+import time
 _logger = logging.getLogger(__name__)
 import xlsxwriter
 
@@ -21,6 +23,7 @@ class report_header(models.Model):
     export_filename = fields.Char(string="Export File Name",  )
 
     detail_ids = fields.One2many(comodel_name="aag.pph21_detail", inverse_name="header_id")
+    tmp_dir = '/tmp/'
 
     def init(self):
         _logger.info("creating aag_hitung_pph")
@@ -37,65 +40,58 @@ class report_header(models.Model):
                 v_detail record;
                 v_sisa_pkp numeric;
                 v_pph21 numeric;
+                v_pph21x numeric;
                 v_range record;
+                v_bruto numeric;
+                v_tunj_pph numeric;
+                v_selisih numeric;
+                v_counter numeric;
+                v_b02tpp numeric;
+                v_sequences integer;
 
             BEGIN
                 delete from aag_pph21_detail where header_id = v_header_id;
                 INSERT INTO aag_pph21_detail (
                     header_id,
-                    "idno", 
-                    "b01gji",
-                    "b02tpp",
-                    "b03tll",
-                    "b04hnr",
-                    "b05pre",
-                    "b06nat",
-                    "b07bns",
-                    "b08bru",
-                    "b09jab",
-                    "b10tht",
-                    "b11jpe",
-                    "b12net",
-                    "b13nes",
-                    "b14npp",
-                    "b15ptk",
-                    "b16pkp",
-                    "b17pph",
-                    "b18pps",
-                    "b19hut",
-                    "b20lns",
-                    "cispin",
-                    "cinpwp",
-                    "cinama",
-                    "citgbp"
+                    "idno",
+                    "aimspj", "aithpj", "aipemb", "ainobp", "aimsp1",
+                    "aimsp2", "ainppg", "ainipg", "ainama", "aialam",
+                    "aijkel", "aisptk", "aitang", "aijbpg", "aiwpln",
+                    "aikneg",
+                    "bkdpjk",
+                    "b01gji", "b02tpp", "b03tll", "b04hnr", "b05pre",
+                    "b06nat", "b07bns", "b08bru", "b09jab", "b10tht",
+                    "b11jpe", "b12net", "b13nes", "b14npp", "b15ptk",
+                    "b16pkp", "b17pph", "b18pps", "b19hut", "b20lns",
+                    "cispin", "cinpwp", "cinama", "citgbp"
                 ) 
                 SELECT 
                     v_header_id,
                     emp.x_idno,
-                    ytd.y_basic+ytd.y_tpk+ytd.y_occup+ytd.y_functional+ytd.y_family+ytd.y_perform+ytd.y_transport+ytd.y_presence+ytd.y_other+ytd.y_meal+ytd.y_shift+ytd.y_leave+ytd.y_medical,
-                    0,
-                    ytd.y_overtime,
-                    0,
-                    ytd.y_acccom+ytd.y_dthcom+ytd.y_bpjs_com,
-                    0,
-                    ytd.y_bonus+ytd.y_thr,
-                    0,
-                    0,
-                    ytd.y_jhtemp+ytd.y_penemp,
-                    0,
-                    0,
-                    0,
-                    0,
-                    ptkp.nominal,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0
+                    ytd.m_curmm,y_year,0,'1.1-12.20-0000001',ytd.y_strmm,
+                    ytd.y_endmm, emp.x_npwp, emp.identification_id, upper(emp.name), 'DEPOK', 
+                    case when emp.gender='male' then 'M' else 'F' end as aijkel,
+                    case 
+                        when ptkp.name='TK/0' or ptkp.name='TK/1' or ptkp.name='TK/2' or ptkp.name='TK/3' then 'TK'
+                        when ptkp.name='K/0' or ptkp.name='K/1' or ptkp.name='K/2' or ptkp.name='K/3' then 'K'
+                        else 'TK'
+                    end as aisptk,
+                    case 
+                        when ptkp.name='TK/1' or ptkp.name='K/1' then 1
+                        when ptkp.name='TK/2' or ptkp.name='K/2' then 2
+                        when ptkp.name='TK/3' or ptkp.name='K/3' then 3
+                        else 0
+                    end as aitang,
+
+                    'Staff','N',
+                    '',
+                    '21-100-01',
+                    y_basic + y_tpk + y_occup + y_functional + y_family + y_perform + y_transport + y_presence + y_other + y_meal + y_shift + y_leave + y_medical,
+                    0, y_overtime, 0, y_acccom + y_dthcom + y_bpjs_com,
+                    0, y_bonus + y_thr, 0, 0, y_jhtemp + y_penemp,
+                    0, 0, 0, 0, ptkp.nominal,
+                    0, 0, 0, 0, 0,
+                    '', '580178119061000', 'YOSHIKIYO MORIKAWA', '31/01/2021'
                 from 
                     aag_salary_ytd_aag_salary_ytd ytd 
                 join 
@@ -103,48 +99,110 @@ class report_header(models.Model):
                 join 
                     aag_master_ptkp ptkp on ptkp.id = emp.ptkp_id;
 
-                UPDATE aag_pph21_detail
-                set b08bru = b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns,
-                b09jab = LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000),
-                b11jpe = LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht, 
-                b12net = (b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)- (LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht), 
-                b14npp = (b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)- (LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht), 
-                b16pkp = ((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)- (LEAST((b01gji + b02tpp + b03tll + b04hnr + b05pre + b06nat + b07bns)*0.05, 6000000) + b10tht))-b15ptk 
-                where header_id = v_header_id;
-
                 -- Hitung PPh21 dari PKP 
+                v_sequences = 1;
                 for v_detail in select * from aag_pph21_detail where header_id=v_header_id
-                loop 
-                    v_sisa_pkp=v_detail.b16pkp;
-                    v_pph21=0;
-                    select * from aag_master_pkp limit 1 offset 0 into v_range;
-                    if v_detail.b16pkp <= v_range.maximum then
-                        UPDATE aag_pph21_detail set b17pph = v_detail.b16pkp * v_range.rate / 100 where id = v_detail.id;
-                    else
-                        v_pph21 = v_pph21 + v_range.maximum * v_range.rate / 100;
-                        v_sisa_pkp = v_detail.b16pkp - v_range.maximum;
-                        select * from aag_master_pkp limit 1 offset 1 into v_range;
-                        if v_sisa_pkp <= (v_range.maximum-v_range.minimum+1) then
-                            v_pph21 = v_pph21 + v_sisa_pkp * v_range.rate / 100; 
-                        else
-                            v_pph21 = v_pph21 + (v_range.maximum-v_range.minimum+1) * v_range.rate / 100;
-                            v_sisa_pkp = v_sisa_pkp-(v_range.maximum-v_range.minimum+1);
-                            select * from aag_master_pkp limit 1 offset 2 into v_range;
-                            if v_sisa_pkp <= (v_range.maximum-v_range.minimum+1) then
-                                v_pph21 = v_pph21 + v_sisa_pkp*v_range.rate/100;
-                            else
-                                v_pph21 = v_pph21 + (v_range.maximum-v_range.minimum+1)*v_range.rate/100;
-                                v_sisa_pkp = v_sisa_pkp-(v_range.maximum-v_range.minimum+1);
-                                select * from aag_master_pkp limit 1 offset 3 into v_range;
-                                v_pph21 = v_pph21 + v_sisa_pkp*v_range.rate/100;
-                            end if;
-                        end if; 
-                        UPDATE aag_pph21_detail set b17pph = v_pph21 where id = v_detail.id;
+                loop
+                    v_pph21 = aag_hitung_pot_pph(v_detail.id,0);
+                    v_b02tpp = v_pph21;
+                    v_selisih = v_pph21;
 
-                    end if;  -- end level-1
-
+                    while round(v_selisih) <> 0
+                    loop 
+                        v_b02tpp = v_pph21;
+						v_pph21 = aag_hitung_pot_pph(v_detail.id,v_b02tpp);
+                        v_selisih =  v_pph21 - v_b02tpp;
+                        -- raise notice '% %', v_selisih, v_b02tpp;  
+                    end loop;
+                    update aag_pph21_detail set ainobp = '1-1-12-'|| substring(v_detail.aithpj::text,3,2) || '-' || LPAD(v_sequences::text, 7, '0') where id=v_detail.id;
+                    v_sequences = v_sequences + 1;
                 end loop;
 
+            END;
+            $BODY$;
+
+        """)
+
+        self.env.cr.execute("""CREATE OR REPLACE FUNCTION public.aag_hitung_pot_pph(
+                v_detail_id integer, v_b02tpp numeric)
+                RETURNS numeric
+                LANGUAGE 'plpgsql'
+
+                COST 100
+                VOLATILE 
+
+            AS $BODY$
+            DECLARE
+				v_detail record;
+                v_b08bru numeric;
+                v_b09jab numeric;
+                v_b11jpe numeric;
+                v_b12net numeric;
+                v_b14npp numeric;
+                v_b16pkp numeric;
+
+                v_sisa_pkp numeric;
+                v_pph21 numeric;
+                v_pph21x numeric;
+                v_range record;
+                v_bruto numeric;
+                v_tunj_pph numeric;
+                v_selisih numeric;
+                v_counter numeric;
+
+            BEGIN
+				select * from aag_pph21_detail where id=v_detail_id into v_detail;
+                v_b08bru = v_detail.b01gji + v_b02tpp + v_detail.b03tll + v_detail.b04hnr + v_detail.b05pre + v_detail.b06nat + v_detail.b07bns;  -- bruto tanpa tunjangan pph.
+                v_b09jab = LEAST(v_b08bru * 0.05, 6000000);
+                v_b11jpe = v_b09jab + v_detail.b10tht;
+                v_b12net = v_b08bru - v_b11jpe;
+                v_b14npp = v_b12net - v_detail.b13nes;
+                if v_detail.aimspj <> 12 then 
+                    v_b14npp = (v_b14npp/v_detail.aimspj) * 12;
+                end if;
+                v_b16pkp = GREATEST(floor((v_b14npp - v_detail.b15ptk)/1000) * 1000,0);                    
+                v_sisa_pkp=v_b16pkp;
+                v_pph21=0;
+
+                select * from aag_master_pkp limit 1 offset 0 into v_range;
+                if v_b16pkp <= v_range.maximum then
+                    v_pph21 = v_b16pkp * v_range.rate / 100;
+                else
+                    v_pph21 = v_pph21 + v_range.maximum * v_range.rate / 100;
+                    v_sisa_pkp = v_b16pkp - v_range.maximum;
+                    select * from aag_master_pkp limit 1 offset 1 into v_range;
+                    if v_sisa_pkp <= (v_range.maximum-v_range.minimum+1) then
+                        v_pph21 = v_pph21 + (v_sisa_pkp * v_range.rate / 100); 
+                    else
+                        v_pph21 = v_pph21 + (v_range.maximum-v_range.minimum+1) * v_range.rate / 100;
+                        v_sisa_pkp = v_sisa_pkp-(v_range.maximum-v_range.minimum+1);
+                        select * from aag_master_pkp limit 1 offset 2 into v_range;
+                        if v_sisa_pkp <= (v_range.maximum-v_range.minimum+1) then
+                            v_pph21 = v_pph21 + v_sisa_pkp*v_range.rate/100;
+                        else
+                            v_pph21 = v_pph21 + (v_range.maximum-v_range.minimum+1)*v_range.rate/100;
+                            v_sisa_pkp = v_sisa_pkp-(v_range.maximum-v_range.minimum+1);
+                            select * from aag_master_pkp limit 1 offset 3 into v_range;
+                            v_pph21 = v_pph21 + v_sisa_pkp*v_range.rate/100;
+                        end if;
+                    end if; 
+ 
+                end if;  -- end level-1
+
+                UPDATE aag_pph21_detail 
+                    set b02tpp = v_pph21,
+                    b08bru = v_b08bru,
+                    b09jab = v_b09jab,
+                    b11jpe = v_b11jpe,
+                    b12net = v_b12net,
+                    b14npp = v_b14npp,
+                    b16pkp = v_b16pkp,
+                    b17pph = v_pph21,
+                    b19hut = v_pph21,
+                    b20lns = v_pph21  
+                    where id = v_detail.id;
+
+                return v_pph21;
             END;
             $BODY$;
 
@@ -156,32 +214,36 @@ class report_header(models.Model):
         sql = "select aag_hitung_pph(%s,%s)"
         cr.execute(sql, (self.id,company_id))
 
-    def get_pph21_setahun(self):
-        sisa_pkp = self.pkp 
-        pph21 = 0 
-        range = self.contract_id.company_id.pkp_ids[0]
-        if self.pkp > range.maximum:
-            pph21 += range.maximum * range.rate / 100 
-            sisa_pkp = self.pkp - range.maximum
-            range = self.contract_id.company_id.pkp_ids[1]
-            if sisa_pkp <= (range.maximum-range.minimum+1):
-                pph21 += sisa_pkp*range.rate/100 
-            else:
-                pph21 += (range.maximum-range.minimum+1) * range.rate / 100
-                sisa_pkp = sisa_pkp-(range.maximum-range.minimum+1)
-                range = self.contract_id.company_id.pkp_ids[2]
-                if sisa_pkp <= (range.maximum-range.minimum+1):
-                    pph21 += sisa_pkp*range.rate/100
-                else:
-                    pph21 += (range.maximum-range.minimum+1)*range.rate/100
-                    sisa_pkp = sisa_pkp-(range.maximum-range.minimum+1)
-                    range = self.contract_id.company_id.pkp_ids[3]
-                    pph21 += sisa_pkp*range.rate/100
-        else:
-            pph21 = self.pkp*range.rate/100        
-        return pph21
-
     def action_export(self):
+        start = time.time()
+
+        self.export_filename  = 'Export-%s.csv' % time.strftime("%Y%m%d_%H%M%S")
+        cr = self.env.cr
+        sql = self.generate_sql()
+        _logger.info('sql=%s', sql)
+        cmd = ['psql']
+        cmd.append('--command='+sql)
+        cmd.append(cr.dbname)
+        odoo.tools.exec_pg_command(*cmd)
+
+        i=0
+        fo = open(self.tmp_dir + self.export_filename, "rb")
+        self.export_file = base64.b64encode(fo.read())
+        fo.close()
+        end = time.time()
+        self.total_durations = end-start
+
+    def generate_sql(self):
+        sql="""\COPY (
+        select 
+        aimspj as "Masa Pajak",
+        aithpj as "Tahun Pajak"
+        from aag_pph21_detail where header_id=%s
+        ) TO '%s' WITH (FORMAT CSV, HEADER TRUE, DELIMITER ';')
+        """ %(self.id, self.tmp_dir+self.export_filename)
+        return sql
+
+    def action_export2(self):
         file_data = BytesIO()
         workbook = xlsxwriter.Workbook(file_data)
         worksheet = workbook.add_worksheet()
@@ -434,10 +496,10 @@ class report_detail(models.Model):
     b20lns          = fields.Integer("PPh21 Yg Dipotong/Dilunasi")
  
     # Kelompok C (Identitas Pemotong)
-    cispin          = fields.Integer("Status Pindah")
-    cinpwp          = fields.Integer("NPWP")
-    cinama          = fields.Integer("Nama")
-    citgbp          = fields.Integer("Tanggal Bukti Potong")
+    cispin          = fields.Char("Status Pindah")
+    cinpwp          = fields.Char("NPWP")
+    cinama          = fields.Char("Nama")
+    citgbp          = fields.Char("Tanggal Bukti Potong")
 
     
 
